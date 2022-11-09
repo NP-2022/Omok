@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<list key="EGit.KnownHosts">
+		<item value="git.eclipse.org"/>
+		<item value="github.com"/>
+		<item value="bitbucket.org"/>
+	</list>
+	<list key="RepositorySelectionPage.UsedUris">
+		<item value="https://github.com/NP-2022/JAVA-Omok.git"/>
+	</list>
+	<section name="org.eclipse.egit.ui.internal.staging.StagingView">
+		<item key="MAIN_SASH_FORM_ORIENTATION_VERTICAL" value="false"/>
+		<item key="HORIZONTAL_SASH_FORM_WEIGHT" value="200,200"/>
+		<item key="STAGING_SASH_FORM_WEIGHT" value="200,200"/>
+		<item key="sortItemState" value="false"/>
+	</section>
+	<section name="GitCommitMessageComponent">
+		<list key="C:\Users\tjdgn\Desktop\NetworkProgramming\JAVA-Omok\.git">
+			<item value="false"/>
+			<item value="tjdgns &lt;tjdgns1657@naver.com&gt;"/>
+			<item value="코드 지저분함, 로그인-메인화면-방만들기-대기화면(미완)"/>
+			<item value="tjdgns &lt;tjdgns1657@naver.com&gt;"/>
+			<item value="20179e5e5a13b3f0c428deb7835c8576db44208f"/>
+			<item value="0"/>
+			<item value="true"/>
+		</list>
+	</section>
+	<section name="org.eclipse.egit.ui.internal.fetch.FetchResultDialog.dialogBounds">
+		<item key="DIALOG_X_ORIGIN" value="660"/>
+		<item key="DIALOG_Y_ORIGIN" value="209"/>
+		<item key="DIALOG_WIDTH" value="616"/>
+		<item key="DIALOG_HEIGHT" value="479"/>
+		<item key="DIALOG_FONT_NAME" value="1|맑은 고딕|10.5|0|WINDOWS|1|-14|0|0|0|400|0|0|0|1|0|0|0|0|맑은 고딕"/>
+	</section>
+</section>
