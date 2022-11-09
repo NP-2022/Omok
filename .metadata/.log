@@ -9272,3 +9272,81 @@ org.eclipse.jgit.errors.TransportException: https://github.com/NP-2022/JAVA-Omok
 	at org.eclipse.egit.core.op.PushOperation.run(PushOperation.java:191)
 	at org.eclipse.egit.ui.internal.push.ConfirmationPage$2.run(ConfirmationPage.java:210)
 	at org.eclipse.jface.operation.ModalContext$ModalContextThread.run(ModalContext.java:122)
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2022-11-09 21:54:40.348
+!MESSAGE close() called when useCnt is already zero for Repository[C:\Users\tjdgn\Desktop\NetworkProgramming\JAVA-Omok\.git]
+
+!ENTRY org.eclipse.egit.ui 4 0 2022-11-09 21:57:19.764
+!MESSAGE Illegal character in path at index 21: https://github.com/C:\Users\tjdgn\Desktop\NetworkProgramming/info/refs?service=git-upload-pack
+!STACK 0
+java.lang.IllegalArgumentException: Illegal character in path at index 21: https://github.com/C:\Users\tjdgn\Desktop\NetworkProgramming/info/refs?service=git-upload-pack
+	at java.base/java.net.URI.create(URI.java:906)
+	at org.apache.http.client.methods.HttpGet.<init>(HttpGet.java:66)
+	at org.eclipse.jgit.transport.http.apache.HttpClientConnection.setRequestMethod(HttpClientConnection.java:318)
+	at org.eclipse.jgit.transport.TransportHttp.httpOpen(TransportHttp.java:1062)
+	at org.eclipse.jgit.transport.TransportHttp.connect(TransportHttp.java:642)
+	at org.eclipse.jgit.transport.TransportHttp.openFetch(TransportHttp.java:465)
+	at org.eclipse.jgit.api.LsRemoteCommand.execute(LsRemoteCommand.java:167)
+	at org.eclipse.jgit.api.LsRemoteCommand.call(LsRemoteCommand.java:128)
+	at org.eclipse.egit.core.op.ListRemoteOperation.run(ListRemoteOperation.java:116)
+	at org.eclipse.egit.ui.internal.components.AsynchronousListOperation.run(AsynchronousListOperation.java:76)
+	at org.eclipse.egit.ui.internal.dialogs.CancelableFuture$1.run(CancelableFuture.java:280)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+Caused by: java.net.URISyntaxException: Illegal character in path at index 21: https://github.com/C:\Users\tjdgn\Desktop\NetworkProgramming/info/refs?service=git-upload-pack
+	at java.base/java.net.URI$Parser.fail(URI.java:2966)
+	at java.base/java.net.URI$Parser.checkChars(URI.java:3137)
+	at java.base/java.net.URI$Parser.parseHierarchical(URI.java:3219)
+	at java.base/java.net.URI$Parser.parse(URI.java:3167)
+	at java.base/java.net.URI.<init>(URI.java:623)
+	at java.base/java.net.URI.create(URI.java:904)
+	... 11 more
+
+!ENTRY org.eclipse.egit.core 4 0 2022-11-09 21:57:27.893
+!MESSAGE An exception occurred during push on URI https://github.com/C:\Users\tjdgn\Desktop\NetworkProgramming: Illegal character in path at index 21: https://github.com/C:\Users\tjdgn\Desktop\NetworkProgramming/info/refs?service=git-receive-pack
+!STACK 0
+java.lang.IllegalArgumentException: Illegal character in path at index 21: https://github.com/C:\Users\tjdgn\Desktop\NetworkProgramming/info/refs?service=git-receive-pack
+	at java.base/java.net.URI.create(URI.java:906)
+	at org.apache.http.client.methods.HttpGet.<init>(HttpGet.java:66)
+	at org.eclipse.jgit.transport.http.apache.HttpClientConnection.setRequestMethod(HttpClientConnection.java:318)
+	at org.eclipse.jgit.transport.TransportHttp.httpOpen(TransportHttp.java:1062)
+	at org.eclipse.jgit.transport.TransportHttp.connect(TransportHttp.java:642)
+	at org.eclipse.jgit.transport.TransportHttp.connect(TransportHttp.java:627)
+	at org.eclipse.jgit.transport.TransportHttp.openPush(TransportHttp.java:541)
+	at org.eclipse.jgit.transport.PushProcess.execute(PushProcess.java:127)
+	at org.eclipse.jgit.transport.Transport.push(Transport.java:1384)
+	at org.eclipse.egit.core.op.PushOperation.run(PushOperation.java:191)
+	at org.eclipse.egit.ui.internal.push.ConfirmationPage$2.run(ConfirmationPage.java:210)
+	at org.eclipse.jface.operation.ModalContext$ModalContextThread.run(ModalContext.java:122)
+Caused by: java.net.URISyntaxException: Illegal character in path at index 21: https://github.com/C:\Users\tjdgn\Desktop\NetworkProgramming/info/refs?service=git-receive-pack
+	at java.base/java.net.URI$Parser.fail(URI.java:2966)
+	at java.base/java.net.URI$Parser.checkChars(URI.java:3137)
+	at java.base/java.net.URI$Parser.parseHierarchical(URI.java:3219)
+	at java.base/java.net.URI$Parser.parse(URI.java:3167)
+	at java.base/java.net.URI.<init>(URI.java:623)
+	at java.base/java.net.URI.create(URI.java:904)
+	... 11 more
+
+!ENTRY org.eclipse.egit.core 4 0 2022-11-09 21:57:44.445
+!MESSAGE An exception occurred during push on URI https://github.com/C:\Users\tjdgn\Desktop\NetworkProgramming: Illegal character in path at index 21: https://github.com/C:\Users\tjdgn\Desktop\NetworkProgramming/info/refs?service=git-receive-pack
+!STACK 0
+java.lang.IllegalArgumentException: Illegal character in path at index 21: https://github.com/C:\Users\tjdgn\Desktop\NetworkProgramming/info/refs?service=git-receive-pack
+	at java.base/java.net.URI.create(URI.java:906)
+	at org.apache.http.client.methods.HttpGet.<init>(HttpGet.java:66)
+	at org.eclipse.jgit.transport.http.apache.HttpClientConnection.setRequestMethod(HttpClientConnection.java:318)
+	at org.eclipse.jgit.transport.TransportHttp.httpOpen(TransportHttp.java:1062)
+	at org.eclipse.jgit.transport.TransportHttp.connect(TransportHttp.java:642)
+	at org.eclipse.jgit.transport.TransportHttp.connect(TransportHttp.java:627)
+	at org.eclipse.jgit.transport.TransportHttp.openPush(TransportHttp.java:541)
+	at org.eclipse.jgit.transport.PushProcess.execute(PushProcess.java:127)
+	at org.eclipse.jgit.transport.Transport.push(Transport.java:1384)
+	at org.eclipse.egit.core.op.PushOperation.run(PushOperation.java:191)
+	at org.eclipse.egit.ui.internal.push.ConfirmationPage$2.run(ConfirmationPage.java:210)
+	at org.eclipse.jface.operation.ModalContext$ModalContextThread.run(ModalContext.java:122)
+Caused by: java.net.URISyntaxException: Illegal character in path at index 21: https://github.com/C:\Users\tjdgn\Desktop\NetworkProgramming/info/refs?service=git-receive-pack
+	at java.base/java.net.URI$Parser.fail(URI.java:2966)
+	at java.base/java.net.URI$Parser.checkChars(URI.java:3137)
+	at java.base/java.net.URI$Parser.parseHierarchical(URI.java:3219)
+	at java.base/java.net.URI$Parser.parse(URI.java:3167)
+	at java.base/java.net.URI.<init>(URI.java:623)
+	at java.base/java.net.URI.create(URI.java:904)
+	... 11 more
