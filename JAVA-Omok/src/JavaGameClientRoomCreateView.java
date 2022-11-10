@@ -38,8 +38,8 @@ public class JavaGameClientRoomCreateView extends JFrame {
 		Ip_addr = ip_addr;
 		Port_no = port_no;
 		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 254, 321);
+		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(900, 100, 254, 321);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 

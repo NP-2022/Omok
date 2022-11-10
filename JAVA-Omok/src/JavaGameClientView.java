@@ -94,7 +94,7 @@ public class JavaGameClientView extends JFrame {
 	 */
 	public JavaGameClientView(String username, String ip_addr, String port_no)  {
 		setResizable(false);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //창 닫히면 프로세스 종료
 		setBounds(100, 100, 800, 634);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -158,13 +158,14 @@ public class JavaGameClientView extends JFrame {
 		gc = panel.getGraphics();
 		
 		// Image 영역 보관용. paint() 에서 이용한다.
+		Image defaultimg =new ImageIcon(JavaGameClientView.class.getResource("default.png")).getImage();
 		panelImage = createImage(panel.getWidth(), panel.getHeight());
 		gc2 = panelImage.getGraphics();
 		gc2.setColor(panel.getBackground());
 		gc2.fillRect(0,0, panel.getWidth(),  panel.getHeight());
 		gc2.setColor(Color.BLACK);
 		gc2.drawRect(0,0, panel.getWidth()-1,  panel.getHeight()-1);
-		
+		gc2.drawImage(defaultimg,  0,  0, panel.getWidth(), panel.getHeight(), panel);
 		
 		lblMouseEvent = new JLabel("<dynamic>");
 		lblMouseEvent.setHorizontalAlignment(SwingConstants.CENTER);
@@ -200,7 +201,7 @@ public class JavaGameClientView extends JFrame {
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JavaGameClientRoomCreateView roomcreate = new JavaGameClientRoomCreateView(username, ip_addr, port_no);
-				setVisible(false);
+				setVisible(true);
 			}
 		});
 		btnNewButton_1.setBounds(675, 283, 97, 23);
@@ -255,6 +256,11 @@ public class JavaGameClientView extends JFrame {
 			AppendText("connect error");
 		}
 
+	}
+
+	private Image getImage(String string) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	public void paint(Graphics g) {
