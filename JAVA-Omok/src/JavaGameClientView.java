@@ -187,10 +187,10 @@ public class JavaGameClientView extends JFrame {
 		scrollPane_1.setBounds(376, 61, 396, 212);
 		contentPane.add(scrollPane_1);
 		
-		JMenuItem menuItem = new JMenuItem("New menu item");
-		scrollPane_1.setViewportView(menuItem);
+		JMenuItem mntmEx = new JMenuItem("ex: \uC81C\uBAA9/\uC778\uC6D0\uC218/\uC720\uD615");
+		scrollPane_1.setViewportView(mntmEx);
 		
-		JLabel lblUserName_1_1 = new JLabel("방 리스트");
+		JLabel lblUserName_1_1 = new JLabel("\uBC29 \uB9AC\uC2A4\uD2B8");
 		lblUserName_1_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblUserName_1_1.setFont(new Font("굴림", Font.BOLD, 14));
 		lblUserName_1_1.setBorder(new LineBorder(new Color(0, 0, 0)));
