@@ -11,6 +11,11 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JSpinner;
+import java.awt.Choice;
+import javax.swing.JSeparator;
 
 public class JavaGameClientRoomCreateView extends JFrame {
 
@@ -24,10 +29,11 @@ public class JavaGameClientRoomCreateView extends JFrame {
 	private JPanel contentPane;
 	private JTextField txtGame;
 	private JTextField txtRoom;
-	private JTextField txtPersonNum;
+	private JSpinner txtPersonNum;
 	private String Username;
 	private String Ip_addr;
 	private String Port_no;
+	private JSpinner spinner;
 
 	/**
 	 * Create the frame.
@@ -74,23 +80,19 @@ public class JavaGameClientRoomCreateView extends JFrame {
 		lblPersonNum.setBounds(12, 163, 82, 33);
 		contentPane.add(lblPersonNum);
 		
-		txtPersonNum = new JTextField();
-		txtPersonNum.setHorizontalAlignment(SwingConstants.CENTER);
-		txtPersonNum.setColumns(10);
-		txtPersonNum.setBounds(101, 163, 116, 33);
-		contentPane.add(txtPersonNum);
-		txtPersonNum.setColumns(10);
-		
 		
 		JButton btnConnect = new JButton("Connect");
 		btnConnect.setBounds(12, 223, 205, 38);
 		contentPane.add(btnConnect);
+		
+		txtPersonNum = new JSpinner();
+		txtPersonNum.setBounds(101, 169, 30, 22);
+		contentPane.add(txtPersonNum);
+		
 		Roomaction action = new Roomaction();
 		btnConnect.addActionListener(action);
 		txtGame.addActionListener(action);
 		txtRoom.addActionListener(action);
-		txtPersonNum.addActionListener(action);
-		
 		setVisible(true);
 		
 	}
@@ -101,9 +103,11 @@ public class JavaGameClientRoomCreateView extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			String Game = txtGame.getText().trim();
 			String Room = txtRoom.getText().trim();
-			String Person = txtPersonNum.getText().trim();
-			JavaGameClientView2 view = new JavaGameClientView2(Username, Ip_addr, Port_no, Game, Room, Person);
-			setVisible(false);
+			int Person = txtPersonNum.getComponentCount();
+			if(Game.equals("¾Ë±î±â")) {
+				JavaGameClientView2 view = new JavaGameClientView2(Username, Ip_addr, Port_no, Game, Room, Person);
+				setVisible(false);
+			}
 		}
 	}
 }
