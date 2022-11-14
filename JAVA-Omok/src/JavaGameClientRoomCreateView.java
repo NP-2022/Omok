@@ -11,11 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
 import javax.swing.JSpinner;
-import java.awt.Choice;
-import javax.swing.JSeparator;
 
 public class JavaGameClientRoomCreateView extends JFrame {
 
@@ -29,11 +25,10 @@ public class JavaGameClientRoomCreateView extends JFrame {
 	private JPanel contentPane;
 	private JTextField txtGame;
 	private JTextField txtRoom;
-	private JSpinner txtPersonNum;
+	private JSpinner PersonNum;
 	private String Username;
 	private String Ip_addr;
 	private String Port_no;
-	private JSpinner spinner;
 
 	/**
 	 * Create the frame.
@@ -57,7 +52,7 @@ public class JavaGameClientRoomCreateView extends JFrame {
 		contentPane.add(lblGameLabel);
 		
 		txtGame = new JTextField();
-		txtGame.setText("오목");
+		txtGame.setText("알까기");
 		txtGame.setHorizontalAlignment(SwingConstants.CENTER);
 		txtGame.setColumns(10);
 		txtGame.setBounds(101, 39, 116, 33);
@@ -80,14 +75,14 @@ public class JavaGameClientRoomCreateView extends JFrame {
 		lblPersonNum.setBounds(12, 163, 82, 33);
 		contentPane.add(lblPersonNum);
 		
+		PersonNum = new JSpinner();
+		PersonNum.setBounds(101, 169, 30, 22);
+		contentPane.add(PersonNum);
 		
 		JButton btnConnect = new JButton("Connect");
 		btnConnect.setBounds(12, 223, 205, 38);
 		contentPane.add(btnConnect);
 		
-		txtPersonNum = new JSpinner();
-		txtPersonNum.setBounds(101, 169, 30, 22);
-		contentPane.add(txtPersonNum);
 		
 		Roomaction action = new Roomaction();
 		btnConnect.addActionListener(action);
@@ -103,12 +98,14 @@ public class JavaGameClientRoomCreateView extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			String Game = txtGame.getText().trim();
 			String Room = txtRoom.getText().trim();
-			int Person = txtPersonNum.getComponentCount();
-			if(Game.equals("알까기")) {
+			int Person = PersonNum.getComponentCount();
+			if(Game.equals("오목")) {
 				JavaGameClientView2 view = new JavaGameClientView2(Username, Ip_addr, Port_no, Game, Room, Person);
+				setVisible(false);
+			}else if(Game.equals("알까기")) {
+				JavaGameClientView3 view = new JavaGameClientView3(Username, Ip_addr, Port_no, Game, Room, Person);
 				setVisible(false);
 			}
 		}
 	}
 }
-

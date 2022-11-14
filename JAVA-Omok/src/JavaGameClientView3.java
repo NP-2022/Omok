@@ -16,15 +16,16 @@ import javax.swing.border.LineBorder;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 import java.awt.Font;
+import java.awt.Graphics;
+
 import javax.swing.JMenuBar;
 import java.awt.ScrollPane;
 import javax.swing.JMenuItem;
 import java.awt.Panel;
 import java.awt.Button;
 
-public class JavaGameClientView2 extends JFrame {
+public class JavaGameClientView3 extends JFrame {
 
-	
 
 	/**
 	 * Launch the application.
@@ -43,28 +44,28 @@ public class JavaGameClientView2 extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public JavaGameClientView2(String username, String ip_addr, String port_no, String Game, String Room, int PersonNum) {
+	public JavaGameClientView3(String username, String ip_addr, String port_no, String Game, String Room, int PersonNum) {
 		setResizable(false);
 		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(900, 100, 890, 629);
+		setBounds(900, 100, 1036, 720);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(522, 329, 352, 185);
+		scrollPane.setBounds(659, 328, 352, 300);
 		contentPane.add(scrollPane);
 		
 		JTextPane textArea = new JTextPane();
 		textArea.setFont(new Font("굴림체", Font.PLAIN, 14));
 		textArea.setEditable(true);
 		textArea.setCaretPosition(0);
-		scrollPane.setViewportView(textArea);
+		scrollPane.setColumnHeaderView(textArea);
 		
 		textField = new JTextField();
 		textField.setColumns(10);
-		textField.setBounds(522, 525, 271, 40);
+		textField.setBounds(659, 638, 271, 40);
 		contentPane.add(textField);
 		
 		JButton btnSend = new JButton("전송");
@@ -73,11 +74,11 @@ public class JavaGameClientView2 extends JFrame {
 			}
 		});
 		btnSend.setFont(new Font("굴림", Font.PLAIN, 14));
-		btnSend.setBounds(805, 524, 69, 40);
+		btnSend.setBounds(942, 637, 69, 40);
 		contentPane.add(btnSend);
 		
 		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(522, 107, 352, 212);
+		scrollPane_1.setBounds(659, 107, 352, 212);
 		contentPane.add(scrollPane_1);
 		
 		JLabel lblUserName_1_1 = new JLabel("유저리스트");
@@ -91,7 +92,7 @@ public class JavaGameClientView2 extends JFrame {
 		scrollPane_1.setViewportView(mntmEx_1);
 		
 		Panel panel = new Panel();
-		panel.setBounds(522, 10, 84, 91);
+		panel.setBounds(659, 10, 84, 91);
 		contentPane.add(panel);
 		
 		JLabel lblUserName_1_1_1 = new JLabel("유저 이름");
@@ -102,7 +103,7 @@ public class JavaGameClientView2 extends JFrame {
 		panel.add(lblUserName_1_1_1);
 		
 		Panel panel_1 = new Panel();
-		panel_1.setBounds(612, 10, 84, 91);
+		panel_1.setBounds(749, 10, 84, 91);
 		contentPane.add(panel_1);
 		
 		JLabel lblUserName_1_1_1_1 = new JLabel("유저 이름");
@@ -113,7 +114,7 @@ public class JavaGameClientView2 extends JFrame {
 		panel_1.add(lblUserName_1_1_1_1);
 		
 		Panel panel_2 = new Panel();
-		panel_2.setBounds(702, 10, 84, 91);
+		panel_2.setBounds(839, 10, 84, 91);
 		contentPane.add(panel_2);
 		
 		JLabel lblUserName_1_1_1_2 = new JLabel("유저 이름");
@@ -124,7 +125,7 @@ public class JavaGameClientView2 extends JFrame {
 		panel_2.add(lblUserName_1_1_1_2);
 		
 		Panel panel_3 = new Panel();
-		panel_3.setBounds(792, 10, 84, 91);
+		panel_3.setBounds(929, 10, 84, 91);
 		contentPane.add(panel_3);
 		
 		JLabel lblUserName_1_1_1_3 = new JLabel("유저이름");
@@ -134,8 +135,9 @@ public class JavaGameClientView2 extends JFrame {
 		lblUserName_1_1_1_3.setBackground(Color.WHITE);
 		panel_3.add(lblUserName_1_1_1_3);
 		
-		Panel panel_4 = new Panel();
-		panel_4.setBounds(10, 10, 500, 500);
+		TablePanel panel_4 = new TablePanel();
+		panel_4.setBounds(12, 10, 627, 628);
+		panel_4.setBackground(new Color(206,167,61));
 		contentPane.add(panel_4);
 		
 		Button button = new Button("시작");
@@ -143,7 +145,7 @@ public class JavaGameClientView2 extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		button.setBounds(153, 538, 107, 27);
+		button.setBounds(220, 644, 107, 27);
 		contentPane.add(button);
 		
 		Button button_1 = new Button("무르기 요청");
@@ -151,7 +153,7 @@ public class JavaGameClientView2 extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		button_1.setBounds(276, 538, 107, 27);
+		button_1.setBounds(343, 644, 107, 27);
 		contentPane.add(button_1);
 		
 		Button button_1_1 = new Button("나가기");
@@ -159,13 +161,28 @@ public class JavaGameClientView2 extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		button_1_1.setBounds(403, 538, 107, 27);
+		button_1_1.setBounds(470, 644, 107, 27);
 		contentPane.add(button_1_1);
 		
 		JLabel lblNewLabel = new JLabel("남은 시간 : 30");
-		lblNewLabel.setBounds(23, 537, 107, 28);
+		lblNewLabel.setBounds(90, 643, 107, 28);
 		contentPane.add(lblNewLabel);
+		
+		
 		setVisible(true);
 
 	}
 }
+
+class TablePanel extends JPanel {
+	private MapSize size = new MapSize();
+	
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        for(int i=1;i<=size.getSize();i++){
+			g.drawLine(size.getCell(), i*size.getCell(), size.getCell()*size.getSize(), i*size.getCell()); 
+			g.drawLine(i*size.getCell(), size.getCell(), i*size.getCell() , size.getCell()*size.getSize()); 
+		}
+    }
+}
+
