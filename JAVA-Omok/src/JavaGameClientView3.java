@@ -148,7 +148,7 @@ public class JavaGameClientView3 extends JFrame {
 		button.setBounds(220, 644, 107, 27);
 		contentPane.add(button);
 		
-		Button button_1 = new Button("무르기 요청");
+		Button button_1 = new Button("알까기");
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}

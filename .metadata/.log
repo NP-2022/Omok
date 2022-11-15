@@ -9133,3 +9133,2332 @@ java.io.FileNotFoundException: C:\Users\tjdgn\Desktop\NetworkProgramming\.metada
 	at org.eclipse.core.internal.resources.SaveManager.save(SaveManager.java:1150)
 	at org.eclipse.core.internal.resources.DelayedSnapshotJob.run(DelayedSnapshotJob.java:51)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+
+!ENTRY org.eclipse.core.resources 4 568 2022-11-14 21:01:57.068
+!MESSAGE Could not write metadata for '/.org.eclipse.egit.core.cmp'.
+!STACK 0
+java.io.FileNotFoundException: C:\Users\tjdgn\Desktop\NetworkProgramming\.metadata\.plugins\org.eclipse.core.resources\.projects\.org.eclipse.egit.core.cmp\.markers.snap (지정된 경로를 찾을 수 없습니다)
+	at java.base/java.io.FileOutputStream.open0(Native Method)
+	at java.base/java.io.FileOutputStream.open(FileOutputStream.java:295)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:236)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:156)
+	at org.eclipse.core.internal.localstore.SafeChunkyOutputStream.<init>(SafeChunkyOutputStream.java:48)
+	at org.eclipse.core.internal.localstore.SafeChunkyOutputStream.<init>(SafeChunkyOutputStream.java:44)
+	at org.eclipse.core.internal.resources.SaveManager.visitAndSnap(SaveManager.java:1816)
+	at org.eclipse.core.internal.resources.SaveManager.visitAndSnap(SaveManager.java:1897)
+	at org.eclipse.core.internal.resources.SaveManager.save(SaveManager.java:1209)
+	at org.eclipse.core.internal.resources.SaveManager.save(SaveManager.java:1150)
+	at org.eclipse.core.internal.resources.DelayedSnapshotJob.run(DelayedSnapshotJob.java:51)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+
+!ENTRY org.eclipse.ui.ide 4 4 2022-11-14 21:08:01.011
+!MESSAGE Problems saving workspace
+
+!ENTRY org.eclipse.ui.ide 4 1 2022-11-14 21:08:01.011
+!MESSAGE Problems occurred while trying to save the state of the workbench.
+!SUBENTRY 1 org.eclipse.core.resources 4 568 2022-11-14 21:08:01.011
+!MESSAGE Could not write metadata for '/.org.eclipse.egit.core.cmp'.
+!STACK 0
+java.io.FileNotFoundException: C:\Users\tjdgn\Desktop\NetworkProgramming\.metadata\.plugins\org.eclipse.core.resources\.projects\.org.eclipse.egit.core.cmp\.markers (지정된 경로를 찾을 수 없습니다)
+	at java.base/java.io.FileOutputStream.open0(Native Method)
+	at java.base/java.io.FileOutputStream.open(FileOutputStream.java:295)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:236)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:185)
+	at org.eclipse.core.internal.localstore.SafeFileOutputStream.<init>(SafeFileOutputStream.java:55)
+	at org.eclipse.core.internal.resources.SaveManager.visitAndSave(SaveManager.java:1689)
+	at org.eclipse.core.internal.resources.SaveManager.lambda$8(SaveManager.java:1773)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197)
+	at java.base/java.util.Spliterators$ArraySpliterator.forEachRemaining(Spliterators.java:1006)
+	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:509)
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499)
+	at java.base/java.util.stream.Nodes$CollectorTask.doLeaf(Nodes.java:2183)
+	at java.base/java.util.stream.Nodes$CollectorTask.doLeaf(Nodes.java:2149)
+	at java.base/java.util.stream.AbstractTask.compute(AbstractTask.java:327)
+	at java.base/java.util.concurrent.CountedCompleter.exec(CountedCompleter.java:754)
+	at java.base/java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:387)
+	at java.base/java.util.concurrent.ForkJoinPool$WorkQueue.topLevelExec(ForkJoinPool.java:1311)
+	at java.base/java.util.concurrent.ForkJoinPool.scan(ForkJoinPool.java:1840)
+	at java.base/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1806)
+	at java.base/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:177)
+!SESSION 2022-11-15 17:18:29.872 -----------------------------------------------
+eclipse.buildId=4.20.0.I20210611-1600
+java.version=16.0.2
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=ko_KR
+Framework arguments:  -product org.eclipse.epp.package.jee.product
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.jee.product
+
+!ENTRY org.eclipse.wb.core 4 0 2022-11-15 17:18:31.069
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.eclipse.wb.core [970]
+  Another singleton bundle selected: osgi.identity; type="osgi.bundle"; version:Version="1.12.0.202211051224"; osgi.identity="org.eclipse.wb.core"; singleton:="true"
+
+	at org.eclipse.osgi.container.Module.start(Module.java:463)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:1849)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:136)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1842)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1783)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1747)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1669)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:234)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:345)
+
+!ENTRY org.eclipse.wb.core.databinding 4 0 2022-11-15 17:18:31.071
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.eclipse.wb.core.databinding [971]
+  Another singleton bundle selected: osgi.identity; type="osgi.bundle"; version:Version="1.9.1.202211051224"; osgi.identity="org.eclipse.wb.core.databinding"; singleton:="true"
+
+	at org.eclipse.osgi.container.Module.start(Module.java:463)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:1849)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:136)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1842)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1783)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1747)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1669)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:234)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:345)
+
+!ENTRY org.eclipse.wb.core.java 4 0 2022-11-15 17:18:31.072
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.eclipse.wb.core.java [972]
+  Another singleton bundle selected: osgi.identity; type="osgi.bundle"; version:Version="1.9.2.202211051224"; osgi.identity="org.eclipse.wb.core.java"; singleton:="true"
+
+	at org.eclipse.osgi.container.Module.start(Module.java:463)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:1849)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:136)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1842)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1783)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1747)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1669)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:234)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:345)
+
+!ENTRY org.eclipse.wb.core.lib 4 0 2022-11-15 17:18:31.075
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.eclipse.wb.core.lib [973]
+  Another singleton bundle selected: osgi.identity; type="osgi.bundle"; version:Version="1.9.1.202211051224"; osgi.identity="org.eclipse.wb.core.lib"; singleton:="true"
+
+	at org.eclipse.osgi.container.Module.start(Module.java:463)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:1849)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:136)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1842)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1783)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1747)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1669)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:234)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:345)
+
+!ENTRY org.eclipse.wb.core.ui 4 0 2022-11-15 17:18:31.077
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.eclipse.wb.core.ui [974]
+  Another singleton bundle selected: osgi.identity; type="osgi.bundle"; version:Version="1.10.0.202211051224"; osgi.identity="org.eclipse.wb.core.ui"; singleton:="true"
+
+	at org.eclipse.osgi.container.Module.start(Module.java:463)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:1849)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:136)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1842)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1783)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1747)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1669)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:234)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:345)
+
+!ENTRY org.eclipse.wb.doc.user 4 0 2022-11-15 17:18:31.080
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.eclipse.wb.doc.user [975]
+  Another singleton bundle selected: osgi.identity; type="osgi.bundle"; version:Version="1.9.1.202211051224"; osgi.identity="org.eclipse.wb.doc.user"; singleton:="true"
+
+	at org.eclipse.osgi.container.Module.start(Module.java:463)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:1849)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:136)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1842)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1783)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1747)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1669)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:234)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:345)
+
+!ENTRY org.eclipse.wb.layout.group 4 0 2022-11-15 17:18:31.082
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.eclipse.wb.layout.group [976]
+  Another singleton bundle selected: osgi.identity; type="osgi.bundle"; version:Version="1.9.1.202211051224"; osgi.identity="org.eclipse.wb.layout.group"; singleton:="true"
+
+	at org.eclipse.osgi.container.Module.start(Module.java:463)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:1849)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:136)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1842)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1783)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1747)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1669)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:234)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:345)
+
+!ENTRY org.eclipse.wb.os 4 0 2022-11-15 17:18:31.085
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.eclipse.wb.os [977]
+  Another singleton bundle selected: osgi.identity; type="osgi.bundle"; version:Version="1.9.1.202211051224"; osgi.identity="org.eclipse.wb.os"; singleton:="true"
+
+	at org.eclipse.osgi.container.Module.start(Module.java:463)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:1849)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:136)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1842)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1783)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1747)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1669)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:234)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:345)
+
+!ENTRY org.eclipse.wb.os.win32 4 0 2022-11-15 17:18:31.087
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.eclipse.wb.os.win32 [978]
+  Another singleton bundle selected: osgi.identity; type="osgi.bundle"; version:Version="1.9.1.202211051224"; osgi.identity="org.eclipse.wb.os.win32"; singleton:="true"
+
+	at org.eclipse.osgi.container.Module.start(Module.java:463)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:1849)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:136)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1842)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1783)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1747)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1669)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:234)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:345)
+
+!ENTRY org.eclipse.wb.rcp 4 0 2022-11-15 17:18:31.090
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.eclipse.wb.rcp [979]
+  Another singleton bundle selected: osgi.identity; type="osgi.bundle"; version:Version="1.9.1.202211051224"; osgi.identity="org.eclipse.wb.rcp"; singleton:="true"
+
+	at org.eclipse.osgi.container.Module.start(Module.java:463)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:1849)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:136)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1842)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1783)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1747)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1669)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:234)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:345)
+
+!ENTRY org.eclipse.wb.rcp.SWT_AWT 4 0 2022-11-15 17:18:31.092
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.eclipse.wb.rcp.SWT_AWT [980]
+  Another singleton bundle selected: osgi.identity; type="osgi.bundle"; version:Version="1.9.1.202211051224"; osgi.identity="org.eclipse.wb.rcp.SWT_AWT"; singleton:="true"
+
+	at org.eclipse.osgi.container.Module.start(Module.java:463)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:1849)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:136)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1842)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1783)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1747)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1669)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:234)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:345)
+
+!ENTRY org.eclipse.wb.rcp.databinding 4 0 2022-11-15 17:18:31.094
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.eclipse.wb.rcp.databinding [981]
+  Another singleton bundle selected: osgi.identity; type="osgi.bundle"; version:Version="1.9.1.202211051224"; osgi.identity="org.eclipse.wb.rcp.databinding"; singleton:="true"
+
+	at org.eclipse.osgi.container.Module.start(Module.java:463)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:1849)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:136)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1842)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1783)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1747)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1669)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:234)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:345)
+
+!ENTRY org.eclipse.wb.rcp.databinding.emf 4 0 2022-11-15 17:18:31.096
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.eclipse.wb.rcp.databinding.emf [982]
+  Another singleton bundle selected: osgi.identity; type="osgi.bundle"; version:Version="1.9.1.202211051224"; osgi.identity="org.eclipse.wb.rcp.databinding.emf"; singleton:="true"
+
+	at org.eclipse.osgi.container.Module.start(Module.java:463)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:1849)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:136)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1842)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1783)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1747)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1669)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:234)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:345)
+
+!ENTRY org.eclipse.wb.rcp.doc.user 4 0 2022-11-15 17:18:31.099
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.eclipse.wb.rcp.doc.user [983]
+  Another singleton bundle selected: osgi.identity; type="osgi.bundle"; version:Version="1.9.1.202211051224"; osgi.identity="org.eclipse.wb.rcp.doc.user"; singleton:="true"
+
+	at org.eclipse.osgi.container.Module.start(Module.java:463)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:1849)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:136)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1842)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1783)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1747)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1669)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:234)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:345)
+
+!ENTRY org.eclipse.wb.rcp.nebula 4 0 2022-11-15 17:18:31.101
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.eclipse.wb.rcp.nebula [984]
+  Another singleton bundle selected: osgi.identity; type="osgi.bundle"; version:Version="1.9.1.202211051224"; osgi.identity="org.eclipse.wb.rcp.nebula"; singleton:="true"
+
+	at org.eclipse.osgi.container.Module.start(Module.java:463)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:1849)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:136)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1842)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1783)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1747)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1669)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:234)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:345)
+
+!ENTRY org.eclipse.wb.rcp.swing2swt 4 0 2022-11-15 17:18:31.103
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.eclipse.wb.rcp.swing2swt [985]
+  Another singleton bundle selected: osgi.identity; type="osgi.bundle"; version:Version="1.9.1.202211051224"; osgi.identity="org.eclipse.wb.rcp.swing2swt"; singleton:="true"
+
+	at org.eclipse.osgi.container.Module.start(Module.java:463)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:1849)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:136)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1842)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1783)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1747)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1669)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:234)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:345)
+
+!ENTRY org.eclipse.wb.runtime 4 0 2022-11-15 17:18:31.105
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.eclipse.wb.runtime [986]
+  Another singleton bundle selected: osgi.identity; type="osgi.bundle"; version:Version="1.9.1.202211051224"; osgi.identity="org.eclipse.wb.runtime"; singleton:="true"
+
+	at org.eclipse.osgi.container.Module.start(Module.java:463)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:1849)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:136)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1842)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1783)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1747)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1669)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:234)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:345)
+
+!ENTRY org.eclipse.wb.runtime.lib 4 0 2022-11-15 17:18:31.107
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.eclipse.wb.runtime.lib [987]
+  Another singleton bundle selected: osgi.identity; type="osgi.bundle"; version:Version="1.9.1.202211051224"; osgi.identity="org.eclipse.wb.runtime.lib"; singleton:="true"
+
+	at org.eclipse.osgi.container.Module.start(Module.java:463)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:1849)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:136)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1842)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1783)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1747)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1669)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:234)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:345)
+
+!ENTRY org.eclipse.wb.swing 4 0 2022-11-15 17:18:31.109
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.eclipse.wb.swing [988]
+  Another singleton bundle selected: osgi.identity; type="osgi.bundle"; version:Version="1.9.1.202211051224"; osgi.identity="org.eclipse.wb.swing"; singleton:="true"
+
+	at org.eclipse.osgi.container.Module.start(Module.java:463)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:1849)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:136)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1842)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1783)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1747)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1669)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:234)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:345)
+
+!ENTRY org.eclipse.wb.swing.FormLayout 4 0 2022-11-15 17:18:31.111
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.eclipse.wb.swing.FormLayout [989]
+  Another singleton bundle selected: osgi.identity; type="osgi.bundle"; version:Version="1.9.1.202211051224"; osgi.identity="org.eclipse.wb.swing.FormLayout"; singleton:="true"
+
+	at org.eclipse.osgi.container.Module.start(Module.java:463)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:1849)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:136)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1842)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1783)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1747)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1669)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:234)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:345)
+
+!ENTRY org.eclipse.wb.swing.FormLayout.lib 4 0 2022-11-15 17:18:31.113
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.eclipse.wb.swing.FormLayout.lib [990]
+  Another singleton bundle selected: osgi.identity; type="osgi.bundle"; version:Version="1.9.1.202211051224"; osgi.identity="org.eclipse.wb.swing.FormLayout.lib"; singleton:="true"
+
+	at org.eclipse.osgi.container.Module.start(Module.java:463)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:1849)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:136)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1842)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1783)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1747)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1669)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:234)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:345)
+
+!ENTRY org.eclipse.wb.swing.MigLayout 4 0 2022-11-15 17:18:31.114
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.eclipse.wb.swing.MigLayout [991]
+  Another singleton bundle selected: osgi.identity; type="osgi.bundle"; version:Version="1.9.1.202211051224"; osgi.identity="org.eclipse.wb.swing.MigLayout"; singleton:="true"
+
+	at org.eclipse.osgi.container.Module.start(Module.java:463)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:1849)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:136)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1842)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1783)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1747)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1669)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:234)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:345)
+
+!ENTRY org.eclipse.wb.swing.MigLayout.lib 4 0 2022-11-15 17:18:31.116
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.eclipse.wb.swing.MigLayout.lib [992]
+  Another singleton bundle selected: osgi.identity; type="osgi.bundle"; version:Version="1.9.1.202211051224"; osgi.identity="org.eclipse.wb.swing.MigLayout.lib"; singleton:="true"
+
+	at org.eclipse.osgi.container.Module.start(Module.java:463)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:1849)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:136)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1842)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1783)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1747)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1669)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:234)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:345)
+
+!ENTRY org.eclipse.wb.swing.databinding 4 0 2022-11-15 17:18:31.118
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.eclipse.wb.swing.databinding [993]
+  Another singleton bundle selected: osgi.identity; type="osgi.bundle"; version:Version="1.9.1.202211051224"; osgi.identity="org.eclipse.wb.swing.databinding"; singleton:="true"
+
+	at org.eclipse.osgi.container.Module.start(Module.java:463)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:1849)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:136)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1842)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1783)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1747)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1669)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:234)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:345)
+
+!ENTRY org.eclipse.wb.swing.doc.user 4 0 2022-11-15 17:18:31.120
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.eclipse.wb.swing.doc.user [994]
+  Another singleton bundle selected: osgi.identity; type="osgi.bundle"; version:Version="1.9.1.202211051224"; osgi.identity="org.eclipse.wb.swing.doc.user"; singleton:="true"
+
+	at org.eclipse.osgi.container.Module.start(Module.java:463)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:1849)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:136)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1842)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1783)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1747)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1669)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:234)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:345)
+
+!ENTRY org.eclipse.wb.swing.java6 4 0 2022-11-15 17:18:31.122
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.eclipse.wb.swing.java6 [995]
+  Another singleton bundle selected: osgi.identity; type="osgi.bundle"; version:Version="1.9.1.202211051224"; osgi.identity="org.eclipse.wb.swing.java6"; singleton:="true"
+
+	at org.eclipse.osgi.container.Module.start(Module.java:463)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:1849)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:136)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1842)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1783)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1747)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1669)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:234)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:345)
+
+!ENTRY org.eclipse.wb.swing.jsr296 4 0 2022-11-15 17:18:31.123
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.eclipse.wb.swing.jsr296 [996]
+  Another singleton bundle selected: osgi.identity; type="osgi.bundle"; version:Version="1.9.1.202211051224"; osgi.identity="org.eclipse.wb.swing.jsr296"; singleton:="true"
+
+	at org.eclipse.osgi.container.Module.start(Module.java:463)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:1849)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:136)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1842)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1783)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1747)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1669)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:234)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:345)
+
+!ENTRY org.eclipse.wb.swt 4 0 2022-11-15 17:18:31.126
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.eclipse.wb.swt [997]
+  Another singleton bundle selected: osgi.identity; type="osgi.bundle"; version:Version="1.9.1.202211051224"; osgi.identity="org.eclipse.wb.swt"; singleton:="true"
+
+	at org.eclipse.osgi.container.Module.start(Module.java:463)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:1849)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:136)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1842)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1783)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1747)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1669)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:234)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:345)
+
+!ENTRY org.eclipse.wb.swt.widgets.baseline 4 0 2022-11-15 17:18:31.128
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.eclipse.wb.swt.widgets.baseline [998]
+  Another singleton bundle selected: osgi.identity; type="osgi.bundle"; version:Version="1.9.1.202211051224"; osgi.identity="org.eclipse.wb.swt.widgets.baseline"; singleton:="true"
+
+	at org.eclipse.osgi.container.Module.start(Module.java:463)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:1849)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:136)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1842)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1783)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1747)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1669)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:234)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:345)
+
+!ENTRY org.eclipse.equinox.p2.reconciler.dropins 4 0 2022-11-15 17:18:31.214
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Exception in org.eclipse.equinox.internal.p2.reconciler.dropins.Activator.start() of bundle org.eclipse.equinox.p2.reconciler.dropins.
+	at org.eclipse.osgi.internal.framework.BundleContextImpl.startActivator(BundleContextImpl.java:835)
+	at org.eclipse.osgi.internal.framework.BundleContextImpl.start(BundleContextImpl.java:763)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle.startWorker0(EquinoxBundle.java:1028)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle$EquinoxModule.startWorker(EquinoxBundle.java:371)
+	at org.eclipse.osgi.container.Module.doStart(Module.java:605)
+	at org.eclipse.osgi.container.Module.start(Module.java:468)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:1849)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:136)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1842)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1785)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1747)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1669)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:234)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:345)
+Caused by: java.lang.IllegalStateException: Registry Directory not available: c:\Program Files\eclipse\p2\org.eclipse.equinox.p2.engine\profileRegistry.
+	at org.eclipse.oomph.p2.internal.core.LazyProfileRegistry.getProfileMap(LazyProfileRegistry.java:236)
+	at org.eclipse.oomph.p2.internal.core.LazyProfileRegistry.getProfileMap(LazyProfileRegistry.java:227)
+	at org.eclipse.oomph.p2.internal.core.LazyProfileRegistry.containsProfile(LazyProfileRegistry.java:208)
+	at org.eclipse.equinox.internal.p2.engine.ProfilePreferences.containsProfile(ProfilePreferences.java:115)
+	at org.eclipse.equinox.internal.p2.engine.ProfilePreferences.load(ProfilePreferences.java:260)
+	at org.eclipse.core.internal.preferences.EclipsePreferences.create(EclipsePreferences.java:370)
+	at org.eclipse.core.internal.preferences.EclipsePreferences.internalNode(EclipsePreferences.java:624)
+	at org.eclipse.core.internal.preferences.EclipsePreferences.node(EclipsePreferences.java:767)
+	at org.eclipse.core.internal.preferences.EclipsePreferences.internalNode(EclipsePreferences.java:630)
+	at org.eclipse.core.internal.preferences.EclipsePreferences.node(EclipsePreferences.java:767)
+	at org.eclipse.core.internal.preferences.EclipsePreferences.internalNode(EclipsePreferences.java:630)
+	at org.eclipse.core.internal.preferences.EclipsePreferences.node(EclipsePreferences.java:767)
+	at org.eclipse.core.internal.preferences.EclipsePreferences.internalNode(EclipsePreferences.java:630)
+	at org.eclipse.core.internal.preferences.EclipsePreferences.node(EclipsePreferences.java:767)
+	at org.eclipse.core.internal.preferences.RootPreferences.getNode(RootPreferences.java:108)
+	at org.eclipse.core.internal.preferences.RootPreferences.node(RootPreferences.java:87)
+	at org.eclipse.equinox.internal.p2.repository.helpers.AbstractRepositoryManager.getSharedPreferences(AbstractRepositoryManager.java:519)
+	at org.eclipse.equinox.internal.p2.repository.helpers.AbstractRepositoryManager.restoreRepositories(AbstractRepositoryManager.java:1026)
+	at org.eclipse.equinox.internal.p2.repository.helpers.AbstractRepositoryManager.basicGetRepository(AbstractRepositoryManager.java:183)
+	at org.eclipse.equinox.internal.p2.repository.helpers.AbstractRepositoryManager.loadRepository(AbstractRepositoryManager.java:658)
+	at org.eclipse.equinox.internal.p2.metadata.repository.MetadataRepositoryManager.loadRepository(MetadataRepositoryManager.java:110)
+	at org.eclipse.equinox.internal.p2.metadata.repository.MetadataRepositoryManager.loadRepository(MetadataRepositoryManager.java:105)
+	at org.eclipse.equinox.internal.provisional.p2.directorywatcher.RepositoryListener.initializeMetadataRepository(RepositoryListener.java:108)
+	at org.eclipse.equinox.internal.provisional.p2.directorywatcher.RepositoryListener.<init>(RepositoryListener.java:63)
+	at org.eclipse.equinox.internal.p2.reconciler.dropins.DropinsRepositoryListener.<init>(DropinsRepositoryListener.java:85)
+	at org.eclipse.equinox.internal.p2.reconciler.dropins.Activator.watchDropins(Activator.java:515)
+	at org.eclipse.equinox.internal.p2.reconciler.dropins.Activator.start(Activator.java:175)
+	at org.eclipse.osgi.internal.framework.BundleContextImpl$2.run(BundleContextImpl.java:814)
+	at org.eclipse.osgi.internal.framework.BundleContextImpl$2.run(BundleContextImpl.java:1)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:554)
+	at org.eclipse.osgi.internal.framework.BundleContextImpl.startActivator(BundleContextImpl.java:806)
+	... 14 more
+Root exception:
+java.lang.IllegalStateException: Registry Directory not available: c:\Program Files\eclipse\p2\org.eclipse.equinox.p2.engine\profileRegistry.
+	at org.eclipse.oomph.p2.internal.core.LazyProfileRegistry.getProfileMap(LazyProfileRegistry.java:236)
+	at org.eclipse.oomph.p2.internal.core.LazyProfileRegistry.getProfileMap(LazyProfileRegistry.java:227)
+	at org.eclipse.oomph.p2.internal.core.LazyProfileRegistry.containsProfile(LazyProfileRegistry.java:208)
+	at org.eclipse.equinox.internal.p2.engine.ProfilePreferences.containsProfile(ProfilePreferences.java:115)
+	at org.eclipse.equinox.internal.p2.engine.ProfilePreferences.load(ProfilePreferences.java:260)
+	at org.eclipse.core.internal.preferences.EclipsePreferences.create(EclipsePreferences.java:370)
+	at org.eclipse.core.internal.preferences.EclipsePreferences.internalNode(EclipsePreferences.java:624)
+	at org.eclipse.core.internal.preferences.EclipsePreferences.node(EclipsePreferences.java:767)
+	at org.eclipse.core.internal.preferences.EclipsePreferences.internalNode(EclipsePreferences.java:630)
+	at org.eclipse.core.internal.preferences.EclipsePreferences.node(EclipsePreferences.java:767)
+	at org.eclipse.core.internal.preferences.EclipsePreferences.internalNode(EclipsePreferences.java:630)
+	at org.eclipse.core.internal.preferences.EclipsePreferences.node(EclipsePreferences.java:767)
+	at org.eclipse.core.internal.preferences.EclipsePreferences.internalNode(EclipsePreferences.java:630)
+	at org.eclipse.core.internal.preferences.EclipsePreferences.node(EclipsePreferences.java:767)
+	at org.eclipse.core.internal.preferences.RootPreferences.getNode(RootPreferences.java:108)
+	at org.eclipse.core.internal.preferences.RootPreferences.node(RootPreferences.java:87)
+	at org.eclipse.equinox.internal.p2.repository.helpers.AbstractRepositoryManager.getSharedPreferences(AbstractRepositoryManager.java:519)
+	at org.eclipse.equinox.internal.p2.repository.helpers.AbstractRepositoryManager.restoreRepositories(AbstractRepositoryManager.java:1026)
+	at org.eclipse.equinox.internal.p2.repository.helpers.AbstractRepositoryManager.basicGetRepository(AbstractRepositoryManager.java:183)
+	at org.eclipse.equinox.internal.p2.repository.helpers.AbstractRepositoryManager.loadRepository(AbstractRepositoryManager.java:658)
+	at org.eclipse.equinox.internal.p2.metadata.repository.MetadataRepositoryManager.loadRepository(MetadataRepositoryManager.java:110)
+	at org.eclipse.equinox.internal.p2.metadata.repository.MetadataRepositoryManager.loadRepository(MetadataRepositoryManager.java:105)
+	at org.eclipse.equinox.internal.provisional.p2.directorywatcher.RepositoryListener.initializeMetadataRepository(RepositoryListener.java:108)
+	at org.eclipse.equinox.internal.provisional.p2.directorywatcher.RepositoryListener.<init>(RepositoryListener.java:63)
+	at org.eclipse.equinox.internal.p2.reconciler.dropins.DropinsRepositoryListener.<init>(DropinsRepositoryListener.java:85)
+	at org.eclipse.equinox.internal.p2.reconciler.dropins.Activator.watchDropins(Activator.java:515)
+	at org.eclipse.equinox.internal.p2.reconciler.dropins.Activator.start(Activator.java:175)
+	at org.eclipse.osgi.internal.framework.BundleContextImpl$2.run(BundleContextImpl.java:814)
+	at org.eclipse.osgi.internal.framework.BundleContextImpl$2.run(BundleContextImpl.java:1)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:554)
+	at org.eclipse.osgi.internal.framework.BundleContextImpl.startActivator(BundleContextImpl.java:806)
+	at org.eclipse.osgi.internal.framework.BundleContextImpl.start(BundleContextImpl.java:763)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle.startWorker0(EquinoxBundle.java:1028)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle$EquinoxModule.startWorker(EquinoxBundle.java:371)
+	at org.eclipse.osgi.container.Module.doStart(Module.java:605)
+	at org.eclipse.osgi.container.Module.start(Module.java:468)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:1849)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:136)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1842)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1785)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1747)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1669)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:234)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:345)
+
+!ENTRY org.eclipse.core.resources 4 567 2022-11-15 17:18:46.017
+!MESSAGE Workspace restored, but some problems occurred.
+!SUBENTRY 1 org.eclipse.core.resources 4 567 2022-11-15 17:18:46.017
+!MESSAGE Could not read metadata for '.org.eclipse.egit.core.cmp'.
+!STACK 1
+org.eclipse.core.internal.resources.ResourceException(C:/Users/tjdgn/Desktop/NetworkProgramming/.metadata/.plugins/org.eclipse.core.resources/.projects/.org.eclipse.egit.core.cmp/1.tree)[568]: java.io.FileNotFoundException: C:\Users\tjdgn\Desktop\NetworkProgramming\.metadata\.plugins\org.eclipse.core.resources\.projects\.org.eclipse.egit.core.cmp\1.tree (지정된 경로를 찾을 수 없습니다)
+	at java.base/java.io.FileOutputStream.open0(Native Method)
+	at java.base/java.io.FileOutputStream.open(FileOutputStream.java:291)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:234)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:184)
+	at org.eclipse.core.internal.localstore.SafeFileOutputStream.<init>(SafeFileOutputStream.java:55)
+	at org.eclipse.core.internal.resources.SaveManager.writeTree(SaveManager.java:2097)
+	at org.eclipse.core.internal.resources.SaveManager.restoreMetaInfo(SaveManager.java:908)
+	at org.eclipse.core.internal.resources.SaveManager.restoreMetaInfo(SaveManager.java:868)
+	at org.eclipse.core.internal.resources.SaveManager.restore(SaveManager.java:724)
+	at org.eclipse.core.internal.resources.SaveManager.startup(SaveManager.java:1555)
+	at org.eclipse.core.internal.resources.Workspace.startup(Workspace.java:2480)
+	at org.eclipse.core.internal.resources.Workspace.open(Workspace.java:2231)
+	at org.eclipse.core.resources.ResourcesPlugin.start(ResourcesPlugin.java:475)
+	at org.eclipse.osgi.internal.framework.BundleContextImpl$2.run(BundleContextImpl.java:814)
+	at org.eclipse.osgi.internal.framework.BundleContextImpl$2.run(BundleContextImpl.java:1)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:554)
+	at org.eclipse.osgi.internal.framework.BundleContextImpl.startActivator(BundleContextImpl.java:806)
+	at org.eclipse.osgi.internal.framework.BundleContextImpl.start(BundleContextImpl.java:763)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle.startWorker0(EquinoxBundle.java:1028)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle$EquinoxModule.startWorker(EquinoxBundle.java:371)
+	at org.eclipse.osgi.container.Module.doStart(Module.java:605)
+	at org.eclipse.osgi.container.Module.start(Module.java:468)
+	at org.eclipse.osgi.framework.util.SecureAction.start(SecureAction.java:511)
+	at org.eclipse.osgi.internal.hooks.EclipseLazyStarter.postFindLocalClass(EclipseLazyStarter.java:117)
+	at org.eclipse.osgi.internal.loader.classpath.ClasspathManager.findLocalClass(ClasspathManager.java:572)
+	at org.eclipse.osgi.internal.loader.ModuleClassLoader.findLocalClass(ModuleClassLoader.java:345)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findLocalClass(BundleLoader.java:401)
+	at org.eclipse.osgi.internal.loader.sources.SingleSourcePackage.loadClass(SingleSourcePackage.java:41)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClass(BundleLoader.java:476)
+	at org.eclipse.osgi.internal.loader.ModuleClassLoader.loadClass(ModuleClassLoader.java:170)
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:519)
+	at org.eclipse.ui.internal.ide.application.IDEApplication.start(IDEApplication.java:153)
+	at org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:203)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:134)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:104)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:401)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:255)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:78)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:567)
+	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:654)
+	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:591)
+	at org.eclipse.equinox.launcher.Main.run(Main.java:1462)
+!SUBENTRY 2 org.eclipse.core.resources 4 568 2022-11-15 17:18:46.018
+!MESSAGE Could not write metadata for '/.org.eclipse.egit.core.cmp'.
+!STACK 0
+java.io.FileNotFoundException: C:\Users\tjdgn\Desktop\NetworkProgramming\.metadata\.plugins\org.eclipse.core.resources\.projects\.org.eclipse.egit.core.cmp\1.tree (지정된 경로를 찾을 수 없습니다)
+	at java.base/java.io.FileOutputStream.open0(Native Method)
+	at java.base/java.io.FileOutputStream.open(FileOutputStream.java:291)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:234)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:184)
+	at org.eclipse.core.internal.localstore.SafeFileOutputStream.<init>(SafeFileOutputStream.java:55)
+	at org.eclipse.core.internal.resources.SaveManager.writeTree(SaveManager.java:2097)
+	at org.eclipse.core.internal.resources.SaveManager.restoreMetaInfo(SaveManager.java:908)
+	at org.eclipse.core.internal.resources.SaveManager.restoreMetaInfo(SaveManager.java:868)
+	at org.eclipse.core.internal.resources.SaveManager.restore(SaveManager.java:724)
+	at org.eclipse.core.internal.resources.SaveManager.startup(SaveManager.java:1555)
+	at org.eclipse.core.internal.resources.Workspace.startup(Workspace.java:2480)
+	at org.eclipse.core.internal.resources.Workspace.open(Workspace.java:2231)
+	at org.eclipse.core.resources.ResourcesPlugin.start(ResourcesPlugin.java:475)
+	at org.eclipse.osgi.internal.framework.BundleContextImpl$2.run(BundleContextImpl.java:814)
+	at org.eclipse.osgi.internal.framework.BundleContextImpl$2.run(BundleContextImpl.java:1)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:554)
+	at org.eclipse.osgi.internal.framework.BundleContextImpl.startActivator(BundleContextImpl.java:806)
+	at org.eclipse.osgi.internal.framework.BundleContextImpl.start(BundleContextImpl.java:763)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle.startWorker0(EquinoxBundle.java:1028)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle$EquinoxModule.startWorker(EquinoxBundle.java:371)
+	at org.eclipse.osgi.container.Module.doStart(Module.java:605)
+	at org.eclipse.osgi.container.Module.start(Module.java:468)
+	at org.eclipse.osgi.framework.util.SecureAction.start(SecureAction.java:511)
+	at org.eclipse.osgi.internal.hooks.EclipseLazyStarter.postFindLocalClass(EclipseLazyStarter.java:117)
+	at org.eclipse.osgi.internal.loader.classpath.ClasspathManager.findLocalClass(ClasspathManager.java:572)
+	at org.eclipse.osgi.internal.loader.ModuleClassLoader.findLocalClass(ModuleClassLoader.java:345)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findLocalClass(BundleLoader.java:401)
+	at org.eclipse.osgi.internal.loader.sources.SingleSourcePackage.loadClass(SingleSourcePackage.java:41)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClass(BundleLoader.java:476)
+	at org.eclipse.osgi.internal.loader.ModuleClassLoader.loadClass(ModuleClassLoader.java:170)
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:519)
+	at org.eclipse.ui.internal.ide.application.IDEApplication.start(IDEApplication.java:153)
+	at org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:203)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:134)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:104)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:401)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:255)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:78)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:567)
+	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:654)
+	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:591)
+	at org.eclipse.equinox.launcher.Main.run(Main.java:1462)
+
+!ENTRY org.eclipse.jface 2 0 2022-11-15 17:18:47.366
+!MESSAGE Keybinding conflicts occurred.  They may interfere with normal accelerator operation.
+!SUBENTRY 1 org.eclipse.jface 2 0 2022-11-15 17:18:47.366
+!MESSAGE A conflict occurred for CTRL+SHIFT+T:
+Binding(CTRL+SHIFT+T,
+	ParameterizedCommand(Command(org.eclipse.jdt.ui.navigate.open.type,Open Type,
+		Open a type in a Java editor,
+		Category(org.eclipse.ui.category.navigate,Navigate,null,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@53a645a2,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,,system)
+Binding(CTRL+SHIFT+T,
+	ParameterizedCommand(Command(org.eclipse.lsp4e.symbolinworkspace,Go to Symbol in Workspace,
+		,
+		Category(org.eclipse.lsp4e.category,Language Servers,null,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@c8d20bb,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,,system)
+
+!ENTRY org.eclipse.ui.navigator 2 0 2022-11-15 17:18:53.191
+!MESSAGE Can't find Navigator Content Descriptor with id: org.eclipse.jst.servlet.ui.EnhancedJavaRendering
+
+!ENTRY org.eclipse.ui.navigator 2 0 2022-11-15 17:18:53.192
+!MESSAGE Can't find Navigator Content Descriptor with id: org.eclipse.jst.servlet.ui.EnhancedJavaRendering
+
+!ENTRY org.eclipse.egit.ui 2 0 2022-11-15 17:18:53.201
+!MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
+user global configuration and to define the default location to store repositories: 'C:\Users\tjdgn'. If this is
+not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
+EGit might behave differently since they see different configuration options.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+
+!ENTRY org.eclipse.e4.ui.workbench 2 0 2022-11-15 17:18:53.229
+!MESSAGE Removing PartDescriptorImpl with the "org.eclipse.pde.spy.preferences.parts.PreferenceSpyPart" id and the "Preference Spy" label.It points to the non available "bundleclass://org.eclipse.pde.spy.preferences/org.eclipse.pde.spy.preferences.parts.PreferenceSpyPart" class. Bundle might have been uninstalled
+
+!ENTRY org.eclipse.e4.ui.workbench 2 0 2022-11-15 17:18:53.230
+!MESSAGE Removing PartDescriptorImpl with the "org.eclipse.swt.tools.spies.partdescriptor.sleak" id and the "Sleak" label.It points to the non available "bundleclass://org.eclipse.swt.tools.spies/org.eclipse.swt.tools.views.SleakView" class. Bundle might have been uninstalled
+
+!ENTRY org.eclipse.e4.ui.workbench 2 0 2022-11-15 17:18:53.232
+!MESSAGE Removing PartDescriptorImpl with the "org.eclipse.pde.spy.bundle.BundleSpyPart" id and the "Bundle Spy" label.It points to the non available "bundleclass://org.eclipse.pde.spy.bundle/org.eclipse.pde.spy.bundle.BundleSpyPart" class. Bundle might have been uninstalled
+
+!ENTRY org.eclipse.e4.ui.workbench 2 0 2022-11-15 17:18:53.234
+!MESSAGE Removing PartDescriptorImpl with the "org.eclipse.pde.spy.context.ContextSpyPart" id and the "Context Spy" label.It points to the non available "bundleclass://org.eclipse.pde.spy.context/org.eclipse.pde.spy.context.ContextSpyPart" class. Bundle might have been uninstalled
+
+!ENTRY org.eclipse.e4.ui.workbench 2 0 2022-11-15 17:18:53.235
+!MESSAGE Removing PartDescriptorImpl with the "org.eclipse.pde.spy.css.CssSpyPart" id and the "CSS Spy" label.It points to the non available "bundleclass://org.eclipse.pde.spy.css/org.eclipse.pde.spy.css.CssSpyPart" class. Bundle might have been uninstalled
+
+!ENTRY org.eclipse.e4.ui.workbench 2 0 2022-11-15 17:18:53.237
+!MESSAGE Removing PartDescriptorImpl with the "org.eclipse.pde.spy.css.CSSScratchPadPart" id and the "CSS Scratch Pad" label.It points to the non available "bundleclass://org.eclipse.pde.spy.css/org.eclipse.pde.spy.css.CSSScratchPadPart" class. Bundle might have been uninstalled
+
+!ENTRY org.eclipse.e4.ui.workbench 2 0 2022-11-15 17:18:53.239
+!MESSAGE Removing PartDescriptorImpl with the "org.eclipse.pde.spy.event.internal.ui.EventSpyPart" id and the "Event Spy" label.It points to the non available "bundleclass://org.eclipse.pde.spy.event/org.eclipse.pde.spy.event.internal.ui.EventSpyPart" class. Bundle might have been uninstalled
+
+!ENTRY org.eclipse.e4.ui.workbench 2 0 2022-11-15 17:18:53.240
+!MESSAGE Removing PartDescriptorImpl with the "org.eclipse.pde.spy.model.ModelSpyPart" id and the "Model Spy" label.It points to the non available "bundleclass://org.eclipse.pde.spy.model/org.eclipse.pde.spy.model.ModelSpyPart" class. Bundle might have been uninstalled
+
+!ENTRY org.eclipse.e4.ui.workbench 2 0 2022-11-15 17:18:53.241
+!MESSAGE Removing PartDescriptorImpl with the "org.eclipse.debug.ui.launchView" id and the "Launch Configurations" label.It points to the non available "bundleclass://org.eclipse.debug.ui.launchview/org.eclipse.debug.ui.launchview.internal.view.LaunchViewImpl" class. Bundle might have been uninstalled
+
+!ENTRY org.eclipse.e4.ui.workbench 2 0 2022-11-15 17:18:53.241
+!MESSAGE Removing PartDescriptorImpl with the "org.eclipse.m2e.core.views.MavenLifecycleMappingsView" id and the "Maven Lifecycle Mappings" label.It points to the non available "bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" class. Bundle might have been uninstalled
+
+!ENTRY org.eclipse.e4.ui.workbench 2 0 2022-11-15 17:18:53.242
+!MESSAGE Removing PartDescriptorImpl with the "org.eclipse.swt.tools.views.MacGeneratorView" id and the "Mac Generator" label.It points to the non available "bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" class. Bundle might have been uninstalled
+
+!ENTRY org.eclipse.e4.ui.workbench 2 0 2022-11-15 17:18:53.242
+!MESSAGE Removing PartDescriptorImpl with the "org.eclipse.swt.tools.views.SpyView" id and the "SWT Spy" label.It points to the non available "bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" class. Bundle might have been uninstalled
+
+!ENTRY org.eclipse.jdt.core 4 4 2022-11-15 17:18:54.423
+!MESSAGE Exception while reading last build state for: P/JAVA-Omok
+!STACK 1
+org.eclipse.core.runtime.CoreException: Error reading last build state for project JAVA-Omok
+	at org.eclipse.jdt.internal.core.JavaModelManager.readState(JavaModelManager.java:4161)
+	at org.eclipse.jdt.internal.core.JavaModelManager.getLastBuiltState(JavaModelManager.java:2287)
+	at org.eclipse.jdt.internal.core.builder.JavaBuilder.getLastState(JavaBuilder.java:449)
+	at org.eclipse.jdt.internal.core.builder.JavaBuilder.build(JavaBuilder.java:189)
+	at org.eclipse.core.internal.events.BuildManager$2.run(BuildManager.java:846)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:45)
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:229)
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:277)
+	at org.eclipse.core.internal.events.BuildManager$1.run(BuildManager.java:330)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:45)
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:333)
+	at org.eclipse.core.internal.events.BuildManager.basicBuildLoop(BuildManager.java:385)
+	at org.eclipse.core.internal.events.BuildManager.build(BuildManager.java:406)
+	at org.eclipse.core.internal.events.AutoBuildJob.doBuild(AutoBuildJob.java:154)
+	at org.eclipse.core.internal.events.AutoBuildJob.run(AutoBuildJob.java:244)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+Caused by: java.io.EOFException
+	at java.base/java.io.DataInputStream.readFully(DataInputStream.java:203)
+	at java.base/java.io.DataInputStream.readUTF(DataInputStream.java:615)
+	at java.base/java.io.DataInputStream.readUTF(DataInputStream.java:570)
+	at org.eclipse.jdt.internal.core.JavaModelManager.readState(JavaModelManager.java:4146)
+	... 15 more
+!SUBENTRY 1 org.eclipse.jdt.core 4 2 2022-11-15 17:18:54.423
+!MESSAGE Error reading last build state for project JAVA-Omok
+!STACK 0
+java.io.EOFException
+	at java.base/java.io.DataInputStream.readFully(DataInputStream.java:203)
+	at java.base/java.io.DataInputStream.readUTF(DataInputStream.java:615)
+	at java.base/java.io.DataInputStream.readUTF(DataInputStream.java:570)
+	at org.eclipse.jdt.internal.core.JavaModelManager.readState(JavaModelManager.java:4146)
+	at org.eclipse.jdt.internal.core.JavaModelManager.getLastBuiltState(JavaModelManager.java:2287)
+	at org.eclipse.jdt.internal.core.builder.JavaBuilder.getLastState(JavaBuilder.java:449)
+	at org.eclipse.jdt.internal.core.builder.JavaBuilder.build(JavaBuilder.java:189)
+	at org.eclipse.core.internal.events.BuildManager$2.run(BuildManager.java:846)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:45)
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:229)
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:277)
+	at org.eclipse.core.internal.events.BuildManager$1.run(BuildManager.java:330)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:45)
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:333)
+	at org.eclipse.core.internal.events.BuildManager.basicBuildLoop(BuildManager.java:385)
+	at org.eclipse.core.internal.events.BuildManager.build(BuildManager.java:406)
+	at org.eclipse.core.internal.events.AutoBuildJob.doBuild(AutoBuildJob.java:154)
+	at org.eclipse.core.internal.events.AutoBuildJob.run(AutoBuildJob.java:244)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+
+!ENTRY org.eclipse.jdt.core 4 4 2022-11-15 17:18:55.111
+!MESSAGE Exception while reading last build state for: P/JAVA-OmokServer
+!STACK 1
+org.eclipse.core.runtime.CoreException: Error reading last build state for project JAVA-OmokServer
+	at org.eclipse.jdt.internal.core.JavaModelManager.readState(JavaModelManager.java:4161)
+	at org.eclipse.jdt.internal.core.JavaModelManager.getLastBuiltState(JavaModelManager.java:2287)
+	at org.eclipse.jdt.internal.core.builder.JavaBuilder.getLastState(JavaBuilder.java:449)
+	at org.eclipse.jdt.internal.core.builder.JavaBuilder.build(JavaBuilder.java:189)
+	at org.eclipse.core.internal.events.BuildManager$2.run(BuildManager.java:846)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:45)
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:229)
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:277)
+	at org.eclipse.core.internal.events.BuildManager$1.run(BuildManager.java:330)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:45)
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:333)
+	at org.eclipse.core.internal.events.BuildManager.basicBuildLoop(BuildManager.java:385)
+	at org.eclipse.core.internal.events.BuildManager.build(BuildManager.java:406)
+	at org.eclipse.core.internal.events.AutoBuildJob.doBuild(AutoBuildJob.java:154)
+	at org.eclipse.core.internal.events.AutoBuildJob.run(AutoBuildJob.java:244)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+Caused by: java.io.EOFException
+	at java.base/java.io.DataInputStream.readFully(DataInputStream.java:203)
+	at java.base/java.io.DataInputStream.readUTF(DataInputStream.java:615)
+	at java.base/java.io.DataInputStream.readUTF(DataInputStream.java:570)
+	at org.eclipse.jdt.internal.core.JavaModelManager.readState(JavaModelManager.java:4146)
+	... 15 more
+!SUBENTRY 1 org.eclipse.jdt.core 4 2 2022-11-15 17:18:55.111
+!MESSAGE Error reading last build state for project JAVA-OmokServer
+!STACK 0
+java.io.EOFException
+	at java.base/java.io.DataInputStream.readFully(DataInputStream.java:203)
+	at java.base/java.io.DataInputStream.readUTF(DataInputStream.java:615)
+	at java.base/java.io.DataInputStream.readUTF(DataInputStream.java:570)
+	at org.eclipse.jdt.internal.core.JavaModelManager.readState(JavaModelManager.java:4146)
+	at org.eclipse.jdt.internal.core.JavaModelManager.getLastBuiltState(JavaModelManager.java:2287)
+	at org.eclipse.jdt.internal.core.builder.JavaBuilder.getLastState(JavaBuilder.java:449)
+	at org.eclipse.jdt.internal.core.builder.JavaBuilder.build(JavaBuilder.java:189)
+	at org.eclipse.core.internal.events.BuildManager$2.run(BuildManager.java:846)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:45)
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:229)
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:277)
+	at org.eclipse.core.internal.events.BuildManager$1.run(BuildManager.java:330)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:45)
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:333)
+	at org.eclipse.core.internal.events.BuildManager.basicBuildLoop(BuildManager.java:385)
+	at org.eclipse.core.internal.events.BuildManager.build(BuildManager.java:406)
+	at org.eclipse.core.internal.events.AutoBuildJob.doBuild(AutoBuildJob.java:154)
+	at org.eclipse.core.internal.events.AutoBuildJob.run(AutoBuildJob.java:244)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+
+!ENTRY org.eclipse.oomph.setup.ui 4 0 2022-11-15 17:19:00.679
+!MESSAGE Registry Directory not available: c:\Program Files\eclipse\p2\org.eclipse.equinox.p2.engine\profileRegistry.
+!STACK 0
+java.lang.IllegalStateException: Registry Directory not available: c:\Program Files\eclipse\p2\org.eclipse.equinox.p2.engine\profileRegistry.
+	at org.eclipse.oomph.p2.internal.core.LazyProfileRegistry.getProfileMap(LazyProfileRegistry.java:236)
+	at org.eclipse.oomph.p2.internal.core.LazyProfileRegistry.getProfileMap(LazyProfileRegistry.java:227)
+	at org.eclipse.oomph.p2.internal.core.LazyProfileRegistry.containsProfile(LazyProfileRegistry.java:208)
+	at org.eclipse.equinox.internal.p2.engine.ProfilePreferences.containsProfile(ProfilePreferences.java:115)
+	at org.eclipse.equinox.internal.p2.engine.ProfilePreferences.load(ProfilePreferences.java:260)
+	at org.eclipse.core.internal.preferences.EclipsePreferences.create(EclipsePreferences.java:370)
+	at org.eclipse.core.internal.preferences.EclipsePreferences.internalNode(EclipsePreferences.java:624)
+	at org.eclipse.core.internal.preferences.EclipsePreferences.node(EclipsePreferences.java:767)
+	at org.eclipse.core.internal.preferences.EclipsePreferences.internalNode(EclipsePreferences.java:630)
+	at org.eclipse.core.internal.preferences.EclipsePreferences.node(EclipsePreferences.java:767)
+	at org.eclipse.core.internal.preferences.EclipsePreferences.internalNode(EclipsePreferences.java:630)
+	at org.eclipse.core.internal.preferences.EclipsePreferences.node(EclipsePreferences.java:767)
+	at org.eclipse.core.internal.preferences.EclipsePreferences.internalNode(EclipsePreferences.java:630)
+	at org.eclipse.core.internal.preferences.EclipsePreferences.node(EclipsePreferences.java:767)
+	at org.eclipse.core.internal.preferences.RootPreferences.getNode(RootPreferences.java:108)
+	at org.eclipse.core.internal.preferences.RootPreferences.node(RootPreferences.java:87)
+	at org.eclipse.equinox.internal.p2.repository.helpers.AbstractRepositoryManager.getSharedPreferences(AbstractRepositoryManager.java:519)
+	at org.eclipse.equinox.internal.p2.repository.helpers.AbstractRepositoryManager.restoreRepositories(AbstractRepositoryManager.java:1026)
+	at org.eclipse.equinox.internal.p2.repository.helpers.AbstractRepositoryManager.getKnownRepositories(AbstractRepositoryManager.java:481)
+	at org.eclipse.oomph.p2.internal.core.CachingRepositoryManager$Artifact.getKnownRepositories(CachingRepositoryManager.java:647)
+	at org.eclipse.oomph.p2.core.P2Util.getKnownRepositories(P2Util.java:84)
+	at org.eclipse.oomph.setup.p2.impl.P2TaskImpl.isNeeded(P2TaskImpl.java:694)
+	at org.eclipse.oomph.setup.internal.core.SetupTaskPerformer.initNeededSetupTasks(SetupTaskPerformer.java:2282)
+	at org.eclipse.oomph.setup.ui.SetupUIPlugin.performStartup(SetupUIPlugin.java:804)
+	at org.eclipse.oomph.setup.ui.SetupUIPlugin.access$5(SetupUIPlugin.java:539)
+	at org.eclipse.oomph.setup.ui.SetupUIPlugin$1$1.run(SetupUIPlugin.java:265)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+
+!ENTRY org.eclipse.wb.core 4 4 2022-11-15 17:20:14.502
+!MESSAGE Designer [1.12.0.202211051224.202211151720]: 205 (Unable to parse source.). 		setTitle("\uC624\uBAA9"); line: 1 The import java.awt.EventQueue is never used
+line: 2 The import java.awt.event.ActionEvent is never used
+line: 3 The import java.awt.event.ActionListener is never used
+line: 5 The import javax.swing.JPanel is never used
+line: 6 The import javax.swing.border.EmptyBorder is never used
+line: 7 The import javax.swing.JLabel is never used
+line: 8 The import javax.swing.JTextField is never used
+line: 9 The import javax.swing.SwingConstants is never used
+line: 10 The import javax.swing.JButton is never used
+line: 11 The import java.awt.Color is never used
+line: 12 The import javax.swing.border.LineBorder is never used
+line: 13 The import javax.swing.JScrollPane is never used
+line: 14 The import javax.swing.JTextPane is never used
+line: 15 The import java.awt.Font is never used
+line: 16 The import java.awt.Graphics is never used
+line: 17 The import javax.swing.JMenuBar is never used
+line: 18 The import java.awt.ScrollPane is never used
+line: 19 The import javax.swing.JMenuItem is never used
+line: 20 The import java.awt.Panel is never used
+line: 21 The import java.awt.Button is never used
+line: 33 The value of the local variable username is not used
+line: 34 The value of the local variable ip_addr is not used
+line: 35 The value of the local variable port_no is not used
+line: 36 The value of the local variable Game is not used
+line: 37 The value of the local variable Room is not used
+line: 38 The value of the local variable PersonNum is not used
+!STACK 0
+org.eclipse.wb.internal.core.utils.exception.DesignerException: 205 (Unable to parse source.). 		setTitle("\uC624\uBAA9"); line: 1 The import java.awt.EventQueue is never used
+line: 2 The import java.awt.event.ActionEvent is never used
+line: 3 The import java.awt.event.ActionListener is never used
+line: 5 The import javax.swing.JPanel is never used
+line: 6 The import javax.swing.border.EmptyBorder is never used
+line: 7 The import javax.swing.JLabel is never used
+line: 8 The import javax.swing.JTextField is never used
+line: 9 The import javax.swing.SwingConstants is never used
+line: 10 The import javax.swing.JButton is never used
+line: 11 The import java.awt.Color is never used
+line: 12 The import javax.swing.border.LineBorder is never used
+line: 13 The import javax.swing.JScrollPane is never used
+line: 14 The import javax.swing.JTextPane is never used
+line: 15 The import java.awt.Font is never used
+line: 16 The import java.awt.Graphics is never used
+line: 17 The import javax.swing.JMenuBar is never used
+line: 18 The import java.awt.ScrollPane is never used
+line: 19 The import javax.swing.JMenuItem is never used
+line: 20 The import java.awt.Panel is never used
+line: 21 The import java.awt.Button is never used
+line: 33 The value of the local variable username is not used
+line: 34 The value of the local variable ip_addr is not used
+line: 35 The value of the local variable port_no is not used
+line: 36 The value of the local variable Game is not used
+line: 37 The value of the local variable Room is not used
+line: 38 The value of the local variable PersonNum is not used
+	at org.eclipse.wb.internal.core.utils.ast.AstParser.parseStatement(AstParser.java:162)
+	at org.eclipse.wb.internal.core.utils.ast.AstEditor.addStatement(AstEditor.java:1666)
+	at org.eclipse.wb.internal.core.utils.ast.AstEditor.addStatement(AstEditor.java:1582)
+	at org.eclipse.wb.core.model.JavaInfo.addExpressionStatement(JavaInfo.java:992)
+	at org.eclipse.wb.core.model.JavaInfo.addMethodInvocation(JavaInfo.java:956)
+	at org.eclipse.wb.core.model.JavaInfo.addMethodInvocation(JavaInfo.java:931)
+	at org.eclipse.wb.internal.core.model.property.accessor.SetterAccessor$5.run(SetterAccessor.java:151)
+	at org.eclipse.wb.internal.core.utils.execution.ExecutionUtils.run(ExecutionUtils.java:331)
+	at org.eclipse.wb.internal.core.model.property.accessor.SetterAccessor.setExpression(SetterAccessor.java:148)
+	at org.eclipse.wb.internal.core.model.property.GenericPropertyImpl.setExpressionUsingAccessor(GenericPropertyImpl.java:345)
+	at org.eclipse.wb.internal.core.model.property.GenericPropertyImpl.setExpression(GenericPropertyImpl.java:304)
+	at org.eclipse.wb.internal.core.model.property.GenericPropertyImpl.setValueEx(GenericPropertyImpl.java:500)
+	at org.eclipse.wb.internal.core.model.property.GenericPropertyImpl$1.run(GenericPropertyImpl.java:211)
+	at org.eclipse.wb.internal.core.utils.execution.ExecutionUtils.run(ExecutionUtils.java:331)
+	at org.eclipse.wb.internal.core.model.property.GenericPropertyImpl.setValue(GenericPropertyImpl.java:208)
+	at org.eclipse.wb.internal.core.model.property.editor.string.StringPropertyEditor.setEditorText(StringPropertyEditor.java:82)
+	at org.eclipse.wb.internal.core.model.property.editor.AbstractTextPropertyEditor.toProperty(AbstractTextPropertyEditor.java:183)
+	at org.eclipse.wb.internal.core.model.property.editor.AbstractTextPropertyEditor.handleKeyPressed(AbstractTextPropertyEditor.java:134)
+	at org.eclipse.wb.internal.core.model.property.editor.AbstractTextPropertyEditor$1.keyPressed(AbstractTextPropertyEditor.java:57)
+	at org.eclipse.swt.widgets.TypedListener.handleEvent(TypedListener.java:171)
+	at org.eclipse.swt.widgets.EventTable.sendEvent(EventTable.java:89)
+	at org.eclipse.swt.widgets.Display.sendEvent(Display.java:4209)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1043)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1067)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1052)
+	at org.eclipse.swt.widgets.Widget.sendKeyEvent(Widget.java:1094)
+	at org.eclipse.swt.widgets.Text.sendKeyEvent(Text.java:1815)
+	at org.eclipse.swt.widgets.Widget.sendKeyEvent(Widget.java:1090)
+	at org.eclipse.swt.widgets.Widget.wmChar(Widget.java:1519)
+	at org.eclipse.swt.widgets.Control.WM_CHAR(Control.java:4882)
+	at org.eclipse.swt.widgets.Text.WM_CHAR(Text.java:2699)
+	at org.eclipse.swt.widgets.Control.windowProc(Control.java:4760)
+	at org.eclipse.swt.widgets.Text.windowProc(Text.java:2681)
+	at org.eclipse.swt.widgets.Display.windowProc(Display.java:4930)
+	at org.eclipse.swt.internal.win32.OS.DispatchMessage(Native Method)
+	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:3624)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine$5.run(PartRenderingEngine.java:1157)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:338)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.run(PartRenderingEngine.java:1046)
+	at org.eclipse.e4.ui.internal.workbench.E4Workbench.createAndRunUI(E4Workbench.java:155)
+	at org.eclipse.ui.internal.Workbench.lambda$3(Workbench.java:644)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:338)
+	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:551)
+	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:156)
+	at org.eclipse.ui.internal.ide.application.IDEApplication.start(IDEApplication.java:152)
+	at org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:203)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:134)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:104)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:401)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:255)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:78)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:567)
+	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:654)
+	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:591)
+	at org.eclipse.equinox.launcher.Main.run(Main.java:1462)
+Caused by: org.eclipse.wb.internal.core.utils.exception.DesignerException: 205 (Unable to parse source.). import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.JButton;
+import java.awt.Color;
+import javax.swing.border.LineBorder;
+import javax.swing.JScrollPane;
+import javax.swing.JTextPane;
+import java.awt.Font;
+import java.awt.Graphics;
+import javax.swing.JMenuBar;
+import java.awt.ScrollPane;
+import javax.swing.JMenuItem;
+import java.awt.Panel;
+import java.awt.Button;
+class JavaGameClientView2 extends JFrame {
+static final long serialVersionUID=0L;
+javax.swing.JPanel contentPane=(javax.swing.JPanel) null;
+javax.swing.JTextField txtGame=(javax.swing.JTextField) null;
+javax.swing.JTextField txtRoom=(javax.swing.JTextField) null;
+javax.swing.JTextField txtPersonNum=(javax.swing.JTextField) null;
+java.lang.String Username=(java.lang.String) null;
+java.lang.String Ip_addr=(java.lang.String) null;
+java.lang.String Port_no=(java.lang.String) null;
+javax.swing.JTextField textField=(javax.swing.JTextField) null;
+JavaGameClientView2(Object __wbp_param) {
+super();java.lang.String username = (java.lang.String) null;
+java.lang.String ip_addr = (java.lang.String) null;
+java.lang.String port_no = (java.lang.String) null;
+java.lang.String Game = (java.lang.String) null;
+java.lang.String Room = (java.lang.String) null;
+int PersonNum = 0;
+		setTitle("\uC624\uBAA9");}
+} line: 1 The import java.awt.EventQueue is never used
+line: 2 The import java.awt.event.ActionEvent is never used
+line: 3 The import java.awt.event.ActionListener is never used
+line: 5 The import javax.swing.JPanel is never used
+line: 6 The import javax.swing.border.EmptyBorder is never used
+line: 7 The import javax.swing.JLabel is never used
+line: 8 The import javax.swing.JTextField is never used
+line: 9 The import javax.swing.SwingConstants is never used
+line: 10 The import javax.swing.JButton is never used
+line: 11 The import java.awt.Color is never used
+line: 12 The import javax.swing.border.LineBorder is never used
+line: 13 The import javax.swing.JScrollPane is never used
+line: 14 The import javax.swing.JTextPane is never used
+line: 15 The import java.awt.Font is never used
+line: 16 The import java.awt.Graphics is never used
+line: 17 The import javax.swing.JMenuBar is never used
+line: 18 The import java.awt.ScrollPane is never used
+line: 19 The import javax.swing.JMenuItem is never used
+line: 20 The import java.awt.Panel is never used
+line: 21 The import java.awt.Button is never used
+line: 33 The value of the local variable username is not used
+line: 34 The value of the local variable ip_addr is not used
+line: 35 The value of the local variable port_no is not used
+line: 36 The value of the local variable Game is not used
+line: 37 The value of the local variable Room is not used
+line: 38 The value of the local variable PersonNum is not used
+	at org.eclipse.wb.internal.core.utils.ast.AstParser.findNode(AstParser.java:773)
+	at org.eclipse.wb.internal.core.utils.ast.AstParser.parseStatement(AstParser.java:159)
+	... 56 more
+Caused by: java.lang.NoSuchMethodError: 'java.lang.String[] org.eclipse.jdt.core.dom.IMethodBinding.getParameterNames()'
+	at org.eclipse.wb.internal.core.utils.ast.binding.DesignerMethodBinding.<init>(DesignerMethodBinding.java:56)
+	at org.eclipse.wb.internal.core.utils.ast.binding.BindingContext.get(BindingContext.java:87)
+	at org.eclipse.wb.internal.core.utils.ast.binding.DesignerTypeBinding.<init>(DesignerTypeBinding.java:160)
+	at org.eclipse.wb.internal.core.utils.ast.binding.BindingContext.get(BindingContext.java:70)
+	at org.eclipse.wb.internal.core.utils.ast.binding.DesignerTypeBinding.<init>(DesignerTypeBinding.java:146)
+	at org.eclipse.wb.internal.core.utils.ast.binding.BindingContext.get(BindingContext.java:70)
+	at org.eclipse.wb.internal.core.utils.ast.AstParser$3.postVisit(AstParser.java:946)
+	at org.eclipse.jdt.core.dom.ASTNode.accept(ASTNode.java:3058)
+	at org.eclipse.jdt.core.dom.ASTNode.acceptChildren(ASTNode.java:3126)
+	at org.eclipse.jdt.core.dom.MethodInvocation.accept0(MethodInvocation.java:228)
+	at org.eclipse.jdt.core.dom.ASTNode.accept(ASTNode.java:3055)
+	at org.eclipse.jdt.core.dom.ASTNode.acceptChild(ASTNode.java:3103)
+	at org.eclipse.jdt.core.dom.ExpressionStatement.accept0(ExpressionStatement.java:136)
+	at org.eclipse.jdt.core.dom.ASTNode.accept(ASTNode.java:3055)
+	at org.eclipse.wb.internal.core.utils.ast.AstParser.copyBindings(AstParser.java:925)
+	at org.eclipse.wb.internal.core.utils.ast.AstParser.findNode0(AstParser.java:827)
+	at org.eclipse.wb.internal.core.utils.ast.AstParser.findNode(AstParser.java:770)
+	... 57 more
+
+!ENTRY org.eclipse.wb.core 4 4 2022-11-15 17:21:19.145
+!MESSAGE Designer [1.12.0.202211051224.202211151720]: 205 (Unable to parse source.). 	private static class __Tmp {
+	}
+ line: 179 The serializable class TablePanel does not declare a static final serialVersionUID field of type long
+!STACK 0
+org.eclipse.wb.internal.core.utils.exception.DesignerException: 205 (Unable to parse source.). 	private static class __Tmp {
+	}
+ line: 179 The serializable class TablePanel does not declare a static final serialVersionUID field of type long
+	at org.eclipse.wb.internal.core.utils.ast.AstParser.parseBodyDeclaration(AstParser.java:182)
+	at org.eclipse.wb.internal.core.utils.ast.AstEditor.addBodyDeclaration(AstEditor.java:2584)
+	at org.eclipse.wb.internal.core.utils.ast.AstEditor.addTypeDeclaration(AstEditor.java:2374)
+	at org.eclipse.wb.internal.core.model.util.live.AbstractLiveManager.parse(AbstractLiveManager.java:181)
+	at org.eclipse.wb.internal.swing.model.component.live.SwingLiveManager.createLiveComponent(SwingLiveManager.java:56)
+	at org.eclipse.wb.internal.core.model.util.live.AbstractLiveManager.createCacheEntryEx(AbstractLiveManager.java:103)
+	at org.eclipse.wb.internal.core.model.util.live.AbstractLiveManager.createCacheEntry(AbstractLiveManager.java:82)
+	at org.eclipse.wb.internal.core.model.util.live.AbstractLiveManager.getCachedEntry(AbstractLiveManager.java:264)
+	at org.eclipse.wb.internal.core.model.util.live.AbstractLiveManager.getCachedEntry(AbstractLiveManager.java:245)
+	at org.eclipse.wb.internal.swing.model.component.live.SwingLiveManager.getImage(SwingLiveManager.java:131)
+	at org.eclipse.wb.internal.swing.model.component.ComponentInfo.getLiveImage(ComponentInfo.java:259)
+	at org.eclipse.wb.core.model.AbstractComponentInfo.getImage(AbstractComponentInfo.java:175)
+	at org.eclipse.wb.internal.core.gef.policy.layout.absolute.AbsoluteBasedLayoutEditPolicy.showCreationFeedback(AbsoluteBasedLayoutEditPolicy.java:618)
+	at org.eclipse.wb.internal.core.gef.policy.layout.absolute.AbsoluteBasedLayoutEditPolicy.showLayoutTargetFeedback(AbsoluteBasedLayoutEditPolicy.java:311)
+	at org.eclipse.wb.gef.graphical.policies.LayoutEditPolicy.showTargetFeedback(LayoutEditPolicy.java:212)
+	at org.eclipse.wb.gef.core.EditPart.showTargetFeedback(EditPart.java:827)
+	at org.eclipse.wb.gef.core.tools.TargetingTool.showTargetFeedback(TargetingTool.java:243)
+	at org.eclipse.wb.gef.core.tools.TargetingTool.handleEnteredEditPart(TargetingTool.java:99)
+	at org.eclipse.wb.gef.core.tools.TargetingTool.setTargetEditPart(TargetingTool.java:76)
+	at org.eclipse.wb.gef.core.tools.TargetingTool.updateTargetUnderMouse(TargetingTool.java:178)
+	at org.eclipse.wb.gef.core.tools.AbstractCreationTool.handleMove(AbstractCreationTool.java:73)
+	at org.eclipse.wb.gef.core.tools.Tool.mouseMove(Tool.java:426)
+	at org.eclipse.wb.internal.gef.core.EditDomain.mouseMove(EditDomain.java:266)
+	at org.eclipse.wb.internal.gef.graphical.EditEventManager.mouseMove(EditEventManager.java:172)
+	at jdk.internal.reflect.GeneratedMethodAccessor144.invoke(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:567)
+	at org.eclipse.wb.internal.draw2d.EventManager$1.invoke(EventManager.java:317)
+	at jdk.proxy9/jdk.proxy9.$Proxy24.mouseMove(Unknown Source)
+	at org.eclipse.swt.widgets.TypedListener.handleEvent(TypedListener.java:216)
+	at org.eclipse.swt.widgets.EventTable.sendEvent(EventTable.java:89)
+	at org.eclipse.swt.widgets.Display.sendEvent(Display.java:4209)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1043)
+	at org.eclipse.swt.widgets.Display.runDeferredEvents(Display.java:4026)
+	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:3626)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine$5.run(PartRenderingEngine.java:1157)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:338)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.run(PartRenderingEngine.java:1046)
+	at org.eclipse.e4.ui.internal.workbench.E4Workbench.createAndRunUI(E4Workbench.java:155)
+	at org.eclipse.ui.internal.Workbench.lambda$3(Workbench.java:644)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:338)
+	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:551)
+	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:156)
+	at org.eclipse.ui.internal.ide.application.IDEApplication.start(IDEApplication.java:152)
+	at org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:203)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:134)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:104)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:401)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:255)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:78)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:567)
+	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:654)
+	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:591)
+	at org.eclipse.equinox.launcher.Main.run(Main.java:1462)
+Caused by: org.eclipse.wb.internal.core.utils.exception.DesignerException: 205 (Unable to parse source.). import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+
+
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.JButton;
+import java.awt.Color;
+import javax.swing.border.LineBorder;
+import javax.swing.JScrollPane;
+import javax.swing.JTextPane;
+import java.awt.Font;
+import java.awt.Graphics;
+
+import javax.swing.JMenuBar;
+import java.awt.ScrollPane;
+import javax.swing.JMenuItem;
+import java.awt.Panel;
+import java.awt.Button;
+
+public class JavaGameClientView2 extends JFrame {
+
+
+	/**
+	 * Launch the application.
+	 */
+	
+	private static final long serialVersionUID = 1L;
+	private JPanel contentPane;
+	private JTextField txtGame;
+	private JTextField txtRoom;
+	private JTextField txtPersonNum;
+	private String Username;
+	private String Ip_addr;
+	private String Port_no;
+	private JTextField textField;
+
+	/**
+	 * Create the frame.
+	 */
+	public JavaGameClientView2(String username, String ip_addr, String port_no, String Game, String Room, int PersonNum) {
+		setResizable(false);
+		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(900, 100, 1036, 720);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(659, 328, 352, 300);
+		contentPane.add(scrollPane);
+		
+		JTextPane textArea = new JTextPane();
+		textArea.setFont(new Font("굴림체", Font.PLAIN, 14));
+		textArea.setEditable(true);
+		textArea.setCaretPosition(0);
+		scrollPane.setColumnHeaderView(textArea);
+		
+		textField = new JTextField();
+		textField.setColumns(10);
+		textField.setBounds(659, 638, 271, 40);
+		contentPane.add(textField);
+		
+		JButton btnSend = new JButton("전송");
+		btnSend.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnSend.setFont(new Font("굴림", Font.PLAIN, 14));
+		btnSend.setBounds(942, 637, 69, 40);
+		contentPane.add(btnSend);
+		
+		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(659, 107, 352, 212);
+		contentPane.add(scrollPane_1);
+		
+		JLabel lblUserName_1_1 = new JLabel("유저리스트");
+		lblUserName_1_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblUserName_1_1.setFont(new Font("굴림", Font.BOLD, 14));
+		lblUserName_1_1.setBorder(new LineBorder(new Color(0, 0, 0)));
+		lblUserName_1_1.setBackground(Color.WHITE);
+		scrollPane_1.setColumnHeaderView(lblUserName_1_1);
+		
+		JMenuItem mntmEx_1 = new JMenuItem("ex: 프사/이름/전적/관전");
+		scrollPane_1.setViewportView(mntmEx_1);
+		
+		Panel panel = new Panel();
+		panel.setBounds(659, 10, 84, 91);
+		contentPane.add(panel);
+		
+		JLabel lblUserName_1_1_1 = new JLabel("유저 이름");
+		lblUserName_1_1_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblUserName_1_1_1.setFont(new Font("굴림", Font.BOLD, 14));
+		lblUserName_1_1_1.setBorder(new LineBorder(new Color(0, 0, 0)));
+		lblUserName_1_1_1.setBackground(Color.WHITE);
+		panel.add(lblUserName_1_1_1);
+		
+		Panel panel_1 = new Panel();
+		panel_1.setBounds(749, 10, 84, 91);
+		contentPane.add(panel_1);
+		
+		JLabel lblUserName_1_1_1_1 = new JLabel("유저 이름");
+		lblUserName_1_1_1_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblUserName_1_1_1_1.setFont(new Font("굴림", Font.BOLD, 14));
+		lblUserName_1_1_1_1.setBorder(new LineBorder(new Color(0, 0, 0)));
+		lblUserName_1_1_1_1.setBackground(Color.WHITE);
+		panel_1.add(lblUserName_1_1_1_1);
+		
+		Panel panel_2 = new Panel();
+		panel_2.setBounds(839, 10, 84, 91);
+		contentPane.add(panel_2);
+		
+		JLabel lblUserName_1_1_1_2 = new JLabel("유저 이름");
+		lblUserName_1_1_1_2.setHorizontalAlignment(SwingConstants.CENTER);
+		lblUserName_1_1_1_2.setFont(new Font("굴림", Font.BOLD, 14));
+		lblUserName_1_1_1_2.setBorder(new LineBorder(new Color(0, 0, 0)));
+		lblUserName_1_1_1_2.setBackground(Color.WHITE);
+		panel_2.add(lblUserName_1_1_1_2);
+		
+		Panel panel_3 = new Panel();
+		panel_3.setBounds(929, 10, 84, 91);
+		contentPane.add(panel_3);
+		
+		JLabel lblUserName_1_1_1_3 = new JLabel("유저이름");
+		lblUserName_1_1_1_3.setHorizontalAlignment(SwingConstants.CENTER);
+		lblUserName_1_1_1_3.setFont(new Font("굴림", Font.BOLD, 14));
+		lblUserName_1_1_1_3.setBorder(new LineBorder(new Color(0, 0, 0)));
+		lblUserName_1_1_1_3.setBackground(Color.WHITE);
+		panel_3.add(lblUserName_1_1_1_3);
+		
+		TablePanel panel_4 = new TablePanel();
+		panel_4.setBounds(12, 10, 627, 628);
+		panel_4.setBackground(new Color(206,167,61));
+		contentPane.add(panel_4);
+		
+		Button button = new Button("시작");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		button.setBounds(220, 644, 107, 27);
+		contentPane.add(button);
+		
+		Button button_1 = new Button("무르기 요청");
+		button_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		button_1.setBounds(343, 644, 107, 27);
+		contentPane.add(button_1);
+		
+		Button button_1_1 = new Button("나가기");
+		button_1_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		button_1_1.setBounds(470, 644, 107, 27);
+		contentPane.add(button_1_1);
+		
+		JLabel lblNewLabel = new JLabel("남은 시간 : 30");
+		lblNewLabel.setBounds(90, 643, 107, 28);
+		contentPane.add(lblNewLabel);
+		
+		
+		setVisible(true);
+
+	}
+	private static class __Tmp {
+	}
+}
+
+class TablePanel extends JPanel {
+	private MapSize size = new MapSize();
+	
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        for(int i=1;i<=size.getSize();i++){
+			g.drawLine(size.getCell(), i*size.getCell(), size.getCell()*size.getSize(), i*size.getCell()); 
+			g.drawLine(i*size.getCell(), size.getCell(), i*size.getCell() , size.getCell()*size.getSize()); 
+		}
+    }
+}
+
+ line: 179 The serializable class TablePanel does not declare a static final serialVersionUID field of type long
+	at org.eclipse.wb.internal.core.utils.ast.AstParser.findNode(AstParser.java:773)
+	at org.eclipse.wb.internal.core.utils.ast.AstParser.parseBodyDeclaration(AstParser.java:179)
+	... 55 more
+Caused by: java.lang.NoSuchMethodError: 'java.lang.String[] org.eclipse.jdt.core.dom.IMethodBinding.getParameterNames()'
+	at org.eclipse.wb.internal.core.utils.ast.binding.DesignerMethodBinding.<init>(DesignerMethodBinding.java:56)
+	at org.eclipse.wb.internal.core.utils.ast.binding.BindingContext.get(BindingContext.java:87)
+	at org.eclipse.wb.internal.core.utils.ast.binding.DesignerTypeBinding.<init>(DesignerTypeBinding.java:160)
+	at org.eclipse.wb.internal.core.utils.ast.binding.BindingContext.get(BindingContext.java:70)
+	at org.eclipse.wb.internal.core.utils.ast.binding.DesignerTypeBinding.<init>(DesignerTypeBinding.java:146)
+	at org.eclipse.wb.internal.core.utils.ast.binding.BindingContext.get(BindingContext.java:70)
+	at org.eclipse.wb.internal.core.utils.ast.binding.DesignerTypeBinding.<init>(DesignerTypeBinding.java:146)
+	at org.eclipse.wb.internal.core.utils.ast.binding.BindingContext.get(BindingContext.java:70)
+	at org.eclipse.wb.internal.core.utils.ast.binding.DesignerTypeBinding.<init>(DesignerTypeBinding.java:146)
+	at org.eclipse.wb.internal.core.utils.ast.binding.BindingContext.get(BindingContext.java:70)
+	at org.eclipse.wb.internal.core.utils.ast.binding.DesignerTypeBinding.<init>(DesignerTypeBinding.java:146)
+	at org.eclipse.wb.internal.core.utils.ast.binding.BindingContext.get(BindingContext.java:70)
+	at org.eclipse.wb.internal.core.utils.ast.binding.DesignerTypeBinding.<init>(DesignerTypeBinding.java:146)
+	at org.eclipse.wb.internal.core.utils.ast.binding.BindingContext.get(BindingContext.java:70)
+	at org.eclipse.wb.internal.core.utils.ast.binding.DesignerTypeBinding.<init>(DesignerTypeBinding.java:146)
+	at org.eclipse.wb.internal.core.utils.ast.binding.BindingContext.get(BindingContext.java:70)
+	at org.eclipse.wb.internal.core.utils.ast.binding.BindingContext.get(BindingContext.java:48)
+	at org.eclipse.wb.internal.core.utils.ast.binding.DesignerTypeBinding.<init>(DesignerTypeBinding.java:145)
+	at org.eclipse.wb.internal.core.utils.ast.binding.BindingContext.get(BindingContext.java:70)
+	at org.eclipse.wb.internal.core.utils.ast.AstParser$3.postVisit(AstParser.java:946)
+	at org.eclipse.jdt.core.dom.ASTNode.accept(ASTNode.java:3058)
+	at org.eclipse.jdt.core.dom.ASTNode.acceptChild(ASTNode.java:3103)
+	at org.eclipse.jdt.core.dom.TypeDeclaration.accept0(TypeDeclaration.java:522)
+	at org.eclipse.jdt.core.dom.ASTNode.accept(ASTNode.java:3055)
+	at org.eclipse.wb.internal.core.utils.ast.AstParser.copyBindings(AstParser.java:925)
+	at org.eclipse.wb.internal.core.utils.ast.AstParser.findNode0(AstParser.java:827)
+	at org.eclipse.wb.internal.core.utils.ast.AstParser.findNode(AstParser.java:770)
+	... 56 more
+
+!ENTRY org.eclipse.wb.core 4 4 2022-11-15 17:21:21.092
+!MESSAGE Designer [1.12.0.202211051224.202211151720]: 205 (Unable to parse source.). 
+		
+		javax.swing.JLabel label = new javax.swing.JLabel("New label"); line: 1 The import java.awt.EventQueue is never used
+line: 2 The import java.awt.event.ActionEvent is never used
+line: 3 The import java.awt.event.ActionListener is never used
+line: 5 The import javax.swing.JPanel is never used
+line: 6 The import javax.swing.border.EmptyBorder is never used
+line: 7 The import javax.swing.JLabel is never used
+line: 8 The import javax.swing.JTextField is never used
+line: 9 The import javax.swing.SwingConstants is never used
+line: 10 The import javax.swing.JButton is never used
+line: 11 The import java.awt.Color is never used
+line: 12 The import javax.swing.border.LineBorder is never used
+line: 13 The import javax.swing.JScrollPane is never used
+line: 14 The import javax.swing.JTextPane is never used
+line: 15 The import java.awt.Font is never used
+line: 16 The import java.awt.Graphics is never used
+line: 17 The import javax.swing.JMenuBar is never used
+line: 18 The import java.awt.ScrollPane is never used
+line: 19 The import javax.swing.JMenuItem is never used
+line: 20 The import java.awt.Panel is never used
+line: 21 The import java.awt.Button is never used
+line: 33 The value of the local variable scrollPane is not used
+line: 34 The value of the local variable textArea is not used
+line: 35 The value of the local variable btnSend is not used
+line: 36 The value of the local variable scrollPane_1 is not used
+line: 37 The value of the local variable lblUserName_1_1 is not used
+line: 38 The value of the local variable mntmEx_1 is not used
+line: 39 The value of the local variable panel is not used
+line: 40 The value of the local variable lblUserName_1_1_1 is not used
+line: 41 The value of the local variable panel_1 is not used
+line: 42 The value of the local variable lblUserName_1_1_1_1 is not used
+line: 43 The value of the local variable panel_2 is not used
+line: 44 The value of the local variable lblUserName_1_1_1_2 is not used
+line: 45 The value of the local variable panel_3 is not used
+line: 46 The value of the local variable lblUserName_1_1_1_3 is not used
+line: 47 The value of the local variable panel_4 is not used
+line: 48 The value of the local variable username is not used
+line: 49 The value of the local variable ip_addr is not used
+line: 50 The value of the local variable port_no is not used
+line: 51 The value of the local variable Game is not used
+line: 52 The value of the local variable Room is not used
+line: 53 The value of the local variable PersonNum is not used
+line: 56 The value of the local variable label is not used
+!STACK 0
+org.eclipse.wb.internal.core.utils.exception.DesignerException: 205 (Unable to parse source.). 
+		
+		javax.swing.JLabel label = new javax.swing.JLabel("New label"); line: 1 The import java.awt.EventQueue is never used
+line: 2 The import java.awt.event.ActionEvent is never used
+line: 3 The import java.awt.event.ActionListener is never used
+line: 5 The import javax.swing.JPanel is never used
+line: 6 The import javax.swing.border.EmptyBorder is never used
+line: 7 The import javax.swing.JLabel is never used
+line: 8 The import javax.swing.JTextField is never used
+line: 9 The import javax.swing.SwingConstants is never used
+line: 10 The import javax.swing.JButton is never used
+line: 11 The import java.awt.Color is never used
+line: 12 The import javax.swing.border.LineBorder is never used
+line: 13 The import javax.swing.JScrollPane is never used
+line: 14 The import javax.swing.JTextPane is never used
+line: 15 The import java.awt.Font is never used
+line: 16 The import java.awt.Graphics is never used
+line: 17 The import javax.swing.JMenuBar is never used
+line: 18 The import java.awt.ScrollPane is never used
+line: 19 The import javax.swing.JMenuItem is never used
+line: 20 The import java.awt.Panel is never used
+line: 21 The import java.awt.Button is never used
+line: 33 The value of the local variable scrollPane is not used
+line: 34 The value of the local variable textArea is not used
+line: 35 The value of the local variable btnSend is not used
+line: 36 The value of the local variable scrollPane_1 is not used
+line: 37 The value of the local variable lblUserName_1_1 is not used
+line: 38 The value of the local variable mntmEx_1 is not used
+line: 39 The value of the local variable panel is not used
+line: 40 The value of the local variable lblUserName_1_1_1 is not used
+line: 41 The value of the local variable panel_1 is not used
+line: 42 The value of the local variable lblUserName_1_1_1_1 is not used
+line: 43 The value of the local variable panel_2 is not used
+line: 44 The value of the local variable lblUserName_1_1_1_2 is not used
+line: 45 The value of the local variable panel_3 is not used
+line: 46 The value of the local variable lblUserName_1_1_1_3 is not used
+line: 47 The value of the local variable panel_4 is not used
+line: 48 The value of the local variable username is not used
+line: 49 The value of the local variable ip_addr is not used
+line: 50 The value of the local variable port_no is not used
+line: 51 The value of the local variable Game is not used
+line: 52 The value of the local variable Room is not used
+line: 53 The value of the local variable PersonNum is not used
+line: 56 The value of the local variable label is not used
+	at org.eclipse.wb.internal.core.utils.ast.AstParser.parseStatement(AstParser.java:162)
+	at org.eclipse.wb.internal.core.utils.ast.AstEditor.addStatement(AstEditor.java:1628)
+	at org.eclipse.wb.internal.core.model.generation.statement.AbstractInsideStatementGenerator.add(AbstractInsideStatementGenerator.java:82)
+	at org.eclipse.wb.internal.core.model.generation.statement.flat.FlatStatementGenerator.add(FlatStatementGenerator.java:66)
+	at org.eclipse.wb.internal.core.model.JavaInfoUtils.add(JavaInfoUtils.java:1392)
+	at org.eclipse.wb.internal.core.model.JavaInfoUtils.add(JavaInfoUtils.java:1295)
+	at org.eclipse.wb.internal.core.model.JavaInfoUtils.add(JavaInfoUtils.java:1225)
+	at org.eclipse.wb.internal.swing.model.layout.LayoutInfo.add(LayoutInfo.java:330)
+	at org.eclipse.wb.internal.swing.model.layout.GenericFlowLayoutInfo.add(GenericFlowLayoutInfo.java:52)
+	at org.eclipse.wb.internal.swing.gef.policy.layout.GenericFlowLayoutEditPolicy.command_CREATE(GenericFlowLayoutEditPolicy.java:84)
+	at org.eclipse.wb.internal.swing.gef.policy.layout.GenericFlowLayoutEditPolicy.command_CREATE(GenericFlowLayoutEditPolicy.java:1)
+	at org.eclipse.wb.core.gef.policy.layout.flow.ObjectFlowLayoutEditPolicy$1.executeEdit(ObjectFlowLayoutEditPolicy.java:54)
+	at org.eclipse.wb.core.gef.command.EditCommand$1.run(EditCommand.java:53)
+	at org.eclipse.wb.internal.core.utils.execution.ExecutionUtils.run(ExecutionUtils.java:331)
+	at org.eclipse.wb.core.gef.command.EditCommand.execute(EditCommand.java:50)
+	at org.eclipse.wb.internal.gef.core.EditDomain.executeCommand(EditDomain.java:59)
+	at org.eclipse.wb.gef.core.tools.Tool.executeCommand(Tool.java:209)
+	at org.eclipse.wb.gef.core.tools.AbstractCreationTool.handleButtonUp(AbstractCreationTool.java:62)
+	at org.eclipse.wb.gef.core.tools.Tool.mouseUp(Tool.java:395)
+	at org.eclipse.wb.internal.gef.core.EditDomain.mouseUp(EditDomain.java:255)
+	at org.eclipse.wb.internal.gef.graphical.EditEventManager.mouseUp(EditEventManager.java:151)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:78)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:567)
+	at org.eclipse.wb.internal.draw2d.EventManager$1.invoke(EventManager.java:317)
+	at jdk.proxy9/jdk.proxy9.$Proxy24.mouseUp(Unknown Source)
+	at org.eclipse.swt.widgets.TypedListener.handleEvent(TypedListener.java:224)
+	at org.eclipse.swt.widgets.EventTable.sendEvent(EventTable.java:89)
+	at org.eclipse.swt.widgets.Display.sendEvent(Display.java:4209)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1043)
+	at org.eclipse.swt.widgets.Display.runDeferredEvents(Display.java:4026)
+	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:3626)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine$5.run(PartRenderingEngine.java:1157)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:338)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.run(PartRenderingEngine.java:1046)
+	at org.eclipse.e4.ui.internal.workbench.E4Workbench.createAndRunUI(E4Workbench.java:155)
+	at org.eclipse.ui.internal.Workbench.lambda$3(Workbench.java:644)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:338)
+	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:551)
+	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:156)
+	at org.eclipse.ui.internal.ide.application.IDEApplication.start(IDEApplication.java:152)
+	at org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:203)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:134)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:104)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:401)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:255)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:78)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:567)
+	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:654)
+	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:591)
+	at org.eclipse.equinox.launcher.Main.run(Main.java:1462)
+Caused by: org.eclipse.wb.internal.core.utils.exception.DesignerException: 205 (Unable to parse source.). import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.JButton;
+import java.awt.Color;
+import javax.swing.border.LineBorder;
+import javax.swing.JScrollPane;
+import javax.swing.JTextPane;
+import java.awt.Font;
+import java.awt.Graphics;
+import javax.swing.JMenuBar;
+import java.awt.ScrollPane;
+import javax.swing.JMenuItem;
+import java.awt.Panel;
+import java.awt.Button;
+class JavaGameClientView2 extends JFrame {
+static final long serialVersionUID=0L;
+javax.swing.JPanel contentPane=(javax.swing.JPanel) null;
+javax.swing.JTextField txtGame=(javax.swing.JTextField) null;
+javax.swing.JTextField txtRoom=(javax.swing.JTextField) null;
+javax.swing.JTextField txtPersonNum=(javax.swing.JTextField) null;
+java.lang.String Username=(java.lang.String) null;
+java.lang.String Ip_addr=(java.lang.String) null;
+java.lang.String Port_no=(java.lang.String) null;
+javax.swing.JTextField textField=(javax.swing.JTextField) null;
+JavaGameClientView2(Object __wbp_param) {
+super();javax.swing.JScrollPane scrollPane = (javax.swing.JScrollPane) null;
+javax.swing.JTextPane textArea = (javax.swing.JTextPane) null;
+javax.swing.JButton btnSend = (javax.swing.JButton) null;
+javax.swing.JScrollPane scrollPane_1 = (javax.swing.JScrollPane) null;
+javax.swing.JLabel lblUserName_1_1 = (javax.swing.JLabel) null;
+javax.swing.JMenuItem mntmEx_1 = (javax.swing.JMenuItem) null;
+java.awt.Panel panel = (java.awt.Panel) null;
+javax.swing.JLabel lblUserName_1_1_1 = (javax.swing.JLabel) null;
+java.awt.Panel panel_1 = (java.awt.Panel) null;
+javax.swing.JLabel lblUserName_1_1_1_1 = (javax.swing.JLabel) null;
+java.awt.Panel panel_2 = (java.awt.Panel) null;
+javax.swing.JLabel lblUserName_1_1_1_2 = (javax.swing.JLabel) null;
+java.awt.Panel panel_3 = (java.awt.Panel) null;
+javax.swing.JLabel lblUserName_1_1_1_3 = (javax.swing.JLabel) null;
+TablePanel panel_4 = (TablePanel) null;
+java.lang.String username = (java.lang.String) null;
+java.lang.String ip_addr = (java.lang.String) null;
+java.lang.String port_no = (java.lang.String) null;
+java.lang.String Game = (java.lang.String) null;
+java.lang.String Room = (java.lang.String) null;
+int PersonNum = 0;
+
+		
+		javax.swing.JLabel label = new javax.swing.JLabel("New label");}
+} line: 1 The import java.awt.EventQueue is never used
+line: 2 The import java.awt.event.ActionEvent is never used
+line: 3 The import java.awt.event.ActionListener is never used
+line: 5 The import javax.swing.JPanel is never used
+line: 6 The import javax.swing.border.EmptyBorder is never used
+line: 7 The import javax.swing.JLabel is never used
+line: 8 The import javax.swing.JTextField is never used
+line: 9 The import javax.swing.SwingConstants is never used
+line: 10 The import javax.swing.JButton is never used
+line: 11 The import java.awt.Color is never used
+line: 12 The import javax.swing.border.LineBorder is never used
+line: 13 The import javax.swing.JScrollPane is never used
+line: 14 The import javax.swing.JTextPane is never used
+line: 15 The import java.awt.Font is never used
+line: 16 The import java.awt.Graphics is never used
+line: 17 The import javax.swing.JMenuBar is never used
+line: 18 The import java.awt.ScrollPane is never used
+line: 19 The import javax.swing.JMenuItem is never used
+line: 20 The import java.awt.Panel is never used
+line: 21 The import java.awt.Button is never used
+line: 33 The value of the local variable scrollPane is not used
+line: 34 The value of the local variable textArea is not used
+line: 35 The value of the local variable btnSend is not used
+line: 36 The value of the local variable scrollPane_1 is not used
+line: 37 The value of the local variable lblUserName_1_1 is not used
+line: 38 The value of the local variable mntmEx_1 is not used
+line: 39 The value of the local variable panel is not used
+line: 40 The value of the local variable lblUserName_1_1_1 is not used
+line: 41 The value of the local variable panel_1 is not used
+line: 42 The value of the local variable lblUserName_1_1_1_1 is not used
+line: 43 The value of the local variable panel_2 is not used
+line: 44 The value of the local variable lblUserName_1_1_1_2 is not used
+line: 45 The value of the local variable panel_3 is not used
+line: 46 The value of the local variable lblUserName_1_1_1_3 is not used
+line: 47 The value of the local variable panel_4 is not used
+line: 48 The value of the local variable username is not used
+line: 49 The value of the local variable ip_addr is not used
+line: 50 The value of the local variable port_no is not used
+line: 51 The value of the local variable Game is not used
+line: 52 The value of the local variable Room is not used
+line: 53 The value of the local variable PersonNum is not used
+line: 56 The value of the local variable label is not used
+	at org.eclipse.wb.internal.core.utils.ast.AstParser.findNode(AstParser.java:773)
+	at org.eclipse.wb.internal.core.utils.ast.AstParser.parseStatement(AstParser.java:159)
+	... 53 more
+Caused by: java.lang.NoSuchMethodError: 'java.lang.String[] org.eclipse.jdt.core.dom.IMethodBinding.getParameterNames()'
+	at org.eclipse.wb.internal.core.utils.ast.binding.DesignerMethodBinding.<init>(DesignerMethodBinding.java:56)
+	at org.eclipse.wb.internal.core.utils.ast.binding.BindingContext.get(BindingContext.java:87)
+	at org.eclipse.wb.internal.core.utils.ast.binding.DesignerTypeBinding.<init>(DesignerTypeBinding.java:160)
+	at org.eclipse.wb.internal.core.utils.ast.binding.BindingContext.get(BindingContext.java:70)
+	at org.eclipse.wb.internal.core.utils.ast.binding.BindingContext.get(BindingContext.java:48)
+	at org.eclipse.wb.internal.core.utils.ast.binding.DesignerTypeBinding.<init>(DesignerTypeBinding.java:145)
+	at org.eclipse.wb.internal.core.utils.ast.binding.BindingContext.get(BindingContext.java:70)
+	at org.eclipse.wb.internal.core.utils.ast.binding.BindingContext.get(BindingContext.java:48)
+	at org.eclipse.wb.internal.core.utils.ast.binding.DesignerTypeBinding.<init>(DesignerTypeBinding.java:152)
+	at org.eclipse.wb.internal.core.utils.ast.binding.BindingContext.get(BindingContext.java:70)
+	at org.eclipse.wb.internal.core.utils.ast.binding.DesignerTypeBinding.<init>(DesignerTypeBinding.java:146)
+	at org.eclipse.wb.internal.core.utils.ast.binding.BindingContext.get(BindingContext.java:70)
+	at org.eclipse.wb.internal.core.utils.ast.AstParser$3.postVisit(AstParser.java:946)
+	at org.eclipse.jdt.core.dom.ASTNode.accept(ASTNode.java:3058)
+	at org.eclipse.jdt.core.dom.ASTNode.acceptChild(ASTNode.java:3103)
+	at org.eclipse.jdt.core.dom.QualifiedName.accept0(QualifiedName.java:163)
+	at org.eclipse.jdt.core.dom.ASTNode.accept(ASTNode.java:3055)
+	at org.eclipse.jdt.core.dom.ASTNode.acceptChild(ASTNode.java:3103)
+	at org.eclipse.jdt.core.dom.SimpleType.accept0(SimpleType.java:195)
+	at org.eclipse.jdt.core.dom.ASTNode.accept(ASTNode.java:3055)
+	at org.eclipse.jdt.core.dom.ASTNode.acceptChild(ASTNode.java:3103)
+	at org.eclipse.jdt.core.dom.VariableDeclarationStatement.accept0(VariableDeclarationStatement.java:253)
+	at org.eclipse.jdt.core.dom.ASTNode.accept(ASTNode.java:3055)
+	at org.eclipse.wb.internal.core.utils.ast.AstParser.copyBindings(AstParser.java:925)
+	at org.eclipse.wb.internal.core.utils.ast.AstParser.findNode0(AstParser.java:827)
+	at org.eclipse.wb.internal.core.utils.ast.AstParser.findNode(AstParser.java:770)
+	... 54 more
+
+!ENTRY org.eclipse.ui.ide 4 4 2022-11-15 17:21:21.118
+!MESSAGE Not properly disposed SWT resource
+!STACK 0
+java.lang.Error: SWT Resource was not properly disposed
+	at org.eclipse.swt.graphics.Resource.initNonDisposeTracking(Resource.java:172)
+	at org.eclipse.swt.graphics.Resource.<init>(Resource.java:120)
+	at org.eclipse.swt.graphics.Image.<init>(Image.java:605)
+	at org.eclipse.wb.internal.core.model.description.helpers.DescriptionHelper.getIconImage(DescriptionHelper.java:166)
+	at org.eclipse.wb.internal.core.model.description.helpers.ComponentPresentationHelper.getComponentImage(ComponentPresentationHelper.java:166)
+	at org.eclipse.wb.internal.core.model.description.helpers.ComponentPresentationHelper.getFastPresentation(ComponentPresentationHelper.java:139)
+	at org.eclipse.wb.internal.core.model.description.helpers.ComponentPresentationHelper.getPresentation(ComponentPresentationHelper.java:114)
+	at org.eclipse.wb.core.editor.palette.model.entry.ComponentEntryInfo.preparePresentation(ComponentEntryInfo.java:259)
+	at org.eclipse.wb.core.editor.palette.model.entry.ComponentEntryInfo.initialize(ComponentEntryInfo.java:219)
+	at org.eclipse.wb.internal.core.editor.palette.DesignerPalette.getVisualEntry(DesignerPalette.java:267)
+	at org.eclipse.wb.internal.core.editor.palette.DesignerPalette$4.getEntries(DesignerPalette.java:347)
+	at org.eclipse.wb.core.controls.palette.PaletteComposite$CategoryFigure.<init>(PaletteComposite.java:368)
+	at org.eclipse.wb.core.controls.palette.PaletteComposite$PaletteFigure.refresh(PaletteComposite.java:284)
+	at org.eclipse.wb.core.controls.palette.PaletteComposite.refreshPalette(PaletteComposite.java:199)
+	at org.eclipse.wb.core.controls.palette.PaletteComposite.setPalette(PaletteComposite.java:192)
+	at org.eclipse.wb.internal.core.editor.palette.DesignerPalette.showPalette(DesignerPalette.java:462)
+	at org.eclipse.wb.internal.core.editor.palette.DesignerPalette.reloadPalette(DesignerPalette.java:182)
+	at org.eclipse.wb.internal.core.editor.palette.DesignerPalette.setInput(DesignerPalette.java:148)
+	at org.eclipse.wb.internal.core.editor.JavaDesignComposite.refresh(JavaDesignComposite.java:147)
+	at org.eclipse.wb.internal.core.editor.DesignPage.internal_refreshGEF(DesignPage.java:604)
+	at org.eclipse.wb.internal.core.editor.DesignPage$8$1.run(DesignPage.java:468)
+	at org.eclipse.swt.widgets.Synchronizer.syncExec(Synchronizer.java:236)
+	at org.eclipse.ui.internal.UISynchronizer.syncExec(UISynchronizer.java:133)
+	at org.eclipse.swt.widgets.Display.syncExec(Display.java:4742)
+	at org.eclipse.wb.internal.core.editor.DesignPage$8.run(DesignPage.java:464)
+	at org.eclipse.jface.operation.ModalContext.runInCurrentThread(ModalContext.java:436)
+	at org.eclipse.jface.operation.ModalContext.run(ModalContext.java:352)
+	at org.eclipse.jface.dialogs.ProgressMonitorDialog.run(ProgressMonitorDialog.java:468)
+	at org.eclipse.wb.internal.core.editor.DesignPage.internal_refreshGEF_withProgress(DesignPage.java:484)
+	at org.eclipse.wb.internal.core.editor.DesignPage.internal_refreshGEF(DesignPage.java:432)
+	at org.eclipse.wb.internal.core.editor.UndoManager.refreshDesignerEditor(UndoManager.java:389)
+	at org.eclipse.wb.internal.core.editor.UndoManager.activate(UndoManager.java:90)
+	at org.eclipse.wb.internal.core.editor.DesignPage.handleActiveState_True(DesignPage.java:275)
+	at org.eclipse.wb.internal.core.editor.DesignPage.handleActiveState(DesignPage.java:252)
+	at org.eclipse.wb.internal.core.editor.multi.DefaultMultiMode.showPage(DefaultMultiMode.java:127)
+	at org.eclipse.wb.internal.core.editor.multi.DefaultMultiMode$1.widgetSelected(DefaultMultiMode.java:63)
+	at org.eclipse.swt.widgets.TypedListener.handleEvent(TypedListener.java:252)
+	at org.eclipse.swt.widgets.EventTable.sendEvent(EventTable.java:89)
+	at org.eclipse.swt.widgets.Display.sendEvent(Display.java:4209)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1043)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1067)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1052)
+	at org.eclipse.swt.widgets.Widget.notifyListeners(Widget.java:766)
+	at org.eclipse.swt.custom.CTabFolder.setSelection(CTabFolder.java:3243)
+	at org.eclipse.swt.custom.CTabFolder.onMouse(CTabFolder.java:1881)
+	at org.eclipse.swt.custom.CTabFolder.lambda$0(CTabFolder.java:330)
+	at org.eclipse.swt.widgets.EventTable.sendEvent(EventTable.java:89)
+	at org.eclipse.swt.widgets.Display.sendEvent(Display.java:4209)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1043)
+	at org.eclipse.swt.widgets.Display.runDeferredEvents(Display.java:4026)
+	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:3626)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine$5.run(PartRenderingEngine.java:1157)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:338)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.run(PartRenderingEngine.java:1046)
+	at org.eclipse.e4.ui.internal.workbench.E4Workbench.createAndRunUI(E4Workbench.java:155)
+	at org.eclipse.ui.internal.Workbench.lambda$3(Workbench.java:644)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:338)
+	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:551)
+	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:156)
+	at org.eclipse.ui.internal.ide.application.IDEApplication.start(IDEApplication.java:152)
+	at org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:203)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:134)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:104)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:401)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:255)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:78)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:567)
+	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:654)
+	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:591)
+	at org.eclipse.equinox.launcher.Main.run(Main.java:1462)
+
+!ENTRY org.eclipse.wb.core 4 4 2022-11-15 17:21:23.749
+!MESSAGE Designer [1.12.0.202211051224.202211151720]: 205 (Unable to parse source.). 
+	public JavaGameClientView2() {
+	} line: 49 Return type for the method is missing
+line: 179 The serializable class TablePanel does not declare a static final serialVersionUID field of type long
+!STACK 0
+org.eclipse.wb.internal.core.utils.exception.DesignerException: 205 (Unable to parse source.). 
+	public JavaGameClientView2() {
+	} line: 49 Return type for the method is missing
+line: 179 The serializable class TablePanel does not declare a static final serialVersionUID field of type long
+	at org.eclipse.wb.internal.core.utils.ast.AstParser.parseBodyDeclaration(AstParser.java:182)
+	at org.eclipse.wb.internal.core.utils.ast.AstEditor.addBodyDeclaration(AstEditor.java:2573)
+	at org.eclipse.wb.internal.core.utils.ast.AstEditor.addMethodDeclaration(AstEditor.java:2139)
+	at org.eclipse.wb.internal.core.utils.ast.AstEditor.addMethodDeclaration(AstEditor.java:2101)
+	at org.eclipse.wb.internal.core.parser.AbstractParseFactory.getConstructor(AbstractParseFactory.java:443)
+	at org.eclipse.wb.internal.swing.parser.ParseFactory.getRootContext(ParseFactory.java:125)
+	at org.eclipse.wb.internal.core.parser.JavaInfoParser.prepareParseContext(JavaInfoParser.java:1191)
+	at org.eclipse.wb.internal.core.parser.JavaInfoParser.parse(JavaInfoParser.java:244)
+	at org.eclipse.wb.internal.core.parser.JavaInfoParser$1.runObject(JavaInfoParser.java:153)
+	at org.eclipse.wb.internal.core.parser.JavaInfoParser$1.runObject(JavaInfoParser.java:1)
+	at org.eclipse.wb.internal.core.utils.execution.ExecutionUtils.runDesignTime(ExecutionUtils.java:160)
+	at org.eclipse.wb.internal.core.parser.JavaInfoParser.parse(JavaInfoParser.java:150)
+	at org.eclipse.wb.internal.core.editor.DesignPage.internal_refreshGEF(DesignPage.java:553)
+	at org.eclipse.wb.internal.core.editor.DesignPage$8$1.run(DesignPage.java:468)
+	at org.eclipse.swt.widgets.Synchronizer.syncExec(Synchronizer.java:236)
+	at org.eclipse.ui.internal.UISynchronizer.syncExec(UISynchronizer.java:133)
+	at org.eclipse.swt.widgets.Display.syncExec(Display.java:4742)
+	at org.eclipse.wb.internal.core.editor.DesignPage$8.run(DesignPage.java:464)
+	at org.eclipse.jface.operation.ModalContext.runInCurrentThread(ModalContext.java:436)
+	at org.eclipse.jface.operation.ModalContext.run(ModalContext.java:352)
+	at org.eclipse.jface.dialogs.ProgressMonitorDialog.run(ProgressMonitorDialog.java:468)
+	at org.eclipse.wb.internal.core.editor.DesignPage.internal_refreshGEF_withProgress(DesignPage.java:484)
+	at org.eclipse.wb.internal.core.editor.DesignPage.internal_refreshGEF(DesignPage.java:432)
+	at org.eclipse.wb.internal.core.editor.UndoManager.refreshDesignerEditor(UndoManager.java:389)
+	at org.eclipse.wb.internal.core.editor.UndoManager$6.run(UndoManager.java:338)
+	at org.eclipse.swt.widgets.RunnableLock.run(RunnableLock.java:40)
+	at org.eclipse.swt.widgets.Synchronizer.runAsyncMessages(Synchronizer.java:185)
+	at org.eclipse.swt.widgets.Display.runAsyncMessages(Display.java:4001)
+	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:3629)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine$5.run(PartRenderingEngine.java:1157)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:338)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.run(PartRenderingEngine.java:1046)
+	at org.eclipse.e4.ui.internal.workbench.E4Workbench.createAndRunUI(E4Workbench.java:155)
+	at org.eclipse.ui.internal.Workbench.lambda$3(Workbench.java:644)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:338)
+	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:551)
+	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:156)
+	at org.eclipse.ui.internal.ide.application.IDEApplication.start(IDEApplication.java:152)
+	at org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:203)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:134)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:104)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:401)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:255)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:78)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:567)
+	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:654)
+	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:591)
+	at org.eclipse.equinox.launcher.Main.run(Main.java:1462)
+Caused by: org.eclipse.wb.internal.core.utils.exception.DesignerException: 205 (Unable to parse source.). import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+
+
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.JButton;
+import java.awt.Color;
+import javax.swing.border.LineBorder;
+import javax.swing.JScrollPane;
+import javax.swing.JTextPane;
+import java.awt.Font;
+import java.awt.Graphics;
+
+import javax.swing.JMenuBar;
+import java.awt.ScrollPane;
+import javax.swing.JMenuItem;
+import java.awt.Panel;
+import java.awt.Button;
+
+public class JavaGameClientView2 extends JFrame {
+	public JavaGameClientView2() {
+	}
+
+
+	/**
+	 * Launch the application.
+	 */
+	
+	private static final long serialVersionUID = 1L;
+	private JPanel contentPane;
+	private JTextField txtGame;
+	private JTextField txtRoom;
+	private JTextField txtPersonNum;
+	private String Username;
+	private String Ip_addr;
+	private String Port_no;
+	private JTextField textField;
+
+	/**
+	 * Create the frame.
+	 */
+	public JavaGameClientView3(String username, String ip_addr, String port_no, String Game, String Room, int PersonNum) {
+		setResizable(false);
+		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(900, 100, 1036, 720);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(659, 328, 352, 300);
+		contentPane.add(scrollPane);
+		
+		JTextPane textArea = new JTextPane();
+		textArea.setFont(new Font("굴림체", Font.PLAIN, 14));
+		textArea.setEditable(true);
+		textArea.setCaretPosition(0);
+		scrollPane.setColumnHeaderView(textArea);
+		
+		textField = new JTextField();
+		textField.setColumns(10);
+		textField.setBounds(659, 638, 271, 40);
+		contentPane.add(textField);
+		
+		JButton btnSend = new JButton("전송");
+		btnSend.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnSend.setFont(new Font("굴림", Font.PLAIN, 14));
+		btnSend.setBounds(942, 637, 69, 40);
+		contentPane.add(btnSend);
+		
+		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(659, 107, 352, 212);
+		contentPane.add(scrollPane_1);
+		
+		JLabel lblUserName_1_1 = new JLabel("유저리스트");
+		lblUserName_1_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblUserName_1_1.setFont(new Font("굴림", Font.BOLD, 14));
+		lblUserName_1_1.setBorder(new LineBorder(new Color(0, 0, 0)));
+		lblUserName_1_1.setBackground(Color.WHITE);
+		scrollPane_1.setColumnHeaderView(lblUserName_1_1);
+		
+		JMenuItem mntmEx_1 = new JMenuItem("ex: 프사/이름/전적/관전");
+		scrollPane_1.setViewportView(mntmEx_1);
+		
+		Panel panel = new Panel();
+		panel.setBounds(659, 10, 84, 91);
+		contentPane.add(panel);
+		
+		JLabel lblUserName_1_1_1 = new JLabel("유저 이름");
+		lblUserName_1_1_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblUserName_1_1_1.setFont(new Font("굴림", Font.BOLD, 14));
+		lblUserName_1_1_1.setBorder(new LineBorder(new Color(0, 0, 0)));
+		lblUserName_1_1_1.setBackground(Color.WHITE);
+		panel.add(lblUserName_1_1_1);
+		
+		Panel panel_1 = new Panel();
+		panel_1.setBounds(749, 10, 84, 91);
+		contentPane.add(panel_1);
+		
+		JLabel lblUserName_1_1_1_1 = new JLabel("유저 이름");
+		lblUserName_1_1_1_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblUserName_1_1_1_1.setFont(new Font("굴림", Font.BOLD, 14));
+		lblUserName_1_1_1_1.setBorder(new LineBorder(new Color(0, 0, 0)));
+		lblUserName_1_1_1_1.setBackground(Color.WHITE);
+		panel_1.add(lblUserName_1_1_1_1);
+		
+		Panel panel_2 = new Panel();
+		panel_2.setBounds(839, 10, 84, 91);
+		contentPane.add(panel_2);
+		
+		JLabel lblUserName_1_1_1_2 = new JLabel("유저 이름");
+		lblUserName_1_1_1_2.setHorizontalAlignment(SwingConstants.CENTER);
+		lblUserName_1_1_1_2.setFont(new Font("굴림", Font.BOLD, 14));
+		lblUserName_1_1_1_2.setBorder(new LineBorder(new Color(0, 0, 0)));
+		lblUserName_1_1_1_2.setBackground(Color.WHITE);
+		panel_2.add(lblUserName_1_1_1_2);
+		
+		Panel panel_3 = new Panel();
+		panel_3.setBounds(929, 10, 84, 91);
+		contentPane.add(panel_3);
+		
+		JLabel lblUserName_1_1_1_3 = new JLabel("유저이름");
+		lblUserName_1_1_1_3.setHorizontalAlignment(SwingConstants.CENTER);
+		lblUserName_1_1_1_3.setFont(new Font("굴림", Font.BOLD, 14));
+		lblUserName_1_1_1_3.setBorder(new LineBorder(new Color(0, 0, 0)));
+		lblUserName_1_1_1_3.setBackground(Color.WHITE);
+		panel_3.add(lblUserName_1_1_1_3);
+		
+		TablePanel panel_4 = new TablePanel();
+		panel_4.setBounds(12, 10, 627, 628);
+		panel_4.setBackground(new Color(206,167,61));
+		contentPane.add(panel_4);
+		
+		Button button = new Button("시작");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		button.setBounds(220, 644, 107, 27);
+		contentPane.add(button);
+		
+		Button button_1 = new Button("무르기 요청");
+		button_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		button_1.setBounds(343, 644, 107, 27);
+		contentPane.add(button_1);
+		
+		Button button_1_1 = new Button("나가기");
+		button_1_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		button_1_1.setBounds(470, 644, 107, 27);
+		contentPane.add(button_1_1);
+		
+		JLabel lblNewLabel = new JLabel("남은 시간 : 30");
+		lblNewLabel.setBounds(90, 643, 107, 28);
+		contentPane.add(lblNewLabel);
+		
+		
+		setVisible(true);
+
+	}
+}
+
+class TablePanel extends JPanel {
+	private MapSize size = new MapSize();
+	
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        for(int i=1;i<=size.getSize();i++){
+			g.drawLine(size.getCell(), i*size.getCell(), size.getCell()*size.getSize(), i*size.getCell()); 
+			g.drawLine(i*size.getCell(), size.getCell(), i*size.getCell() , size.getCell()*size.getSize()); 
+		}
+    }
+}
+
+ line: 49 Return type for the method is missing
+line: 179 The serializable class TablePanel does not declare a static final serialVersionUID field of type long
+	at org.eclipse.wb.internal.core.utils.ast.AstParser.findNode(AstParser.java:773)
+	at org.eclipse.wb.internal.core.utils.ast.AstParser.parseBodyDeclaration(AstParser.java:179)
+	... 49 more
+Caused by: java.lang.NoSuchMethodError: 'java.lang.String[] org.eclipse.jdt.core.dom.IMethodBinding.getParameterNames()'
+	at org.eclipse.wb.internal.core.utils.ast.binding.DesignerMethodBinding.<init>(DesignerMethodBinding.java:56)
+	at org.eclipse.wb.internal.core.utils.ast.binding.BindingContext.get(BindingContext.java:87)
+	at org.eclipse.wb.internal.core.utils.ast.binding.DesignerTypeBinding.<init>(DesignerTypeBinding.java:160)
+	at org.eclipse.wb.internal.core.utils.ast.binding.BindingContext.get(BindingContext.java:70)
+	at org.eclipse.wb.internal.core.utils.ast.binding.DesignerTypeBinding.<init>(DesignerTypeBinding.java:146)
+	at org.eclipse.wb.internal.core.utils.ast.binding.BindingContext.get(BindingContext.java:70)
+	at org.eclipse.wb.internal.core.utils.ast.binding.DesignerTypeBinding.<init>(DesignerTypeBinding.java:146)
+	at org.eclipse.wb.internal.core.utils.ast.binding.BindingContext.get(BindingContext.java:70)
+	at org.eclipse.wb.internal.core.utils.ast.binding.DesignerTypeBinding.<init>(DesignerTypeBinding.java:146)
+	at org.eclipse.wb.internal.core.utils.ast.binding.BindingContext.get(BindingContext.java:70)
+	at org.eclipse.wb.internal.core.utils.ast.binding.DesignerTypeBinding.<init>(DesignerTypeBinding.java:146)
+	at org.eclipse.wb.internal.core.utils.ast.binding.BindingContext.get(BindingContext.java:70)
+	at org.eclipse.wb.internal.core.utils.ast.binding.DesignerTypeBinding.<init>(DesignerTypeBinding.java:146)
+	at org.eclipse.wb.internal.core.utils.ast.binding.BindingContext.get(BindingContext.java:70)
+	at org.eclipse.wb.internal.core.utils.ast.binding.DesignerTypeBinding.<init>(DesignerTypeBinding.java:146)
+	at org.eclipse.wb.internal.core.utils.ast.binding.BindingContext.get(BindingContext.java:70)
+	at org.eclipse.wb.internal.core.utils.ast.binding.BindingContext.get(BindingContext.java:48)
+	at org.eclipse.wb.internal.core.utils.ast.binding.DesignerMethodBinding.<init>(DesignerMethodBinding.java:54)
+	at org.eclipse.wb.internal.core.utils.ast.binding.BindingContext.get(BindingContext.java:87)
+	at org.eclipse.wb.internal.core.utils.ast.AstParser$3.postVisit(AstParser.java:958)
+	at org.eclipse.jdt.core.dom.ASTNode.accept(ASTNode.java:3058)
+	at org.eclipse.wb.internal.core.utils.ast.AstParser.copyBindings(AstParser.java:925)
+	at org.eclipse.wb.internal.core.utils.ast.AstParser.findNode0(AstParser.java:827)
+	at org.eclipse.wb.internal.core.utils.ast.AstParser.findNode(AstParser.java:770)
+	... 50 more
+
+!ENTRY org.eclipse.ui.ide 4 4 2022-11-15 17:21:36.582
+!MESSAGE Not properly disposed SWT resource
+!STACK 0
+java.lang.Error: SWT Resource was not properly disposed
+	at org.eclipse.swt.graphics.Resource.initNonDisposeTracking(Resource.java:172)
+	at org.eclipse.swt.graphics.Resource.<init>(Resource.java:120)
+	at org.eclipse.swt.graphics.Image.<init>(Image.java:205)
+	at org.eclipse.wb.internal.core.utils.exception.DesignerExceptionUtils.makeScreenshot(DesignerExceptionUtils.java:541)
+	at org.eclipse.wb.internal.core.editor.DesignPage.handleDesignException(DesignPage.java:657)
+	at org.eclipse.wb.internal.core.editor.DesignPage$9.handleException(DesignPage.java:583)
+	at org.eclipse.wb.internal.core.utils.execution.ExecutionUtils.run(ExecutionUtils.java:337)
+	at org.eclipse.wb.core.gef.command.EditCommand.execute(EditCommand.java:50)
+	at org.eclipse.wb.internal.gef.core.EditDomain.executeCommand(EditDomain.java:59)
+	at org.eclipse.wb.gef.core.tools.Tool.executeCommand(Tool.java:209)
+	at org.eclipse.wb.gef.core.tools.AbstractCreationTool.handleButtonUp(AbstractCreationTool.java:62)
+	at org.eclipse.wb.gef.core.tools.Tool.mouseUp(Tool.java:395)
+	at org.eclipse.wb.internal.gef.core.EditDomain.mouseUp(EditDomain.java:255)
+	at org.eclipse.wb.internal.gef.graphical.EditEventManager.mouseUp(EditEventManager.java:151)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:78)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:567)
+	at org.eclipse.wb.internal.draw2d.EventManager$1.invoke(EventManager.java:317)
+	at jdk.proxy9/jdk.proxy9.$Proxy24.mouseUp(Unknown Source)
+	at org.eclipse.swt.widgets.TypedListener.handleEvent(TypedListener.java:224)
+	at org.eclipse.swt.widgets.EventTable.sendEvent(EventTable.java:89)
+	at org.eclipse.swt.widgets.Display.sendEvent(Display.java:4209)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1043)
+	at org.eclipse.swt.widgets.Display.runDeferredEvents(Display.java:4026)
+	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:3626)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine$5.run(PartRenderingEngine.java:1157)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:338)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.run(PartRenderingEngine.java:1046)
+	at org.eclipse.e4.ui.internal.workbench.E4Workbench.createAndRunUI(E4Workbench.java:155)
+	at org.eclipse.ui.internal.Workbench.lambda$3(Workbench.java:644)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:338)
+	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:551)
+	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:156)
+	at org.eclipse.ui.internal.ide.application.IDEApplication.start(IDEApplication.java:152)
+	at org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:203)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:134)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:104)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:401)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:255)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:78)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:567)
+	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:654)
+	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:591)
+	at org.eclipse.equinox.launcher.Main.run(Main.java:1462)
+
+!ENTRY org.eclipse.ui.ide 4 4 2022-11-15 17:22:59.069
+!MESSAGE Not properly disposed SWT resource
+!STACK 0
+java.lang.Error: SWT Resource was not properly disposed
+	at org.eclipse.swt.graphics.Resource.initNonDisposeTracking(Resource.java:172)
+	at org.eclipse.swt.graphics.Resource.<init>(Resource.java:120)
+	at org.eclipse.swt.graphics.Image.<init>(Image.java:605)
+	at org.eclipse.wb.internal.core.model.description.helpers.DescriptionHelper.getIconImage(DescriptionHelper.java:166)
+	at org.eclipse.wb.internal.core.model.description.helpers.ComponentPresentationHelper.getComponentImage(ComponentPresentationHelper.java:166)
+	at org.eclipse.wb.internal.core.model.description.helpers.ComponentPresentationHelper.getFastPresentation(ComponentPresentationHelper.java:139)
+	at org.eclipse.wb.internal.core.model.description.helpers.ComponentPresentationHelper.getPresentation(ComponentPresentationHelper.java:114)
+	at org.eclipse.wb.core.editor.palette.model.entry.ComponentEntryInfo.preparePresentation(ComponentEntryInfo.java:259)
+	at org.eclipse.wb.core.editor.palette.model.entry.ComponentEntryInfo.initialize(ComponentEntryInfo.java:219)
+	at org.eclipse.wb.internal.core.editor.palette.DesignerPalette.getVisualEntry(DesignerPalette.java:267)
+	at org.eclipse.wb.internal.core.editor.palette.DesignerPalette$4.getEntries(DesignerPalette.java:347)
+	at org.eclipse.wb.core.controls.palette.PaletteComposite$CategoryFigure.<init>(PaletteComposite.java:368)
+	at org.eclipse.wb.core.controls.palette.PaletteComposite$PaletteFigure.refresh(PaletteComposite.java:284)
+	at org.eclipse.wb.core.controls.palette.PaletteComposite.refreshPalette(PaletteComposite.java:199)
+	at org.eclipse.wb.core.controls.palette.PaletteComposite.setPalette(PaletteComposite.java:192)
+	at org.eclipse.wb.internal.core.editor.palette.DesignerPalette.showPalette(DesignerPalette.java:462)
+	at org.eclipse.wb.internal.core.editor.palette.DesignerPalette.reloadPalette(DesignerPalette.java:182)
+	at org.eclipse.wb.internal.core.editor.palette.DesignerPalette.setInput(DesignerPalette.java:148)
+	at org.eclipse.wb.internal.core.editor.JavaDesignComposite.refresh(JavaDesignComposite.java:147)
+	at org.eclipse.wb.internal.core.editor.DesignPage.internal_refreshGEF(DesignPage.java:604)
+	at org.eclipse.wb.internal.core.editor.DesignPage$8$1.run(DesignPage.java:468)
+	at org.eclipse.swt.widgets.Synchronizer.syncExec(Synchronizer.java:236)
+	at org.eclipse.ui.internal.UISynchronizer.syncExec(UISynchronizer.java:133)
+	at org.eclipse.swt.widgets.Display.syncExec(Display.java:4742)
+	at org.eclipse.wb.internal.core.editor.DesignPage$8.run(DesignPage.java:464)
+	at org.eclipse.jface.operation.ModalContext.runInCurrentThread(ModalContext.java:436)
+	at org.eclipse.jface.operation.ModalContext.run(ModalContext.java:352)
+	at org.eclipse.jface.dialogs.ProgressMonitorDialog.run(ProgressMonitorDialog.java:468)
+	at org.eclipse.wb.internal.core.editor.DesignPage.internal_refreshGEF_withProgress(DesignPage.java:484)
+	at org.eclipse.wb.internal.core.editor.DesignPage.internal_refreshGEF(DesignPage.java:432)
+	at org.eclipse.wb.internal.core.editor.UndoManager.refreshDesignerEditor(UndoManager.java:389)
+	at org.eclipse.wb.internal.core.editor.UndoManager.activate(UndoManager.java:90)
+	at org.eclipse.wb.internal.core.editor.DesignPage.handleActiveState_True(DesignPage.java:275)
+	at org.eclipse.wb.internal.core.editor.DesignPage.handleActiveState(DesignPage.java:252)
+	at org.eclipse.wb.internal.core.editor.multi.DefaultMultiMode.showPage(DefaultMultiMode.java:127)
+	at org.eclipse.wb.internal.core.editor.multi.DefaultMultiMode$1.widgetSelected(DefaultMultiMode.java:63)
+	at org.eclipse.swt.widgets.TypedListener.handleEvent(TypedListener.java:252)
+	at org.eclipse.swt.widgets.EventTable.sendEvent(EventTable.java:89)
+	at org.eclipse.swt.widgets.Display.sendEvent(Display.java:4209)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1043)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1067)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1052)
+	at org.eclipse.swt.widgets.Widget.notifyListeners(Widget.java:766)
+	at org.eclipse.swt.custom.CTabFolder.setSelection(CTabFolder.java:3243)
+	at org.eclipse.swt.custom.CTabFolder.onMouse(CTabFolder.java:1881)
+	at org.eclipse.swt.custom.CTabFolder.lambda$0(CTabFolder.java:330)
+	at org.eclipse.swt.widgets.EventTable.sendEvent(EventTable.java:89)
+	at org.eclipse.swt.widgets.Display.sendEvent(Display.java:4209)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1043)
+	at org.eclipse.swt.widgets.Display.runDeferredEvents(Display.java:4026)
+	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:3626)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine$5.run(PartRenderingEngine.java:1157)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:338)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.run(PartRenderingEngine.java:1046)
+	at org.eclipse.e4.ui.internal.workbench.E4Workbench.createAndRunUI(E4Workbench.java:155)
+	at org.eclipse.ui.internal.Workbench.lambda$3(Workbench.java:644)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:338)
+	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:551)
+	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:156)
+	at org.eclipse.ui.internal.ide.application.IDEApplication.start(IDEApplication.java:152)
+	at org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:203)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:134)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:104)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:401)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:255)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:78)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:567)
+	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:654)
+	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:591)
+	at org.eclipse.equinox.launcher.Main.run(Main.java:1462)
+
+!ENTRY org.eclipse.core.resources 4 568 2022-11-15 17:23:54.365
+!MESSAGE Could not write metadata for '/.org.eclipse.egit.core.cmp'.
+!STACK 0
+java.io.FileNotFoundException: C:\Users\tjdgn\Desktop\NetworkProgramming\.metadata\.plugins\org.eclipse.core.resources\.projects\.org.eclipse.egit.core.cmp\.markers.snap (지정된 경로를 찾을 수 없습니다)
+	at java.base/java.io.FileOutputStream.open0(Native Method)
+	at java.base/java.io.FileOutputStream.open(FileOutputStream.java:291)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:234)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:155)
+	at org.eclipse.core.internal.localstore.SafeChunkyOutputStream.<init>(SafeChunkyOutputStream.java:48)
+	at org.eclipse.core.internal.localstore.SafeChunkyOutputStream.<init>(SafeChunkyOutputStream.java:44)
+	at org.eclipse.core.internal.resources.SaveManager.visitAndSnap(SaveManager.java:1765)
+	at org.eclipse.core.internal.resources.SaveManager.visitAndSnap(SaveManager.java:1846)
+	at org.eclipse.core.internal.resources.SaveManager.save(SaveManager.java:1202)
+	at org.eclipse.core.internal.resources.SaveManager.save(SaveManager.java:1143)
+	at org.eclipse.core.internal.resources.DelayedSnapshotJob.run(DelayedSnapshotJob.java:55)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+
+!ENTRY org.eclipse.ui.ide 4 4 2022-11-15 17:23:58.874
+!MESSAGE Not properly disposed SWT resource
+!STACK 0
+java.lang.Error: SWT Resource was not properly disposed
+	at org.eclipse.swt.graphics.Resource.initNonDisposeTracking(Resource.java:172)
+	at org.eclipse.swt.graphics.Resource.<init>(Resource.java:120)
+	at org.eclipse.swt.graphics.Image.<init>(Image.java:605)
+	at org.eclipse.wb.internal.core.model.description.helpers.DescriptionHelper.getIconImage(DescriptionHelper.java:166)
+	at org.eclipse.wb.internal.core.model.description.helpers.ComponentPresentationHelper.getComponentImage(ComponentPresentationHelper.java:166)
+	at org.eclipse.wb.internal.core.model.description.helpers.ComponentPresentationHelper.getFastPresentation(ComponentPresentationHelper.java:139)
+	at org.eclipse.wb.internal.core.model.description.helpers.ComponentPresentationHelper.getPresentation(ComponentPresentationHelper.java:114)
+	at org.eclipse.wb.core.editor.palette.model.entry.ComponentEntryInfo.preparePresentation(ComponentEntryInfo.java:259)
+	at org.eclipse.wb.core.editor.palette.model.entry.ComponentEntryInfo.initialize(ComponentEntryInfo.java:219)
+	at org.eclipse.wb.internal.core.editor.palette.DesignerPalette.getVisualEntry(DesignerPalette.java:267)
+	at org.eclipse.wb.internal.core.editor.palette.DesignerPalette$4.getEntries(DesignerPalette.java:347)
+	at org.eclipse.wb.core.controls.palette.PaletteComposite$CategoryFigure.<init>(PaletteComposite.java:368)
+	at org.eclipse.wb.core.controls.palette.PaletteComposite$PaletteFigure.refresh(PaletteComposite.java:284)
+	at org.eclipse.wb.core.controls.palette.PaletteComposite.refreshPalette(PaletteComposite.java:199)
+	at org.eclipse.wb.core.controls.palette.PaletteComposite.setPalette(PaletteComposite.java:192)
+	at org.eclipse.wb.internal.core.editor.palette.DesignerPalette.showPalette(DesignerPalette.java:462)
+	at org.eclipse.wb.internal.core.editor.palette.DesignerPalette.reloadPalette(DesignerPalette.java:182)
+	at org.eclipse.wb.internal.core.editor.palette.DesignerPalette.setInput(DesignerPalette.java:148)
+	at org.eclipse.wb.internal.core.editor.JavaDesignComposite.refresh(JavaDesignComposite.java:147)
+	at org.eclipse.wb.internal.core.editor.DesignPage.internal_refreshGEF(DesignPage.java:604)
+	at org.eclipse.wb.internal.core.editor.DesignPage$8$1.run(DesignPage.java:468)
+	at org.eclipse.swt.widgets.Synchronizer.syncExec(Synchronizer.java:236)
+	at org.eclipse.ui.internal.UISynchronizer.syncExec(UISynchronizer.java:133)
+	at org.eclipse.swt.widgets.Display.syncExec(Display.java:4742)
+	at org.eclipse.wb.internal.core.editor.DesignPage$8.run(DesignPage.java:464)
+	at org.eclipse.jface.operation.ModalContext.runInCurrentThread(ModalContext.java:436)
+	at org.eclipse.jface.operation.ModalContext.run(ModalContext.java:352)
+	at org.eclipse.jface.dialogs.ProgressMonitorDialog.run(ProgressMonitorDialog.java:468)
+	at org.eclipse.wb.internal.core.editor.DesignPage.internal_refreshGEF_withProgress(DesignPage.java:484)
+	at org.eclipse.wb.internal.core.editor.DesignPage.internal_refreshGEF(DesignPage.java:432)
+	at org.eclipse.wb.internal.core.editor.UndoManager.refreshDesignerEditor(UndoManager.java:389)
+	at org.eclipse.wb.internal.core.editor.UndoManager.activate(UndoManager.java:90)
+	at org.eclipse.wb.internal.core.editor.DesignPage.handleActiveState_True(DesignPage.java:275)
+	at org.eclipse.wb.internal.core.editor.DesignPage.handleActiveState(DesignPage.java:252)
+	at org.eclipse.wb.internal.core.editor.multi.DefaultMultiMode.showPage(DefaultMultiMode.java:127)
+	at org.eclipse.wb.internal.core.editor.multi.DefaultMultiMode$1.widgetSelected(DefaultMultiMode.java:63)
+	at org.eclipse.swt.widgets.TypedListener.handleEvent(TypedListener.java:252)
+	at org.eclipse.swt.widgets.EventTable.sendEvent(EventTable.java:89)
+	at org.eclipse.swt.widgets.Display.sendEvent(Display.java:4209)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1043)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1067)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1052)
+	at org.eclipse.swt.widgets.Widget.notifyListeners(Widget.java:766)
+	at org.eclipse.swt.custom.CTabFolder.setSelection(CTabFolder.java:3243)
+	at org.eclipse.swt.custom.CTabFolder.onMouse(CTabFolder.java:1881)
+	at org.eclipse.swt.custom.CTabFolder.lambda$0(CTabFolder.java:330)
+	at org.eclipse.swt.widgets.EventTable.sendEvent(EventTable.java:89)
+	at org.eclipse.swt.widgets.Display.sendEvent(Display.java:4209)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1043)
+	at org.eclipse.swt.widgets.Display.runDeferredEvents(Display.java:4026)
+	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:3626)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine$5.run(PartRenderingEngine.java:1157)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:338)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.run(PartRenderingEngine.java:1046)
+	at org.eclipse.e4.ui.internal.workbench.E4Workbench.createAndRunUI(E4Workbench.java:155)
+	at org.eclipse.ui.internal.Workbench.lambda$3(Workbench.java:644)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:338)
+	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:551)
+	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:156)
+	at org.eclipse.ui.internal.ide.application.IDEApplication.start(IDEApplication.java:152)
+	at org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:203)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:134)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:104)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:401)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:255)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:78)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:567)
+	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:654)
+	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:591)
+	at org.eclipse.equinox.launcher.Main.run(Main.java:1462)
+
+!ENTRY org.eclipse.core.resources 4 568 2022-11-15 17:29:20.792
+!MESSAGE Could not write metadata for '/.org.eclipse.egit.core.cmp'.
+!STACK 0
+java.io.FileNotFoundException: C:\Users\tjdgn\Desktop\NetworkProgramming\.metadata\.plugins\org.eclipse.core.resources\.projects\.org.eclipse.egit.core.cmp\.markers.snap (지정된 경로를 찾을 수 없습니다)
+	at java.base/java.io.FileOutputStream.open0(Native Method)
+	at java.base/java.io.FileOutputStream.open(FileOutputStream.java:291)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:234)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:155)
+	at org.eclipse.core.internal.localstore.SafeChunkyOutputStream.<init>(SafeChunkyOutputStream.java:48)
+	at org.eclipse.core.internal.localstore.SafeChunkyOutputStream.<init>(SafeChunkyOutputStream.java:44)
+	at org.eclipse.core.internal.resources.SaveManager.visitAndSnap(SaveManager.java:1765)
+	at org.eclipse.core.internal.resources.SaveManager.visitAndSnap(SaveManager.java:1846)
+	at org.eclipse.core.internal.resources.SaveManager.save(SaveManager.java:1202)
+	at org.eclipse.core.internal.resources.SaveManager.save(SaveManager.java:1143)
+	at org.eclipse.core.internal.resources.DelayedSnapshotJob.run(DelayedSnapshotJob.java:55)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+
+!ENTRY org.eclipse.ui.ide 4 4 2022-11-15 17:31:03.450
+!MESSAGE Problems saving workspace
+
+!ENTRY org.eclipse.ui.ide 4 1 2022-11-15 17:31:03.450
+!MESSAGE Problems occurred while trying to save the state of the workbench.
+!SUBENTRY 1 org.eclipse.core.resources 4 568 2022-11-15 17:31:03.450
+!MESSAGE Could not write metadata for '/.org.eclipse.egit.core.cmp'.
+!STACK 0
+java.io.FileNotFoundException: C:\Users\tjdgn\Desktop\NetworkProgramming\.metadata\.plugins\org.eclipse.core.resources\.projects\.org.eclipse.egit.core.cmp\.markers (지정된 경로를 찾을 수 없습니다)
+	at java.base/java.io.FileOutputStream.open0(Native Method)
+	at java.base/java.io.FileOutputStream.open(FileOutputStream.java:291)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:234)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:184)
+	at org.eclipse.core.internal.localstore.SafeFileOutputStream.<init>(SafeFileOutputStream.java:55)
+	at org.eclipse.core.internal.resources.SaveManager.visitAndSave(SaveManager.java:1657)
+	at org.eclipse.core.internal.resources.SaveManager.visitAndSave(SaveManager.java:1736)
+	at org.eclipse.core.internal.resources.SaveManager.save(SaveManager.java:1177)
+	at org.eclipse.core.internal.resources.Workspace.save(Workspace.java:2354)
+	at org.eclipse.ui.internal.ide.application.IDEWorkbenchAdvisor.lambda$1(IDEWorkbenchAdvisor.java:554)
+	at org.eclipse.jface.operation.ModalContext$ModalContextThread.run(ModalContext.java:122)
