@@ -1,6 +1,9 @@
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -10,13 +13,16 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.Color;
 import javax.swing.border.LineBorder;
+
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Image;
 
 import javax.swing.JMenuBar;
 import java.awt.ScrollPane;
@@ -40,6 +46,14 @@ public class JavaGameClientView3 extends JFrame {
 	private String Ip_addr;
 	private String Port_no;
 	private JTextField textField;
+	private JLabel lblMouseEvent;
+	private Graphics gc2 = null;
+	private int pen_size = 2; // minimum 2
+	// 그려진 Image를 보관하는 용도, paint() 함수에서 이용한다.
+	private Image panelImage = null;
+	private Graphics gc;
+	private TablePanel panel_4;
+	JPanel panel;
 
 	/**
 	 * Create the frame.
@@ -135,10 +149,26 @@ public class JavaGameClientView3 extends JFrame {
 		lblUserName_1_1_1_3.setBackground(Color.WHITE);
 		panel_3.add(lblUserName_1_1_1_3);
 		
-		TablePanel panel_4 = new TablePanel();
+		panel_4 = new TablePanel();
 		panel_4.setBounds(12, 10, 627, 628);
 		panel_4.setBackground(new Color(206,167,61));
+		panel_4.init();
+		//gc1 = panel_4.getGraphics();
 		contentPane.add(panel_4);
+		gc = panel_4.getGraphics();
+//		
+//
+//		// Image 영역 보관용. paint() 에서 이용한다.
+//		Image defaultimg = new ImageIcon(JavaGameClientView.class.getResource("default.png")).getImage();
+//		panelImage = createImage(panel_4.getWidth(), panel_4.getHeight());
+//		gc2 = panelImage.getGraphics();
+//		gc2.setColor(panel_4.getBackground());
+//		gc2.fillRect(0,0, panel_4.getWidth(),  panel_4.getHeight());
+//		gc2.setColor(Color.BLACK);
+//		gc2.drawRect(0,0, panel_4.getWidth()-1,  panel_4.getHeight()-1);
+//		gc2.drawImage(defaultimg,  0,  0, panel_4.getWidth(), panel_4.getHeight(), panel_4);
+		
+		
 		
 		Button button = new Button("시작");
 		button.addActionListener(new ActionListener() {
@@ -168,14 +198,92 @@ public class JavaGameClientView3 extends JFrame {
 		lblNewLabel.setBounds(90, 643, 107, 28);
 		contentPane.add(lblNewLabel);
 		
-		
+		MyMouseEvent mouse = new MyMouseEvent();
+		//panel_4.addMouseMotionListener(mouse);
+		panel_4.addMouseListener(mouse);
 		setVisible(true);
 
 	}
+	
+	class MyMouseEvent implements MouseListener, MouseMotionListener {
+		int x;
+		int y;
+		@Override
+		public void mouseDragged(MouseEvent e) {
+			//lblMouseEvent.setText(e.getButton() + " mouseDragged " + e.getX() + "," + e.getY());// 좌표출력가능
+//			Color c = new Color(0,0,255);
+//			gc2.setColor(c);
+//			gc2.fillOval(e.getX()-pen_size/2, e.getY()-pen_size/2, pen_size, pen_size);
+//			// panelImnage는 paint()에서 이용한다.
+//			gc.drawImage(panelImage, 0, 0, panel);
+			//SendMouseEvent(e);
+		}
+
+		@Override
+		public void mouseMoved(MouseEvent e) {
+			//lblMouseEvent.setText(e.getButton() + " mouseMoved " + e.getX() + "," + e.getY());
+		}
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			//lblMouseEvent.setText(e.getButton() + " mouseClicked " + e.getX() + "," + e.getY());
+//			Color c = new Color(0,0,255);
+//			gc2.setColor(c);
+//			gc2.fillOval(e.getX()-pen_size/2, e.getY()-pen_size/2, pen_size, pen_size);
+//			gc.drawImage(panelImage, 0, 0, panel);
+			
+			x = (int)Math.round(e.getX()/(double) 30)-1;
+			y = (int)Math.round(e.getY()/(double) 30);
+			panel_4.setMap(y, x, 1);
+			//panel_4.drawStone(gc);
+			panel_4.repaint();
+			
+			//SendMouseEvent(e);
+		}
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			//lblMouseEvent.setText(e.getButton() + " mouseEntered " + e.getX() + "," + e.getY());
+			// panel.setBackground(Color.YELLOW);
+		}
+		@Override
+		public void mouseExited(MouseEvent e) {
+			//lblMouseEvent.setText(e.getButton() + " mouseExited " + e.getX() + "," + e.getY());
+			// panel.setBackground(Color.CYAN);
+		}
+		@Override
+		public void mousePressed(MouseEvent e) {
+			//lblMouseEvent.setText(e.getButton() + " mousePressed " + e.getX() + "," + e.getY());
+		}
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			//lblMouseEvent.setText(e.getButton() + " mouseReleased " + e.getX() + "," + e.getY());
+			// 드래그중 멈출시 보임
+		}
+	}
 }
+
+
 
 class TablePanel extends JPanel {
 	private MapSize size = new MapSize();
+	private final int STONE_SIZE=28;
+	private int MaxSize = 20;
+	private int Map[][] = new int[MaxSize+1][MaxSize];
+
+	public void init() {
+		for (int i = 0; i < MaxSize; i++) {
+			for (int j = 0; j < MaxSize; j++) {
+				Map[i][j] = 0;
+			}
+		}
+	}
+
+	public void setMap(int y, int x, int color) {
+		if(Map[y][x] == 0)
+			Map[y][x] = color;
+		else
+			Map[y][x] = 0;
+	}
+	
 	
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -183,6 +291,33 @@ class TablePanel extends JPanel {
 			g.drawLine(size.getCell(), i*size.getCell(), size.getCell()*size.getSize(), i*size.getCell()); 
 			g.drawLine(i*size.getCell(), size.getCell(), i*size.getCell() , size.getCell()*size.getSize()); 
 		}
+        drawStone(g);
     }
+    
+    public void drawStone(Graphics g) {
+		for(int y=1;y<size.getSize()+1;y++){
+			for(int x=0;x<size.getSize();x++){
+				if(Map[y][x]==1)
+					drawBlack(g,x,y);
+				else if(Map[y][x]==2)
+					drawWhite(g, x, y);
+				else if(Map[y][x]==3)
+					drawRed(g, x, y);
+			}
+		}
+	}
+	public void drawRed(Graphics g,int x,int y){
+		g.setColor(Color.RED);
+		g.fillOval(x*size.getCell()+15, y*size.getCell()-15, STONE_SIZE, STONE_SIZE);
+	}
+	public void drawBlack(Graphics g,int x,int y){
+		g.setColor(Color.BLACK);
+		g.fillOval(x*size.getCell()+15, y*size.getCell()-15, STONE_SIZE, STONE_SIZE);
+	}
+	public void drawWhite(Graphics g,int x,int y){
+		g.setColor(Color.WHITE);
+		g.fillOval(x*size.getCell()+15, y*size.getCell()-15, STONE_SIZE, STONE_SIZE);
+	}
+    
 }
 
