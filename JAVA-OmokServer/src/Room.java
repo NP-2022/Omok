@@ -1,5 +1,6 @@
 import java.util.Vector;
 
+
 class Stone {
 	public int x, y;
 }
@@ -31,5 +32,25 @@ public class Room {
 	
 	public void addStone(Stone stone) {
 		this.stoneList.add(stone);
+	}
+
+
+	public boolean hasName(String userName) {
+		for (JavaGameServer.UserService user : playerList) {
+			if (user.UserName.equals(userName)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+
+	public void addUser(JavaGameServer.UserService userService) {
+		playerList.add(userService);
+	}
+
+
+	public int getPlayerCount() {
+		return playerList.size();
 	}
 }

@@ -210,7 +210,7 @@ public class JavaGameClientView extends JFrame {
 		roomList = new JList(roomListModel);
 		roomList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
-		insertButton = new JButton("\uBC29 \uC785\uC7A5");
+		insertButton = new JButton("방 입장");
 		insertButton.setBounds(566, 283, 97, 23);
 		
 		contentPane.add(insertButton);
@@ -219,6 +219,7 @@ public class JavaGameClientView extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				int index = roomList.getSelectedIndex();
+				if(index == -1) return;
 				requestInsertRoom(index);
 				System.out.println("go to "+index+" requested.");
 			}
@@ -227,7 +228,7 @@ public class JavaGameClientView extends JFrame {
 		
 		roomListScrollPane.setViewportView(roomList);
 		
-		JButton btnNewButton_1 = new JButton("\uBC29 \uB9CC\uB4E4\uAE30");
+		JButton btnNewButton_1 = new JButton("방 만들기");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JavaGameClientRoomCreateView roomcreate = new JavaGameClientRoomCreateView(mainClientView, username, ip_addr, port_no);

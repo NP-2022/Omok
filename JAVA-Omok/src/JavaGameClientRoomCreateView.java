@@ -25,9 +25,9 @@ public class JavaGameClientRoomCreateView extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JComboBox gameModeComboBox;
+	private JComboBox maxPlayerComboBox;
 	private JTextField txtRoom;
 	private JLabel lblRoom;
-	private JSpinner PersonNum;
 	private String Username;
 	private String Ip_addr;
 	private String Port_no;
@@ -58,7 +58,7 @@ public class JavaGameClientRoomCreateView extends JFrame {
 		contentPane.add(lblGameLabel);
 		
 		String[] gameModes = {"오목", "알까기"};
-		gameModeComboBox = new JComboBox<String>(gameModes);
+		gameModeComboBox = new JComboBox(gameModes);
 		gameModeComboBox.setBounds(101, 39, 116, 33);
 		contentPane.add(gameModeComboBox);
 		
@@ -78,9 +78,10 @@ public class JavaGameClientRoomCreateView extends JFrame {
 		lblPersonNum.setBounds(12, 163, 82, 33);
 		contentPane.add(lblPersonNum);
 		
-		PersonNum = new JSpinner();
-		PersonNum.setBounds(101, 169, 30, 22);
-		contentPane.add(PersonNum);
+		String[] maxPlayers = {"2", "3", "4"};
+		maxPlayerComboBox = new JComboBox(maxPlayers);
+		maxPlayerComboBox.setBounds(101, 169, 47, 22);
+		contentPane.add(maxPlayerComboBox);
 		
 		JButton btnConnect = new JButton("Connect");
 		btnConnect.setBounds(12, 223, 205, 38);
@@ -99,19 +100,19 @@ public class JavaGameClientRoomCreateView extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			String Game = gameModeComboBox.getSelectedItem().toString();
 			String Room = txtRoom.getText().trim();
-			int Person = PersonNum.getComponentCount(); 
+			int maxPlayer = Integer.parseInt(maxPlayerComboBox.getSelectedItem().toString());
 			if(Game.equals("오목")) {
-				JavaGameClientView2 view = new JavaGameClientView2(mainClientView, Username, Ip_addr, Port_no, Game, Room, Person);
+				JavaGameClientView2 view = new JavaGameClientView2(mainClientView, Username, Ip_addr, Port_no, Game, Room, maxPlayer);
 				mainClientView.gameClientView = view;
 				setVisible(false);
 			}else if(Game.equals("알까기")) {
-				JavaGameClientView3 view = new JavaGameClientView3(mainClientView, Username, Ip_addr, Port_no, Game, Room, Person);
+				JavaGameClientView3 view = new JavaGameClientView3(mainClientView, Username, Ip_addr, Port_no, Game, Room, maxPlayer);
 				mainClientView.gameClientView = view;
 				setVisible(false);
 			}
 			
 			ChatMsg msg = new ChatMsg(Username, "600", Game);
-			msg.roomMax = (int)PersonNum.getValue();
+			msg.roomMax = maxPlayer;
 			msg.roomName = txtRoom.getText();
 			msg.gameMode = Game;
 			mainClientView.SendObject(msg);

@@ -172,25 +172,11 @@ public class JavaGameServer extends JFrame {
 			this.client_socket = client_socket;
 			this.user_vc = userVec;
 			try {
-//				is = client_socket.getInputStream();
-//				dis = new DataInputStream(is);
-//				os = client_socket.getOutputStream();
-//				dos = new DataOutputStream(os);
-
 				oos = new ObjectOutputStream(client_socket.getOutputStream());
 				oos.flush();
 				ois = new ObjectInputStream(client_socket.getInputStream());
 
-				// line1 = dis.readUTF();
-				// /login user1 ==> msg[0] msg[1]
-//				byte[] b = new byte[BUF_LEN];
-//				dis.read(b);		
-//				String line1 = new String(b);
-//
-//				//String[] msg = line1.split(" ");
-//				//UserName = msg[1].trim();
-//				UserStatus = "O"; // Online 상태
-//				Login();
+				
 			} catch (Exception e) {
 				AppendText("userService error");
 			}
@@ -236,32 +222,9 @@ public class JavaGameServer extends JFrame {
 					user.WriteOne(str);
 			}
 		}
-
-		// Windows 처럼 message 제외한 나머지 부분은 NULL 로 만들기 위한 함수
-		public byte[] MakePacket(String msg) {
-			byte[] packet = new byte[BUF_LEN];
-			byte[] bb = null;
-			int i;
-			for (i = 0; i < BUF_LEN; i++)
-				packet[i] = 0;
-			try {
-				bb = msg.getBytes("euc-kr");
-			} catch (UnsupportedEncodingException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			for (i = 0; i < bb.length; i++)
-				packet[i] = bb[i];
-			return packet;
-		}
-
 		// UserService Thread가 담당하는 Client 에게 1:1 전송
 		public void WriteOne(String msg) {
 			try {
-				// dos.writeUTF(msg);
-//				byte[] bb;
-//				bb = MakePacket(msg);
-//				dos.write(bb, 0, bb.length);
 				ChatMsg obcm = new ChatMsg("SERVER", "200", msg);
 				oos.writeObject(obcm);
 			} catch (IOException e) {
@@ -340,6 +303,10 @@ public class JavaGameServer extends JFrame {
 				WriteOne("방이 꽉 찼습니다!");
 				return;
 			}
+			else if (room.hasName(msg.UserName)) {
+				WriteOne("이미 들어가 있는 방입니다!");
+				return;
+			}
 			else {
 				AppendText("플레이어 "+UserName+" "+room.roomNumber+"번 방 입장.");
 				msg = new ChatMsg(UserName, "700", "");
@@ -347,6 +314,7 @@ public class JavaGameServer extends JFrame {
 				msg.roomName = room.roomName;
 				msg.gameMode = room.gameMode;
 				msg.roomNumber = room.roomNumber;
+				room.addUser(this);
 				WriteAllObject(msg);
 			}
 		}
@@ -355,7 +323,7 @@ public class JavaGameServer extends JFrame {
 			ChatMsg msg = new ChatMsg(UserName, "702", "");
 			StringBuffer data = new StringBuffer();
 			for(Room room : roomVec) {
-				data.append(String.format("[No.%d] [%s] [mode:%s] [%d/%d] [방장:%s])\n",room.roomNumber, room.roomName, room.gameMode, 1, room.roomMax, room.ownerName));
+				data.append(String.format("[No.%d] [%s] [mode:%s] [%d/%d] [방장:%s])\n",room.roomNumber, room.roomName, room.gameMode, room.getPlayerCount(), room.roomMax, room.ownerName));
 			}
 			msg.data = data.toString();
 			WriteAllObject(msg);
@@ -364,24 +332,7 @@ public class JavaGameServer extends JFrame {
 		public void run() {
 			while (true) { // 사용자 접속을 계속해서 받기 위해 while문
 				try {
-					// String msg = dis.readUTF();
-//					byte[] b = new byte[BUF_LEN];
-//					int ret;
-//					ret = dis.read(b);
-//					if (ret < 0) {
-//						AppendText("dis.read() < 0 error");
-//						try {
-//							dos.close();
-//							dis.close();
-//							client_socket.close();
-//							Logout();
-//							break;
-//						} catch (Exception ee) {
-//							break;
-//						} // catch문 끝
-//					}
-//					String msg = new String(b, "euc-kr");
-//					msg = msg.trim(); // 앞뒤 blank NULL, \n 모두 제거
+					
 					Object obcm = null;
 					String msg = null;
 					ChatMsg cm = null;
