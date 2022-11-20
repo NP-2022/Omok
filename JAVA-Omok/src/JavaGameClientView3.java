@@ -52,12 +52,17 @@ public class JavaGameClientView3 extends JFrame {
 	private Graphics gc;
 	private TablePanel panel_4;
 	JPanel panel;
+	
+	public JavaGameClientView mainClientView;
 
 	/**
 	 * Create the frame.
 	 */
-	public JavaGameClientView3(String username, String ip_addr, String port_no, String Game, String Room,
+	public JavaGameClientView3(JavaGameClientView mainClientView, String username, String ip_addr, String port_no, String Game, String Room,
 			int PersonNum) {
+		
+		this.mainClientView = mainClientView;
+		
 		setResizable(false);
 		// setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(900, 100, 1036, 720);

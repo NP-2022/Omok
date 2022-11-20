@@ -11,6 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JSpinner;
 
 public class JavaGameClientRoomCreateView extends JFrame {
@@ -23,17 +24,22 @@ public class JavaGameClientRoomCreateView extends JFrame {
 	
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField txtGame;
+	private JComboBox gameModeComboBox;
 	private JTextField txtRoom;
+	private JLabel lblRoom;
 	private JSpinner PersonNum;
 	private String Username;
 	private String Ip_addr;
 	private String Port_no;
+	
+	JavaGameClientView mainClientView; // ois와 oos를 생성한 최초 Class에서 처리
 
 	/**
 	 * Create the frame.
 	 */
-	public JavaGameClientRoomCreateView(String username, String ip_addr, String port_no) {
+	public JavaGameClientRoomCreateView(JavaGameClientView mainClientView, String username, String ip_addr, String port_no) {
+		
+		this.mainClientView = mainClientView;
 		
 		Username = username;
 		Ip_addr = ip_addr;
@@ -51,15 +57,12 @@ public class JavaGameClientRoomCreateView extends JFrame {
 		lblGameLabel.setBounds(12, 39, 82, 33);
 		contentPane.add(lblGameLabel);
 		
-		txtGame = new JTextField();
-		txtGame.setText("알까기");
-		txtGame.setHorizontalAlignment(SwingConstants.CENTER);
-		txtGame.setColumns(10);
-		txtGame.setBounds(101, 39, 116, 33);
-		contentPane.add(txtGame);
-		txtGame.setColumns(10);
+		String[] gameModes = {"오목", "알까기"};
+		gameModeComboBox = new JComboBox<String>(gameModes);
+		gameModeComboBox.setBounds(101, 39, 116, 33);
+		contentPane.add(gameModeComboBox);
 		
-		JLabel lblRoom = new JLabel("방 이름");
+		lblRoom = new JLabel("방 이름");
 		lblRoom.setBounds(12, 100, 82, 33);
 		contentPane.add(lblRoom);
 		
@@ -86,8 +89,6 @@ public class JavaGameClientRoomCreateView extends JFrame {
 		
 		Roomaction action = new Roomaction();
 		btnConnect.addActionListener(action);
-		txtGame.addActionListener(action);
-		txtRoom.addActionListener(action);
 		setVisible(true);
 		
 	}
@@ -96,16 +97,21 @@ public class JavaGameClientRoomCreateView extends JFrame {
 	{
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			String Game = txtGame.getText().trim();
+			String Game = gameModeComboBox.getSelectedItem().toString();
 			String Room = txtRoom.getText().trim();
-			int Person = PersonNum.getComponentCount();
+			int Person = PersonNum.getComponentCount(); 
 			if(Game.equals("오목")) {
-				JavaGameClientView2 view = new JavaGameClientView2(Username, Ip_addr, Port_no, Game, Room, Person);
+				JavaGameClientView2 view = new JavaGameClientView2(mainClientView, Username, Ip_addr, Port_no, Game, Room, Person);
 				setVisible(false);
 			}else if(Game.equals("알까기")) {
-				JavaGameClientView3 view = new JavaGameClientView3(Username, Ip_addr, Port_no, Game, Room, Person);
+				JavaGameClientView3 view = new JavaGameClientView3(mainClientView, Username, Ip_addr, Port_no, Game, Room, Person);
 				setVisible(false);
 			}
+			
+			ChatMsg msg = new ChatMsg(Username, "600", Game);
+			msg.roomMax = (int)PersonNum.getValue();
+			msg.roomName = lblRoom.getText();
+			mainClientView.SendObject(msg);
 		}
 	}
 }

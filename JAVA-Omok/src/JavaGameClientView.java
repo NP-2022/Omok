@@ -78,12 +78,13 @@ public class JavaGameClientView extends JFrame {
 	private JButton imgBtn;
 
 	JPanel panel;
-	private JLabel lblMouseEvent;
 	private Graphics gc;
 	private int pen_size = 2; // minimum 2
 	// 그려진 Image를 보관하는 용도, paint() 함수에서 이용한다.
 	private Image panelImage = null; 
 	private Graphics gc2 = null;
+	
+	public JavaGameClientView mainClientView = null;
 
 
 	
@@ -92,6 +93,9 @@ public class JavaGameClientView extends JFrame {
 	 * @throws BadLocationException 
 	 */
 	public JavaGameClientView(String username, String ip_addr, String port_no)  {
+		
+		mainClientView = this;
+		
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //창 닫히면 프로세스 종료
 		setBounds(100, 100, 800, 634);
@@ -110,7 +114,7 @@ public class JavaGameClientView extends JFrame {
 		scrollPane.setViewportView(textArea);
 
 		txtInput = new JTextField();
-		txtInput.setBounds(79, 540, 209, 40);
+		txtInput.setBounds(12, 540, 276, 40);
 		contentPane.add(txtInput);
 		txtInput.setColumns(10);
 
@@ -124,7 +128,7 @@ public class JavaGameClientView extends JFrame {
 		lblUserName.setBackground(Color.WHITE);
 		lblUserName.setFont(new Font("굴림", Font.BOLD, 14));
 		lblUserName.setHorizontalAlignment(SwingConstants.CENTER);
-		lblUserName.setBounds(12, 539, 62, 40);
+		lblUserName.setBounds(376, 539, 149, 40);
 		contentPane.add(lblUserName);
 		setVisible(true);
 
@@ -134,7 +138,7 @@ public class JavaGameClientView extends JFrame {
 
 		imgBtn = new JButton("이미지 변경");
 		imgBtn.setFont(new Font("굴림", Font.PLAIN, 16));
-		imgBtn.setBounds(376, 489, 50, 40);
+		imgBtn.setBounds(376, 324, 149, 40);
 		contentPane.add(imgBtn);
 
 		JButton btnNewButton = new JButton("종 료");
@@ -146,13 +150,13 @@ public class JavaGameClientView extends JFrame {
 				System.exit(0);
 			}
 		});
-		btnNewButton.setBounds(672, 492, 100, 40);
+		btnNewButton.setBounds(672, 539, 100, 40);
 		contentPane.add(btnNewButton);
 
 		panel = new JPanel();
 		panel.setBorder(new LineBorder(new Color(0, 0, 0)));
 		panel.setBackground(Color.WHITE);
-		panel.setBounds(376, 325, 149, 154);
+		panel.setBounds(376, 374, 149, 154);
 		contentPane.add(panel);
 		gc = panel.getGraphics();
 		
@@ -165,14 +169,6 @@ public class JavaGameClientView extends JFrame {
 		gc2.setColor(Color.BLACK);
 		gc2.drawRect(0,0, panel.getWidth()-1,  panel.getHeight()-1);
 		gc2.drawImage(defaultimg,  0,  0, panel.getWidth(), panel.getHeight(), panel);
-		
-		lblMouseEvent = new JLabel("<dynamic>");
-		lblMouseEvent.setHorizontalAlignment(SwingConstants.CENTER);
-		lblMouseEvent.setFont(new Font("굴림", Font.BOLD, 14));
-		lblMouseEvent.setBorder(new LineBorder(new Color(0, 0, 0)));
-		lblMouseEvent.setBackground(Color.WHITE);
-		lblMouseEvent.setBounds(376, 539, 400, 40);
-		contentPane.add(lblMouseEvent);
 		
 		JLabel lblUserName_1 = new JLabel("<Omok Game>");
 		lblUserName_1.setHorizontalAlignment(SwingConstants.CENTER);
@@ -199,7 +195,7 @@ public class JavaGameClientView extends JFrame {
 		JButton btnNewButton_1 = new JButton("방 만들기======");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JavaGameClientRoomCreateView roomcreate = new JavaGameClientRoomCreateView(username, ip_addr, port_no);
+				JavaGameClientRoomCreateView roomcreate = new JavaGameClientRoomCreateView(mainClientView, username, ip_addr, port_no);
 				setVisible(true);
 			}
 		});
@@ -209,7 +205,7 @@ public class JavaGameClientView extends JFrame {
 		
 		
 		scrollPane_2 = new JScrollPane();
-		scrollPane_2.setBounds(537, 325, 235, 154);
+		scrollPane_2.setBounds(537, 374, 235, 154);
 		contentPane.add(scrollPane_2);
 		
 		lblUserName_1_2 = new JLabel("전적");
@@ -308,6 +304,9 @@ public class JavaGameClientView extends JFrame {
 					case "500": // Mouse Event 수신
 						DoMouseEvent(cm);
 						break;
+					case "600": // 새로운 방 생성 됨, 리스트 갱신
+						//roomListUpdate(cm);
+						break;
 					}
 				} catch (IOException e) {
 					AppendText("ois.readObject() error");
@@ -357,8 +356,8 @@ public class JavaGameClientView extends JFrame {
 				if (pen_size > 2)
 					pen_size--;
 			}
-			lblMouseEvent.setText("mouseWheelMoved Rotation=" + e.getWheelRotation() 
-				+ " pen_size = " + pen_size + " " + e.getX() + "," + e.getY());
+			//lblMouseEvent.setText("mouseWheelMoved Rotation=" + e.getWheelRotation() 
+			//	+ " pen_size = " + pen_size + " " + e.getX() + "," + e.getY());
 
 		}
 		
@@ -367,7 +366,7 @@ public class JavaGameClientView extends JFrame {
 	class MyMouseEvent implements MouseListener, MouseMotionListener {
 		@Override
 		public void mouseDragged(MouseEvent e) {
-			lblMouseEvent.setText(e.getButton() + " mouseDragged " + e.getX() + "," + e.getY());// 좌표출력가능
+			//lblMouseEvent.setText(e.getButton() + " mouseDragged " + e.getX() + "," + e.getY());// 좌표출력가능
 			Color c = new Color(0,0,255);
 			gc2.setColor(c);
 			gc2.fillOval(e.getX()-pen_size/2, e.getY()-pen_size/2, pen_size, pen_size);
@@ -378,12 +377,12 @@ public class JavaGameClientView extends JFrame {
 
 		@Override
 		public void mouseMoved(MouseEvent e) {
-			lblMouseEvent.setText(e.getButton() + " mouseMoved " + e.getX() + "," + e.getY());
+			//lblMouseEvent.setText(e.getButton() + " mouseMoved " + e.getX() + "," + e.getY());
 		}
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			lblMouseEvent.setText(e.getButton() + " mouseClicked " + e.getX() + "," + e.getY());
+			//lblMouseEvent.setText(e.getButton() + " mouseClicked " + e.getX() + "," + e.getY());
 			Color c = new Color(0,0,255);
 			gc2.setColor(c);
 			gc2.fillOval(e.getX()-pen_size/2, e.getY()-pen_size/2, pen_size, pen_size);
@@ -393,27 +392,27 @@ public class JavaGameClientView extends JFrame {
 
 		@Override
 		public void mouseEntered(MouseEvent e) {
-			lblMouseEvent.setText(e.getButton() + " mouseEntered " + e.getX() + "," + e.getY());
+			//lblMouseEvent.setText(e.getButton() + " mouseEntered " + e.getX() + "," + e.getY());
 			// panel.setBackground(Color.YELLOW);
 
 		}
 
 		@Override
 		public void mouseExited(MouseEvent e) {
-			lblMouseEvent.setText(e.getButton() + " mouseExited " + e.getX() + "," + e.getY());
+			//lblMouseEvent.setText(e.getButton() + " mouseExited " + e.getX() + "," + e.getY());
 			// panel.setBackground(Color.CYAN);
 
 		}
 
 		@Override
 		public void mousePressed(MouseEvent e) {
-			lblMouseEvent.setText(e.getButton() + " mousePressed " + e.getX() + "," + e.getY());
+			//lblMouseEvent.setText(e.getButton() + " mousePressed " + e.getX() + "," + e.getY());
 
 		}
 
 		@Override
 		public void mouseReleased(MouseEvent e) {
-			lblMouseEvent.setText(e.getButton() + " mouseReleased " + e.getX() + "," + e.getY());
+			//lblMouseEvent.setText(e.getButton() + " mouseReleased " + e.getX() + "," + e.getY());
 			// 드래그중 멈출시 보임
 
 		}

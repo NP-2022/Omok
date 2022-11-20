@@ -38,8 +38,11 @@ public class JavaGameServer extends JFrame {
 
 	private ServerSocket socket; // 서버소켓
 	private Socket client_socket; // accept() 에서 생성된 client 소켓
-	private Vector UserVec = new Vector(); // 연결된 사용자를 저장할 벡터
+	private Vector<UserService> userVec = new Vector(); // 연결된 사용자를 저장할 벡터
 	private static final int BUF_LEN = 128; // Windows 처럼 BUF_LEN 을 정의
+	
+	private Vector<Room> roomVec = new Vector(); // 생성된 방을 저장할 벡터
+	private int roomCount = 1; // 방 번호는 1부터 계속 증가한다. 
 
 	/**
 	 * Launch the application.
@@ -119,9 +122,9 @@ public class JavaGameServer extends JFrame {
 					AppendText("새로운 참가자 from " + client_socket);
 					// User 당 하나씩 Thread 생성
 					UserService new_user = new UserService(client_socket);
-					UserVec.add(new_user); // 새로운 참가자 배열에 추가
+					userVec.add(new_user); // 새로운 참가자 배열에 추가
 					new_user.start(); // 만든 객체의 스레드 실행
-					AppendText("현재 참가자 수 " + UserVec.size());
+					AppendText("현재 참가자 수 " + userVec.size());
 				} catch (IOException e) {
 					AppendText("accept() error");
 					// System.exit(0);
@@ -159,12 +162,16 @@ public class JavaGameServer extends JFrame {
 		private Vector user_vc;
 		public String UserName = "";
 		public String UserStatus;
+		
+		public int roomNumber;
+		public boolean ready;
+		public boolean userTurn;
 
 		public UserService(Socket client_socket) {
 			// TODO Auto-generated constructor stub
 			// 매개변수로 넘어온 자료 저장
 			this.client_socket = client_socket;
-			this.user_vc = UserVec;
+			this.user_vc = userVec;
 			try {
 //				is = client_socket.getInputStream();
 //				dis = new DataInputStream(is);
@@ -200,9 +207,9 @@ public class JavaGameServer extends JFrame {
 
 		public void Logout() {
 			String msg = "[" + UserName + "]님이 퇴장 하였습니다.\n";
-			UserVec.removeElement(this); // Logout한 현재 객체를 벡터에서 지운다
+			userVec.removeElement(this); // Logout한 현재 객체를 벡터에서 지운다
 			WriteAll(msg); // 나를 제외한 다른 User들에게 전송
-			AppendText("사용자 " + "[" + UserName + "] 퇴장. 현재 참가자 수 " + UserVec.size());
+			AppendText("사용자 " + "[" + UserName + "] 퇴장. 현재 참가자 수 " + userVec.size());
 		}
 
 		// 모든 User들에게 방송. 각각의 UserService Thread의 WriteONe() 을 호출한다.
@@ -318,6 +325,14 @@ public class JavaGameServer extends JFrame {
 			}
 		}
 		
+		public void createRoom(Object ob) {
+			ChatMsg msg = (ChatMsg)ob;
+			Room room = new Room(roomCount++, msg.roomName, UserName, msg.roomMax); // 방 생성 (방 번호, 방 이름, 방장 이름, 방 최대 인원수)
+			roomVec.add(room); // 방 벡터에 방 추가
+			this.roomNumber = room.roomNumber; // 이 유저의 방 번호 지정
+			AppendText(roomCount+"번 방 생성 완료. 현재 방 개수 "+roomVec.size());
+		}
+		
 		public void run() {
 			while (true) { // 사용자 접속을 계속해서 받기 위해 while문
 				try {
@@ -408,7 +423,12 @@ public class JavaGameServer extends JFrame {
 					} else if (cm.code.matches("400")) { // logout message 처리
 						Logout();
 						break;
-					} else { // 300, 500, ... 기타 object는 모두 방송한다.
+					} else if(cm.code.matches("600")) { // 방 생성 처리
+						createRoom(cm);
+						WriteAllObject(cm);
+					}
+					
+					else { // 300, 500, ... 기타 object는 모두 방송한다.
 						WriteAllObject(cm);
 					} 
 				} catch (IOException e) {
