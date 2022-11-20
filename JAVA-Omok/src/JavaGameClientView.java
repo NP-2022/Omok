@@ -20,6 +20,7 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.Socket;
+import java.util.Vector;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -28,6 +29,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
+import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -40,20 +42,27 @@ import java.awt.Color;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.JToggleButton;
+import javax.swing.ListSelectionModel;
 import javax.swing.JList;
 import java.awt.Canvas;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JMenuBar;
 
 public class JavaGameClientView extends JFrame {
 	/**
 	 * 
 	 */
+	
+	private String Ip_addr;
+	private String Port_no;
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField txtInput;
@@ -84,8 +93,13 @@ public class JavaGameClientView extends JFrame {
 	private Image panelImage = null; 
 	private Graphics gc2 = null;
 	
-	public JavaGameClientView mainClientView = null;
+	public JavaGameClientView mainClientView = null; // 현재 화면에 대한 레퍼런스
+	public JFrame gameClientView = null; // 게임 화면 레퍼런스
 
+	private JScrollPane roomListScrollPane; 
+	private JList roomList;
+	private DefaultListModel roomListModel; // 방 목록
+	private JButton insertButton;
 
 	
 	/**
@@ -95,6 +109,10 @@ public class JavaGameClientView extends JFrame {
 	public JavaGameClientView(String username, String ip_addr, String port_no)  {
 		
 		mainClientView = this;
+
+		UserName = username;
+		Ip_addr = ip_addr;
+		Port_no = port_no;
 		
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //창 닫히면 프로세스 종료
@@ -133,7 +151,6 @@ public class JavaGameClientView extends JFrame {
 		setVisible(true);
 
 		AppendText("User " + username + " connecting " + ip_addr + " " + port_no);
-		UserName = username;
 		lblUserName.setText(UserName);
 
 		imgBtn = new JButton("이미지 변경");
@@ -178,21 +195,39 @@ public class JavaGameClientView extends JFrame {
 		lblUserName_1.setBounds(12, 11, 760, 40);
 		contentPane.add(lblUserName_1);
 		
-		scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(376, 61, 396, 212);
-		contentPane.add(scrollPane_1);
-		
-		JMenuItem mntmEx = new JMenuItem("ex: \uC81C\uBAA9/\uC778\uC6D0\uC218/\uC720\uD615");
-		scrollPane_1.setViewportView(mntmEx);
+		roomListScrollPane = new JScrollPane();
+		roomListScrollPane.setBounds(376, 61, 396, 212);
+		contentPane.add(roomListScrollPane);
 		
 		JLabel lblUserName_1_1 = new JLabel("\uBC29 \uB9AC\uC2A4\uD2B8");
 		lblUserName_1_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblUserName_1_1.setFont(new Font("굴림", Font.BOLD, 14));
 		lblUserName_1_1.setBorder(new LineBorder(new Color(0, 0, 0)));
 		lblUserName_1_1.setBackground(Color.WHITE);
-		scrollPane_1.setColumnHeaderView(lblUserName_1_1);
+		roomListScrollPane.setColumnHeaderView(lblUserName_1_1);
+
+		roomListModel = new DefaultListModel();
+		roomList = new JList(roomListModel);
+		roomList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
-		JButton btnNewButton_1 = new JButton("방 만들기======");
+		insertButton = new JButton("\uBC29 \uC785\uC7A5");
+		insertButton.setBounds(566, 283, 97, 23);
+		
+		contentPane.add(insertButton);
+		
+		insertButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int index = roomList.getSelectedIndex();
+				requestInsertRoom(index);
+				System.out.println("go to "+index+" requested.");
+			}
+			
+		});
+		
+		roomListScrollPane.setViewportView(roomList);
+		
+		JButton btnNewButton_1 = new JButton("\uBC29 \uB9CC\uB4E4\uAE30");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JavaGameClientRoomCreateView roomcreate = new JavaGameClientRoomCreateView(mainClientView, username, ip_addr, port_no);
@@ -214,6 +249,7 @@ public class JavaGameClientView extends JFrame {
 		lblUserName_1_2.setFont(new Font("굴림", Font.BOLD, 14));
 		lblUserName_1_2.setBorder(new LineBorder(new Color(0, 0, 0)));
 		lblUserName_1_2.setBackground(Color.WHITE);
+		
 
 		try {
 			socket = new Socket(ip_addr, Integer.parseInt(port_no));
@@ -304,9 +340,15 @@ public class JavaGameClientView extends JFrame {
 					case "500": // Mouse Event 수신
 						DoMouseEvent(cm);
 						break;
-					case "600": // 새로운 방 생성 됨, 리스트 갱신
-						//roomListUpdate(cm);
+					case "600": // 새로운 방 생성 됨
 						break;
+					case "700": // 누군가가 방에 입장
+						if(cm.UserName.equals(UserName)) // 방에 입장한 클라이언트 본인일 경우
+							insertRoom(cm);
+						break;
+					case "702": // 방 리스트 갱신
+						roomListUpdate(cm);
+						
 					}
 				} catch (IOException e) {
 					AppendText("ois.readObject() error");
@@ -325,6 +367,31 @@ public class JavaGameClientView extends JFrame {
 
 			}
 		}
+	}
+
+	private void requestInsertRoom(int index) {
+		ChatMsg msg = new ChatMsg(UserName, "700", "");
+		msg.roomNumber = index;
+		SendObject(msg);
+	}
+	
+	private void insertRoom(ChatMsg msg) { // 방 입장하기
+		if(msg.gameMode.equals("오목")) {
+			JavaGameClientView2 view = new JavaGameClientView2(mainClientView, UserName, Ip_addr, Port_no, msg.gameMode, msg.roomName, msg.roomMax);
+			mainClientView.gameClientView = view;
+		}else if(msg.gameMode.equals("알까기")) {
+			JavaGameClientView3 view = new JavaGameClientView3(mainClientView, UserName, Ip_addr, Port_no, msg.gameMode, msg.roomName, msg.roomMax);
+			mainClientView.gameClientView = view;
+		}
+	}
+	
+	public void roomListUpdate(ChatMsg cm) {
+		roomListModel.removeAllElements();
+		String list[] = cm.data.split("\n");
+		for(String item: list) {
+			roomListModel.addElement(item);
+		}
+		System.out.println("list updated");
 	}
 
 	// Mouse Event 수신 처리
@@ -458,7 +525,6 @@ public class JavaGameClientView extends JFrame {
 	}
 
 	ImageIcon icon1 = new ImageIcon("src/icon1.jpg");
-	private JScrollPane scrollPane_1;
 	private JLabel lblUserName_1_2;
 	private JScrollPane scrollPane_2;
 

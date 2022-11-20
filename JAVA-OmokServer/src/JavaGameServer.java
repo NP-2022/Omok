@@ -42,7 +42,6 @@ public class JavaGameServer extends JFrame {
 	private static final int BUF_LEN = 128; // Windows 처럼 BUF_LEN 을 정의
 	
 	private Vector<Room> roomVec = new Vector(); // 생성된 방을 저장할 벡터
-	private int roomCount = 1; // 방 번호는 1부터 계속 증가한다. 
 
 	/**
 	 * Launch the application.
@@ -325,12 +324,41 @@ public class JavaGameServer extends JFrame {
 			}
 		}
 		
-		public void createRoom(Object ob) {
-			ChatMsg msg = (ChatMsg)ob;
-			Room room = new Room(roomCount++, msg.roomName, UserName, msg.roomMax); // 방 생성 (방 번호, 방 이름, 방장 이름, 방 최대 인원수)
+		public void createRoom(ChatMsg msg) {
+			Room room = new Room(msg.roomName, this, msg.roomMax, msg.gameMode); // 방 생성 (방 번호, 방 이름, 방장 이름, 방 최대 인원수)
 			roomVec.add(room); // 방 벡터에 방 추가
-			this.roomNumber = room.roomNumber; // 이 유저의 방 번호 지정
-			AppendText(roomCount+"번 방 생성 완료. 현재 방 개수 "+roomVec.size());
+			int vecIndex = roomVec.indexOf(room);
+			room.roomNumber = vecIndex;
+			this.roomNumber = vecIndex; // 이 유저의 방 번호 지정
+			msg.roomNumber = vecIndex;
+			AppendText(roomNumber+"번 방 생성 완료. 현재 방 개수 "+roomVec.size());
+		}
+		
+		public void insertRoom(ChatMsg msg) {
+			Room room = roomVec.get(msg.roomNumber);
+			if(room.isFull()) {
+				WriteOne("방이 꽉 찼습니다!");
+				return;
+			}
+			else {
+				AppendText("플레이어 "+UserName+" "+room.roomNumber+"번 방 입장.");
+				msg = new ChatMsg(UserName, "700", "");
+				msg.roomMax = room.roomMax;
+				msg.roomName = room.roomName;
+				msg.gameMode = room.gameMode;
+				msg.roomNumber = room.roomNumber;
+				WriteAllObject(msg);
+			}
+		}
+		
+		public void updateRoomList() {
+			ChatMsg msg = new ChatMsg(UserName, "702", "");
+			StringBuffer data = new StringBuffer();
+			for(Room room : roomVec) {
+				data.append(String.format("[No.%d] [%s] [mode:%s] [%d/%d] [방장:%s])\n",room.roomNumber, room.roomName, room.gameMode, 1, room.roomMax, room.ownerName));
+			}
+			msg.data = data.toString();
+			WriteAllObject(msg);
 		}
 		
 		public void run() {
@@ -377,6 +405,7 @@ public class JavaGameServer extends JFrame {
 						UserName = cm.UserName;
 						UserStatus = "O"; // Online 상태
 						Login();
+						updateRoomList();
 					} else if (cm.code.matches("200")) {
 						msg = String.format("[%s] %s", cm.UserName, cm.data);
 						AppendText(msg); // server 화면에 출력
@@ -426,6 +455,12 @@ public class JavaGameServer extends JFrame {
 					} else if(cm.code.matches("600")) { // 방 생성 처리
 						createRoom(cm);
 						WriteAllObject(cm);
+						updateRoomList();
+					}
+					
+					else if(cm.code.matches("700")) { // 방 입장 처리
+						insertRoom(cm);
+						updateRoomList();
 					}
 					
 					else { // 300, 500, ... 기타 object는 모두 방송한다.

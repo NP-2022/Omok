@@ -102,15 +102,18 @@ public class JavaGameClientRoomCreateView extends JFrame {
 			int Person = PersonNum.getComponentCount(); 
 			if(Game.equals("오목")) {
 				JavaGameClientView2 view = new JavaGameClientView2(mainClientView, Username, Ip_addr, Port_no, Game, Room, Person);
+				mainClientView.gameClientView = view;
 				setVisible(false);
 			}else if(Game.equals("알까기")) {
 				JavaGameClientView3 view = new JavaGameClientView3(mainClientView, Username, Ip_addr, Port_no, Game, Room, Person);
+				mainClientView.gameClientView = view;
 				setVisible(false);
 			}
 			
 			ChatMsg msg = new ChatMsg(Username, "600", Game);
 			msg.roomMax = (int)PersonNum.getValue();
-			msg.roomName = lblRoom.getText();
+			msg.roomName = txtRoom.getText();
+			msg.gameMode = Game;
 			mainClientView.SendObject(msg);
 		}
 	}
