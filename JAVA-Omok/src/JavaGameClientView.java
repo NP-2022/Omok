@@ -94,7 +94,7 @@ public class JavaGameClientView extends JFrame {
 	private Graphics gc2 = null;
 	
 	public JavaGameClientView mainClientView = null; // 현재 화면에 대한 레퍼런스
-	public JFrame gameClientView = null; // 게임 화면 레퍼런스
+	public JavaGameClientView2 gameClientView = null; // 게임 화면 레퍼런스
 
 	private JScrollPane roomListScrollPane; 
 	private JList roomList;
@@ -187,24 +187,24 @@ public class JavaGameClientView extends JFrame {
 		gc2.drawRect(0,0, panel.getWidth()-1,  panel.getHeight()-1);
 		gc2.drawImage(defaultimg,  0,  0, panel.getWidth(), panel.getHeight(), panel);
 		
-		JLabel lblUserName_1 = new JLabel("<Omok Game>");
-		lblUserName_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblUserName_1.setFont(new Font("굴림", Font.BOLD, 14));
-		lblUserName_1.setBorder(new LineBorder(new Color(0, 0, 0)));
-		lblUserName_1.setBackground(Color.WHITE);
-		lblUserName_1.setBounds(12, 11, 760, 40);
-		contentPane.add(lblUserName_1);
+		JLabel titleLabel = new JLabel("<Omok Game>");
+		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		titleLabel.setFont(new Font("굴림", Font.BOLD, 14));
+		titleLabel.setBorder(new LineBorder(new Color(0, 0, 0)));
+		titleLabel.setBackground(Color.WHITE);
+		titleLabel.setBounds(12, 11, 760, 40);
+		contentPane.add(titleLabel);
 		
 		roomListScrollPane = new JScrollPane();
 		roomListScrollPane.setBounds(376, 61, 396, 212);
 		contentPane.add(roomListScrollPane);
 		
-		JLabel lblUserName_1_1 = new JLabel("\uBC29 \uB9AC\uC2A4\uD2B8");
-		lblUserName_1_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblUserName_1_1.setFont(new Font("굴림", Font.BOLD, 14));
-		lblUserName_1_1.setBorder(new LineBorder(new Color(0, 0, 0)));
-		lblUserName_1_1.setBackground(Color.WHITE);
-		roomListScrollPane.setColumnHeaderView(lblUserName_1_1);
+		JLabel roomListTitleLabel = new JLabel("\uBC29 \uB9AC\uC2A4\uD2B8");
+		roomListTitleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		roomListTitleLabel.setFont(new Font("굴림", Font.BOLD, 14));
+		roomListTitleLabel.setBorder(new LineBorder(new Color(0, 0, 0)));
+		roomListTitleLabel.setBackground(Color.WHITE);
+		roomListScrollPane.setColumnHeaderView(roomListTitleLabel);
 
 		roomListModel = new DefaultListModel();
 		roomList = new JList(roomListModel);
@@ -349,7 +349,10 @@ public class JavaGameClientView extends JFrame {
 						break;
 					case "702": // 방 리스트 갱신
 						roomListUpdate(cm);
-						
+						break;
+					case "703": // 유저 리스트 갱신
+						gameClientView.userListUpdate(cm);
+						break;
 					}
 				} catch (IOException e) {
 					AppendText("ois.readObject() error");
@@ -377,13 +380,8 @@ public class JavaGameClientView extends JFrame {
 	}
 	
 	private void insertRoom(ChatMsg msg) { // 방 입장하기
-		if(msg.gameMode.equals("오목")) {
-			JavaGameClientView2 view = new JavaGameClientView2(mainClientView, UserName, Ip_addr, Port_no, msg.gameMode, msg.roomName, msg.roomMax);
-			mainClientView.gameClientView = view;
-		}else if(msg.gameMode.equals("알까기")) {
-			JavaGameClientView3 view = new JavaGameClientView3(mainClientView, UserName, Ip_addr, Port_no, msg.gameMode, msg.roomName, msg.roomMax);
-			mainClientView.gameClientView = view;
-		}
+		JavaGameClientView2 view = new JavaGameClientView2(mainClientView, UserName, Ip_addr, Port_no, msg.gameMode, msg.roomName, msg.roomMax);
+		mainClientView.gameClientView = view;
 	}
 	
 	public void roomListUpdate(ChatMsg cm) {
@@ -392,7 +390,7 @@ public class JavaGameClientView extends JFrame {
 		for(String item: list) {
 			roomListModel.addElement(item);
 		}
-		System.out.println("list updated");
+		System.out.println("roomList updated");
 	}
 
 	// Mouse Event 수신 처리

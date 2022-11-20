@@ -101,15 +101,10 @@ public class JavaGameClientRoomCreateView extends JFrame {
 			String Game = gameModeComboBox.getSelectedItem().toString();
 			String Room = txtRoom.getText().trim();
 			int maxPlayer = Integer.parseInt(maxPlayerComboBox.getSelectedItem().toString());
-			if(Game.equals("오목")) {
-				JavaGameClientView2 view = new JavaGameClientView2(mainClientView, Username, Ip_addr, Port_no, Game, Room, maxPlayer);
-				mainClientView.gameClientView = view;
-				setVisible(false);
-			}else if(Game.equals("알까기")) {
-				JavaGameClientView3 view = new JavaGameClientView3(mainClientView, Username, Ip_addr, Port_no, Game, Room, maxPlayer);
-				mainClientView.gameClientView = view;
-				setVisible(false);
-			}
+			
+			JavaGameClientView2 view = new JavaGameClientView2(mainClientView, Username, Ip_addr, Port_no, Game, Room, maxPlayer);
+			mainClientView.gameClientView = view;
+			setVisible(false);
 			
 			ChatMsg msg = new ChatMsg(Username, "600", Game);
 			msg.roomMax = maxPlayer;

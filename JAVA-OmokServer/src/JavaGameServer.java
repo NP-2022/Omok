@@ -295,6 +295,10 @@ public class JavaGameServer extends JFrame {
 			this.roomNumber = vecIndex; // 이 유저의 방 번호 지정
 			msg.roomNumber = vecIndex;
 			AppendText(roomNumber+"번 방 생성 완료. 현재 방 개수 "+roomVec.size());
+			
+			for(UserService user: room.playerList) 
+				user.updateUserList();
+			
 		}
 		
 		public void insertRoom(ChatMsg msg) {
@@ -316,10 +320,12 @@ public class JavaGameServer extends JFrame {
 				msg.roomNumber = room.roomNumber;
 				room.addUser(this);
 				WriteAllObject(msg);
+				for(UserService user: room.playerList) 
+					user.updateUserList();
 			}
 		}
 		
-		public void updateRoomList() {
+		public void updateRoomList() { // 방 목록을 갱신하는 String을 모두에게 전역으로 보냄
 			ChatMsg msg = new ChatMsg(UserName, "702", "");
 			StringBuffer data = new StringBuffer();
 			for(Room room : roomVec) {
@@ -327,6 +333,17 @@ public class JavaGameServer extends JFrame {
 			}
 			msg.data = data.toString();
 			WriteAllObject(msg);
+		}
+		
+		public void updateUserList() { // 이 함수를 호출한 UserService에게만 유저 목록을 갱신하는 String을 보냄
+			ChatMsg msg = new ChatMsg(UserName, "703", "");
+			Room room = roomVec.get(roomNumber);
+			StringBuffer data = new StringBuffer();
+			for(UserService user : room.playerList) {
+				data.append(String.format("[이름:%s]\n",user.UserName));
+			}
+			msg.data = data.toString();
+			WriteOneObject(msg);
 		}
 		
 		public void run() {
