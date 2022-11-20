@@ -12,6 +12,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.Color;
@@ -28,6 +29,9 @@ import java.awt.ScrollPane;
 import javax.swing.JMenuItem;
 import java.awt.Panel;
 import java.awt.Button;
+import javax.swing.JList;
+import javax.swing.ListModel;
+import javax.swing.ListSelectionModel;
 
 public class JavaGameClientView2 extends JFrame {
 
@@ -50,14 +54,22 @@ public class JavaGameClientView2 extends JFrame {
 	// 그려진 Image를 보관하는 용도, paint() 함수에서 이용한다.
 	private Image panelImage = null;
 	private Graphics gc;
-	private TablePanel1 panel_4;
+	private TablePanel1 gamePanel;
 	JPanel panel;
+	
+	private JList userList;
+	private DefaultListModel userListModel; // 방 목록
+	
+	public JavaGameClientView mainClientView;
 
 	/**
 	 * Create the frame.
 	 */
-	public JavaGameClientView2(String username, String ip_addr, String port_no, String Game, String Room,
+	public JavaGameClientView2(JavaGameClientView mainClientView, String username, String ip_addr, String port_no, String Game, String Room,
 			int PersonNum) {
+		
+		this.mainClientView = mainClientView;
+		
 		setResizable(false);
 		// setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(900, 100, 1036, 720);
@@ -90,71 +102,73 @@ public class JavaGameClientView2 extends JFrame {
 		btnSend.setBounds(942, 637, 69, 40);
 		contentPane.add(btnSend);
 
-		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(659, 107, 352, 212);
-		contentPane.add(scrollPane_1);
+		JScrollPane userListScrollPane = new JScrollPane();
+		userListScrollPane.setBounds(659, 107, 352, 212);
+		contentPane.add(userListScrollPane);
 
-		JLabel lblUserName_1_1 = new JLabel("유저리스트");
-		lblUserName_1_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblUserName_1_1.setFont(new Font("굴림", Font.BOLD, 14));
-		lblUserName_1_1.setBorder(new LineBorder(new Color(0, 0, 0)));
-		lblUserName_1_1.setBackground(Color.WHITE);
-		scrollPane_1.setColumnHeaderView(lblUserName_1_1);
+		JLabel userListTitleLabel = new JLabel("유저리스트");
+		userListTitleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		userListTitleLabel.setFont(new Font("굴림", Font.BOLD, 14));
+		userListTitleLabel.setBorder(new LineBorder(new Color(0, 0, 0)));
+		userListTitleLabel.setBackground(Color.WHITE);
+		userListScrollPane.setColumnHeaderView(userListTitleLabel);
+		
+		userListModel = new DefaultListModel();
+		userList = new JList(userListModel);
+		userList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		userListScrollPane.setViewportView(userList);
 
-		JMenuItem mntmEx_1 = new JMenuItem("ex: 프사/이름/전적/관전");
-		scrollPane_1.setViewportView(mntmEx_1);
+		Panel user1Pannel = new Panel();
+		user1Pannel.setBounds(659, 10, 84, 91);
+		contentPane.add(user1Pannel);
 
-		Panel panel = new Panel();
-		panel.setBounds(659, 10, 84, 91);
-		contentPane.add(panel);
+		JLabel user1NameLabel = new JLabel("유저 이름");
+		user1NameLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		user1NameLabel.setFont(new Font("굴림", Font.BOLD, 14));
+		user1NameLabel.setBorder(new LineBorder(new Color(0, 0, 0)));
+		user1NameLabel.setBackground(Color.WHITE);
+		user1Pannel.add(user1NameLabel);
 
-		JLabel lblUserName_1_1_1 = new JLabel("유저 이름");
-		lblUserName_1_1_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblUserName_1_1_1.setFont(new Font("굴림", Font.BOLD, 14));
-		lblUserName_1_1_1.setBorder(new LineBorder(new Color(0, 0, 0)));
-		lblUserName_1_1_1.setBackground(Color.WHITE);
-		panel.add(lblUserName_1_1_1);
+		Panel user2Pannel = new Panel();
+		user2Pannel.setBounds(749, 10, 84, 91);
+		contentPane.add(user2Pannel);
 
-		Panel panel_1 = new Panel();
-		panel_1.setBounds(749, 10, 84, 91);
-		contentPane.add(panel_1);
+		JLabel user2NameLabel = new JLabel("유저 이름");
+		user2NameLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		user2NameLabel.setFont(new Font("굴림", Font.BOLD, 14));
+		user2NameLabel.setBorder(new LineBorder(new Color(0, 0, 0)));
+		user2NameLabel.setBackground(Color.WHITE);
+		user2Pannel.add(user2NameLabel);
 
-		JLabel lblUserName_1_1_1_1 = new JLabel("유저 이름");
-		lblUserName_1_1_1_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblUserName_1_1_1_1.setFont(new Font("굴림", Font.BOLD, 14));
-		lblUserName_1_1_1_1.setBorder(new LineBorder(new Color(0, 0, 0)));
-		lblUserName_1_1_1_1.setBackground(Color.WHITE);
-		panel_1.add(lblUserName_1_1_1_1);
+		Panel user3Pannel = new Panel();
+		user3Pannel.setBounds(839, 10, 84, 91);
+		contentPane.add(user3Pannel);
 
-		Panel panel_2 = new Panel();
-		panel_2.setBounds(839, 10, 84, 91);
-		contentPane.add(panel_2);
+		JLabel user3NameLabel = new JLabel("유저 이름");
+		user3NameLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		user3NameLabel.setFont(new Font("굴림", Font.BOLD, 14));
+		user3NameLabel.setBorder(new LineBorder(new Color(0, 0, 0)));
+		user3NameLabel.setBackground(Color.WHITE);
+		user3Pannel.add(user3NameLabel);
 
-		JLabel lblUserName_1_1_1_2 = new JLabel("유저 이름");
-		lblUserName_1_1_1_2.setHorizontalAlignment(SwingConstants.CENTER);
-		lblUserName_1_1_1_2.setFont(new Font("굴림", Font.BOLD, 14));
-		lblUserName_1_1_1_2.setBorder(new LineBorder(new Color(0, 0, 0)));
-		lblUserName_1_1_1_2.setBackground(Color.WHITE);
-		panel_2.add(lblUserName_1_1_1_2);
+		Panel user4Pannel = new Panel();
+		user4Pannel.setBounds(929, 10, 84, 91);
+		contentPane.add(user4Pannel);
 
-		Panel panel_3 = new Panel();
-		panel_3.setBounds(929, 10, 84, 91);
-		contentPane.add(panel_3);
+		JLabel user4NameLabel = new JLabel("유저이름");
+		user4NameLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		user4NameLabel.setFont(new Font("굴림", Font.BOLD, 14));
+		user4NameLabel.setBorder(new LineBorder(new Color(0, 0, 0)));
+		user4NameLabel.setBackground(Color.WHITE);
+		user4Pannel.add(user4NameLabel);
 
-		JLabel lblUserName_1_1_1_3 = new JLabel("유저이름");
-		lblUserName_1_1_1_3.setHorizontalAlignment(SwingConstants.CENTER);
-		lblUserName_1_1_1_3.setFont(new Font("굴림", Font.BOLD, 14));
-		lblUserName_1_1_1_3.setBorder(new LineBorder(new Color(0, 0, 0)));
-		lblUserName_1_1_1_3.setBackground(Color.WHITE);
-		panel_3.add(lblUserName_1_1_1_3);
-
-		panel_4 = new TablePanel1();
-		panel_4.setBounds(12, 10, 627, 628);
-		panel_4.setBackground(new Color(206, 167, 61));
-		panel_4.init();
+		gamePanel = new TablePanel1();
+		gamePanel.setBounds(12, 10, 627, 628);
+		gamePanel.setBackground(new Color(206, 167, 61));
+		gamePanel.init();
 		// gc1 = panel_4.getGraphics();
-		contentPane.add(panel_4);
-		gc = panel_4.getGraphics();
+		contentPane.add(gamePanel);
+		gc = gamePanel.getGraphics();
 //		
 //
 //		// Image 영역 보관용. paint() 에서 이용한다.
@@ -167,29 +181,29 @@ public class JavaGameClientView2 extends JFrame {
 //		gc2.drawRect(0,0, panel_4.getWidth()-1,  panel_4.getHeight()-1);
 //		gc2.drawImage(defaultimg,  0,  0, panel_4.getWidth(), panel_4.getHeight(), panel_4);
 
-		Button button = new Button("시작");
-		button.addActionListener(new ActionListener() {
+		Button startButton = new Button("시작");
+		startButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		button.setBounds(220, 644, 107, 27);
-		contentPane.add(button);
+		startButton.setBounds(220, 644, 107, 27);
+		contentPane.add(startButton);
 
-		Button button_1 = new Button("알까기");
-		button_1.addActionListener(new ActionListener() {
+		Button modeButton = new Button("알까기");
+		modeButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		button_1.setBounds(343, 644, 107, 27);
-		contentPane.add(button_1);
+		modeButton.setBounds(343, 644, 107, 27);
+		contentPane.add(modeButton);
 
-		Button button_1_1 = new Button("나가기");
-		button_1_1.addActionListener(new ActionListener() {
+		Button exitButton = new Button("나가기");
+		exitButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		button_1_1.setBounds(470, 644, 107, 27);
-		contentPane.add(button_1_1);
+		exitButton.setBounds(470, 644, 107, 27);
+		contentPane.add(exitButton);
 
 		JLabel lblNewLabel = new JLabel("남은 시간 : 30");
 		lblNewLabel.setBounds(90, 643, 107, 28);
@@ -197,7 +211,7 @@ public class JavaGameClientView2 extends JFrame {
 
 		MyMouseEvent mouse = new MyMouseEvent();
 		// panel_4.addMouseMotionListener(mouse);
-		panel_4.addMouseListener(mouse);
+		gamePanel.addMouseListener(mouse);
 		setVisible(true);
 
 	}
@@ -236,17 +250,17 @@ public class JavaGameClientView2 extends JFrame {
 			x = (int) Math.round(e.getX() / (double) 30) - 1;
 			y = (int) Math.round(e.getY() / (double) 30);
 
-			panel_4.setMap(y, x, 1);
-			if (panel_4.Three(y, x)) {
-				panel_4.setZero(y, x);
+			gamePanel.setMap(y, x, 1);
+			if (gamePanel.Three(y, x)) {
+				gamePanel.setZero(y, x);
 			}
 
 			// panel_4.drawStone(gc);
-			if (panel_4.Rule(y, x)) {
-				panel_4.init();
-				panel_4.repaint();
+			if (gamePanel.Rule(y, x)) {
+				gamePanel.init();
+				gamePanel.repaint();
 			} else
-				panel_4.repaint();
+				gamePanel.repaint();
 			// SendMouseEvent(e);
 		}
 
@@ -276,6 +290,15 @@ public class JavaGameClientView2 extends JFrame {
 			// e.getY());
 			// 드래그중 멈출시 보임
 		}
+	}
+	
+	public void userListUpdate(ChatMsg msg) {
+		userListModel.removeAllElements();
+		String list[] = msg.data.split("\n");
+		for(String item: list) {
+			userListModel.addElement(item);
+		}
+		System.out.println("userList updated");
 	}
 }
 

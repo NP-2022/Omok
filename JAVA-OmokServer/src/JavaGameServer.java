@@ -38,8 +38,10 @@ public class JavaGameServer extends JFrame {
 
 	private ServerSocket socket; // 서버소켓
 	private Socket client_socket; // accept() 에서 생성된 client 소켓
-	private Vector UserVec = new Vector(); // 연결된 사용자를 저장할 벡터
+	private Vector<UserService> userVec = new Vector(); // 연결된 사용자를 저장할 벡터
 	private static final int BUF_LEN = 128; // Windows 처럼 BUF_LEN 을 정의
+	
+	private Vector<Room> roomVec = new Vector(); // 생성된 방을 저장할 벡터
 
 	/**
 	 * Launch the application.
@@ -119,9 +121,9 @@ public class JavaGameServer extends JFrame {
 					AppendText("새로운 참가자 from " + client_socket);
 					// User 당 하나씩 Thread 생성
 					UserService new_user = new UserService(client_socket);
-					UserVec.add(new_user); // 새로운 참가자 배열에 추가
+					userVec.add(new_user); // 새로운 참가자 배열에 추가
 					new_user.start(); // 만든 객체의 스레드 실행
-					AppendText("현재 참가자 수 " + UserVec.size());
+					AppendText("현재 참가자 수 " + userVec.size());
 				} catch (IOException e) {
 					AppendText("accept() error");
 					// System.exit(0);
@@ -159,32 +161,22 @@ public class JavaGameServer extends JFrame {
 		private Vector user_vc;
 		public String UserName = "";
 		public String UserStatus;
+		
+		public int roomNumber;
+		public boolean ready;
+		public boolean userTurn;
 
 		public UserService(Socket client_socket) {
 			// TODO Auto-generated constructor stub
 			// 매개변수로 넘어온 자료 저장
 			this.client_socket = client_socket;
-			this.user_vc = UserVec;
+			this.user_vc = userVec;
 			try {
-//				is = client_socket.getInputStream();
-//				dis = new DataInputStream(is);
-//				os = client_socket.getOutputStream();
-//				dos = new DataOutputStream(os);
-
 				oos = new ObjectOutputStream(client_socket.getOutputStream());
 				oos.flush();
 				ois = new ObjectInputStream(client_socket.getInputStream());
 
-				// line1 = dis.readUTF();
-				// /login user1 ==> msg[0] msg[1]
-//				byte[] b = new byte[BUF_LEN];
-//				dis.read(b);		
-//				String line1 = new String(b);
-//
-//				//String[] msg = line1.split(" ");
-//				//UserName = msg[1].trim();
-//				UserStatus = "O"; // Online 상태
-//				Login();
+				
 			} catch (Exception e) {
 				AppendText("userService error");
 			}
@@ -200,9 +192,9 @@ public class JavaGameServer extends JFrame {
 
 		public void Logout() {
 			String msg = "[" + UserName + "]님이 퇴장 하였습니다.\n";
-			UserVec.removeElement(this); // Logout한 현재 객체를 벡터에서 지운다
+			userVec.removeElement(this); // Logout한 현재 객체를 벡터에서 지운다
 			WriteAll(msg); // 나를 제외한 다른 User들에게 전송
-			AppendText("사용자 " + "[" + UserName + "] 퇴장. 현재 참가자 수 " + UserVec.size());
+			AppendText("사용자 " + "[" + UserName + "] 퇴장. 현재 참가자 수 " + userVec.size());
 		}
 
 		// 모든 User들에게 방송. 각각의 UserService Thread의 WriteONe() 을 호출한다.
@@ -230,32 +222,9 @@ public class JavaGameServer extends JFrame {
 					user.WriteOne(str);
 			}
 		}
-
-		// Windows 처럼 message 제외한 나머지 부분은 NULL 로 만들기 위한 함수
-		public byte[] MakePacket(String msg) {
-			byte[] packet = new byte[BUF_LEN];
-			byte[] bb = null;
-			int i;
-			for (i = 0; i < BUF_LEN; i++)
-				packet[i] = 0;
-			try {
-				bb = msg.getBytes("euc-kr");
-			} catch (UnsupportedEncodingException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			for (i = 0; i < bb.length; i++)
-				packet[i] = bb[i];
-			return packet;
-		}
-
 		// UserService Thread가 담당하는 Client 에게 1:1 전송
 		public void WriteOne(String msg) {
 			try {
-				// dos.writeUTF(msg);
-//				byte[] bb;
-//				bb = MakePacket(msg);
-//				dos.write(bb, 0, bb.length);
 				ChatMsg obcm = new ChatMsg("SERVER", "200", msg);
 				oos.writeObject(obcm);
 			} catch (IOException e) {
@@ -318,27 +287,69 @@ public class JavaGameServer extends JFrame {
 			}
 		}
 		
+		public void createRoom(ChatMsg msg) {
+			Room room = new Room(msg.roomName, this, msg.roomMax, msg.gameMode); // 방 생성 (방 번호, 방 이름, 방장 이름, 방 최대 인원수)
+			roomVec.add(room); // 방 벡터에 방 추가
+			int vecIndex = roomVec.indexOf(room);
+			room.roomNumber = vecIndex;
+			this.roomNumber = vecIndex; // 이 유저의 방 번호 지정
+			msg.roomNumber = vecIndex;
+			AppendText(roomNumber+"번 방 생성 완료. 현재 방 개수 "+roomVec.size());
+			
+			for(UserService user: room.playerList) 
+				user.updateUserList();
+			
+		}
+		
+		public void insertRoom(ChatMsg msg) {
+			Room room = roomVec.get(msg.roomNumber);
+			if(room.isFull()) {
+				WriteOne("방이 꽉 찼습니다!");
+				return;
+			}
+			else if (room.hasName(msg.UserName)) {
+				WriteOne("이미 들어가 있는 방입니다!");
+				return;
+			}
+			else {
+				AppendText("플레이어 "+UserName+" "+room.roomNumber+"번 방 입장.");
+				msg = new ChatMsg(UserName, "700", "");
+				msg.roomMax = room.roomMax;
+				msg.roomName = room.roomName;
+				msg.gameMode = room.gameMode;
+				msg.roomNumber = room.roomNumber;
+				room.addUser(this);
+				WriteAllObject(msg);
+				for(UserService user: room.playerList) 
+					user.updateUserList();
+			}
+		}
+		
+		public void updateRoomList() { // 방 목록을 갱신하는 String을 모두에게 전역으로 보냄
+			ChatMsg msg = new ChatMsg(UserName, "702", "");
+			StringBuffer data = new StringBuffer();
+			for(Room room : roomVec) {
+				data.append(String.format("[No.%d] [%s] [mode:%s] [%d/%d] [방장:%s])\n",room.roomNumber, room.roomName, room.gameMode, room.getPlayerCount(), room.roomMax, room.ownerName));
+			}
+			msg.data = data.toString();
+			WriteAllObject(msg);
+		}
+		
+		public void updateUserList() { // 이 함수를 호출한 UserService에게만 유저 목록을 갱신하는 String을 보냄
+			ChatMsg msg = new ChatMsg(UserName, "703", "");
+			Room room = roomVec.get(roomNumber);
+			StringBuffer data = new StringBuffer();
+			for(UserService user : room.playerList) {
+				data.append(String.format("[이름:%s]\n",user.UserName));
+			}
+			msg.data = data.toString();
+			WriteOneObject(msg);
+		}
+		
 		public void run() {
 			while (true) { // 사용자 접속을 계속해서 받기 위해 while문
 				try {
-					// String msg = dis.readUTF();
-//					byte[] b = new byte[BUF_LEN];
-//					int ret;
-//					ret = dis.read(b);
-//					if (ret < 0) {
-//						AppendText("dis.read() < 0 error");
-//						try {
-//							dos.close();
-//							dis.close();
-//							client_socket.close();
-//							Logout();
-//							break;
-//						} catch (Exception ee) {
-//							break;
-//						} // catch문 끝
-//					}
-//					String msg = new String(b, "euc-kr");
-//					msg = msg.trim(); // 앞뒤 blank NULL, \n 모두 제거
+					
 					Object obcm = null;
 					String msg = null;
 					ChatMsg cm = null;
@@ -362,6 +373,7 @@ public class JavaGameServer extends JFrame {
 						UserName = cm.UserName;
 						UserStatus = "O"; // Online 상태
 						Login();
+						updateRoomList();
 					} else if (cm.code.matches("200")) {
 						msg = String.format("[%s] %s", cm.UserName, cm.data);
 						AppendText(msg); // server 화면에 출력
@@ -408,7 +420,18 @@ public class JavaGameServer extends JFrame {
 					} else if (cm.code.matches("400")) { // logout message 처리
 						Logout();
 						break;
-					} else { // 300, 500, ... 기타 object는 모두 방송한다.
+					} else if(cm.code.matches("600")) { // 방 생성 처리
+						createRoom(cm);
+						WriteAllObject(cm);
+						updateRoomList();
+					}
+					
+					else if(cm.code.matches("700")) { // 방 입장 처리
+						insertRoom(cm);
+						updateRoomList();
+					}
+					
+					else { // 300, 500, ... 기타 object는 모두 방송한다.
 						WriteAllObject(cm);
 					} 
 				} catch (IOException e) {
