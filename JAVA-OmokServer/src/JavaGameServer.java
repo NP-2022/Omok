@@ -329,7 +329,7 @@ public class JavaGameServer extends JFrame {
 			ChatMsg msg = new ChatMsg(UserName, "702", "");
 			StringBuffer data = new StringBuffer();
 			for(Room room : roomVec) {
-				data.append(String.format("[No.%d] [%s] [mode:%s] [%d/%d] [방장:%s])\n",room.roomNumber, room.roomName, room.gameMode, room.getPlayerCount(), room.roomMax, room.ownerName));
+				data.append(String.format("[No.%d] [%s] [mode:%s] [%d/%d] [방장:%s]\n",room.roomNumber, room.roomName, room.gameMode, room.getPlayerCount(), room.roomMax, room.ownerName));
 			}
 			msg.data = data.toString();
 			WriteAllObject(msg);
