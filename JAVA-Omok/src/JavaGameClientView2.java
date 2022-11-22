@@ -166,20 +166,11 @@ public class JavaGameClientView2 extends JFrame {
 		gamePanel.setBounds(12, 10, 627, 628);
 		gamePanel.setBackground(new Color(206, 167, 61));
 		gamePanel.init();
-		// gc1 = panel_4.getGraphics();
+
 		contentPane.add(gamePanel);
 		gc = gamePanel.getGraphics();
-//		
-//
-//		// Image 영역 보관용. paint() 에서 이용한다.
-//		Image defaultimg = new ImageIcon(JavaGameClientView.class.getResource("default.png")).getImage();
-//		panelImage = createImage(panel_4.getWidth(), panel_4.getHeight());
-//		gc2 = panelImage.getGraphics();
-//		gc2.setColor(panel_4.getBackground());
-//		gc2.fillRect(0,0, panel_4.getWidth(),  panel_4.getHeight());
-//		gc2.setColor(Color.BLACK);
-//		gc2.drawRect(0,0, panel_4.getWidth()-1,  panel_4.getHeight()-1);
-//		gc2.drawImage(defaultimg,  0,  0, panel_4.getWidth(), panel_4.getHeight(), panel_4);
+
+		
 
 		Button startButton = new Button("시작");
 		startButton.addActionListener(new ActionListener() {
@@ -210,7 +201,7 @@ public class JavaGameClientView2 extends JFrame {
 		contentPane.add(lblNewLabel);
 
 		MyMouseEvent mouse = new MyMouseEvent();
-		// panel_4.addMouseMotionListener(mouse);
+
 		gamePanel.addMouseListener(mouse);
 		setVisible(true);
 
@@ -434,20 +425,14 @@ class TablePanel1 extends JPanel {
 	}
 
 	public void drawRed(Graphics g, int x, int y) {
-		// g.setColor(Color.RED);
-		// g.fillOval(x*size.getCell()+15, y*size.getCell()-15, STONE_SIZE, STONE_SIZE);
 		g.drawImage(Red, x * size.getCell() + 15, y * size.getCell() - 15, 28, 28, this);
 	}
 
 	public void drawBlack(Graphics g, int x, int y) {
-		// g.setColor(Color.BLACK);
-		// g.fillOval(x*size.getCell()+15, y*size.getCell()-15, STONE_SIZE, STONE_SIZE);
 		g.drawImage(Custom, x * size.getCell() + 15, y * size.getCell() - 15, 28, 28, this);
 	}
 
 	public void drawWhite(Graphics g, int x, int y) {
-		// g.setColor(Color.WHITE);
-		// g.fillOval(x*size.getCell()+15, y*size.getCell()-15, STONE_SIZE, STONE_SIZE);
 		g.drawImage(White, x * size.getCell() + 15, y * size.getCell() - 15, 28, 28, this);
 	}
 
