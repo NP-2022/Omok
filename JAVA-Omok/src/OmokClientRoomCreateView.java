@@ -26,8 +26,8 @@ public class OmokClientRoomCreateView extends JFrame {
 	private JPanel contentPane;
 	private JComboBox gameModeComboBox;
 	private JComboBox maxPlayerComboBox;
-	private JTextField txtRoom;
-	private JLabel lblRoom;
+	private JTextField roomNameTextField;
+	private JLabel roomNameLabel;
 	private String Username;
 	private String Ip_addr;
 	private String Port_no;
@@ -53,43 +53,43 @@ public class OmokClientRoomCreateView extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblGameLabel = new JLabel("게임");
-		lblGameLabel.setBounds(12, 39, 82, 33);
-		contentPane.add(lblGameLabel);
+		JLabel gameModeLabel = new JLabel("게임");
+		gameModeLabel.setBounds(12, 39, 82, 33);
+		contentPane.add(gameModeLabel);
 		
 		String[] gameModes = {"오목", "알까기"};
 		gameModeComboBox = new JComboBox(gameModes);
 		gameModeComboBox.setBounds(101, 39, 116, 33);
 		contentPane.add(gameModeComboBox);
 		
-		lblRoom = new JLabel("방 이름");
-		lblRoom.setBounds(12, 100, 82, 33);
-		contentPane.add(lblRoom);
+		roomNameLabel = new JLabel("방 이름");
+		roomNameLabel.setBounds(12, 100, 82, 33);
+		contentPane.add(roomNameLabel);
 		
-		txtRoom = new JTextField();
-		txtRoom.setHorizontalAlignment(SwingConstants.CENTER);
-		txtRoom.setColumns(10);
-		txtRoom.setBounds(101, 100, 116, 33);
-		contentPane.add(txtRoom);
-		txtRoom.setColumns(10);
+		roomNameTextField = new JTextField();
+		roomNameTextField.setHorizontalAlignment(SwingConstants.CENTER);
+		roomNameTextField.setColumns(10);
+		roomNameTextField.setBounds(101, 100, 116, 33);
+		contentPane.add(roomNameTextField);
+		roomNameTextField.setColumns(10);
 		
 
-		JLabel lblPersonNum = new JLabel("인원");
-		lblPersonNum.setBounds(12, 163, 82, 33);
-		contentPane.add(lblPersonNum);
+		JLabel maxPlayerLabel = new JLabel("인원");
+		maxPlayerLabel.setBounds(12, 163, 82, 33);
+		contentPane.add(maxPlayerLabel);
 		
 		String[] maxPlayers = {"2", "3", "4"};
 		maxPlayerComboBox = new JComboBox(maxPlayers);
 		maxPlayerComboBox.setBounds(101, 169, 47, 22);
 		contentPane.add(maxPlayerComboBox);
 		
-		JButton btnConnect = new JButton("Connect");
-		btnConnect.setBounds(12, 223, 205, 38);
-		contentPane.add(btnConnect);
+		JButton createButton = new JButton("\uBC29 \uC0DD\uC131");
+		createButton.setBounds(12, 223, 205, 38);
+		contentPane.add(createButton);
 		
 		
 		Roomaction action = new Roomaction();
-		btnConnect.addActionListener(action);
+		createButton.addActionListener(action);
 		setVisible(true);
 		
 	}
@@ -99,7 +99,7 @@ public class OmokClientRoomCreateView extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			String gameModeName = gameModeComboBox.getSelectedItem().toString();
-			String roomName = txtRoom.getText().trim();
+			String roomName = roomNameTextField.getText().trim();
 			int maxPlayer = Integer.parseInt(maxPlayerComboBox.getSelectedItem().toString());
 			
 			OmokClientGameView view = new OmokClientGameView(mainView, Username, Ip_addr, Port_no, gameModeName, roomName, maxPlayer);
@@ -108,7 +108,7 @@ public class OmokClientRoomCreateView extends JFrame {
 			
 			ChatMsg msg = new ChatMsg(Username, "600", gameModeName);
 			msg.roomMax = maxPlayer;
-			msg.roomName = txtRoom.getText();
+			msg.roomName = roomNameTextField.getText();
 			msg.gameMode = gameModeName;
 			mainView.SendObject(msg);
 		}

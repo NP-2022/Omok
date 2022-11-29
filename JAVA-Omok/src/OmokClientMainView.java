@@ -68,9 +68,9 @@ public class OmokClientMainView extends JFrame {
 	private String Port_no;
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField txtInput;
+	private JTextField chatTextInput;
 	private String UserName;
-	private JButton btnSend;
+	private JButton chatSendButton;
 	private static final int BUF_LEN = 128; // Windows 처럼 BUF_LEN 을 정의
 	private Socket socket; // 연결소켓
 	private InputStream is;
@@ -81,15 +81,15 @@ public class OmokClientMainView extends JFrame {
 	private ObjectInputStream ois;
 	private ObjectOutputStream oos;
 
-	private JLabel lblUserName;
+	private JLabel userNameLabel;
 	// private JTextArea textArea;
 	private JTextPane textArea;
 
 	private Frame frame;
 	private FileDialog fd;
-	private JButton imgBtn;
+	private JButton imageChangeButton;
 
-	JPanel panel;
+	JPanel imagePanel;
 	private Graphics gc;
 	private int pen_size = 2; // minimum 2
 	// 그려진 Image를 보관하는 용도, paint() 함수에서 이용한다.
@@ -103,7 +103,7 @@ public class OmokClientMainView extends JFrame {
 	private JScrollPane roomListScrollPane; 
 	private JList roomList;
 	private DefaultListModel roomListModel; // 방 목록
-	private JButton insertButton;
+	private JButton roomInsertButton;
 
 	
 	/**
@@ -126,70 +126,70 @@ public class OmokClientMainView extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(12, 61, 352, 471);
-		contentPane.add(scrollPane);
+		JScrollPane chatScrollPane = new JScrollPane();
+		chatScrollPane.setBounds(12, 61, 352, 471);
+		contentPane.add(chatScrollPane);
 
 		textArea = new JTextPane();
 		textArea.setEditable(true);
 		textArea.setFont(new Font("굴림체", Font.PLAIN, 14));
-		scrollPane.setViewportView(textArea);
+		chatScrollPane.setViewportView(textArea);
 
-		txtInput = new JTextField();
-		txtInput.setBounds(12, 540, 276, 40);
-		contentPane.add(txtInput);
-		txtInput.setColumns(10);
+		chatTextInput = new JTextField();
+		chatTextInput.setBounds(12, 540, 276, 40);
+		contentPane.add(chatTextInput);
+		chatTextInput.setColumns(10);
 
-		btnSend = new JButton("\uC804\uC1A1");
-		btnSend.setFont(new Font("굴림", Font.PLAIN, 14));
-		btnSend.setBounds(295, 539, 69, 40);
-		contentPane.add(btnSend);
+		chatSendButton = new JButton("전송");
+		chatSendButton.setFont(new Font("굴림", Font.PLAIN, 14));
+		chatSendButton.setBounds(295, 539, 69, 40);
+		contentPane.add(chatSendButton);
 
-		lblUserName = new JLabel("User");
-		lblUserName.setBorder(new LineBorder(new Color(0, 0, 0)));
-		lblUserName.setBackground(Color.WHITE);
-		lblUserName.setFont(new Font("굴림", Font.BOLD, 14));
-		lblUserName.setHorizontalAlignment(SwingConstants.CENTER);
-		lblUserName.setBounds(376, 539, 149, 40);
-		contentPane.add(lblUserName);
+		userNameLabel = new JLabel("User");
+		userNameLabel.setBorder(new LineBorder(new Color(0, 0, 0)));
+		userNameLabel.setBackground(Color.WHITE);
+		userNameLabel.setFont(new Font("굴림", Font.BOLD, 14));
+		userNameLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		userNameLabel.setBounds(376, 539, 149, 40);
+		contentPane.add(userNameLabel);
 		setVisible(true);
 
 		AppendText("User " + username + " connecting " + ip_addr + " " + port_no);
-		lblUserName.setText(UserName);
+		userNameLabel.setText("username");
 
-		imgBtn = new JButton("이미지 변경");
-		imgBtn.setFont(new Font("굴림", Font.PLAIN, 16));
-		imgBtn.setBounds(376, 324, 149, 40);
-		contentPane.add(imgBtn);
+		imageChangeButton = new JButton("이미지 변경");
+		imageChangeButton.setFont(new Font("굴림", Font.PLAIN, 16));
+		imageChangeButton.setBounds(376, 324, 149, 40);
+		contentPane.add(imageChangeButton);
 
-		JButton btnNewButton = new JButton("종 료");
-		btnNewButton.setFont(new Font("굴림", Font.PLAIN, 14));
-		btnNewButton.addActionListener(new ActionListener() {
+		JButton exitButton = new JButton("종 료");
+		exitButton.setFont(new Font("굴림", Font.PLAIN, 14));
+		exitButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ChatMsg msg = new ChatMsg(UserName, "400", "Bye");
 				SendObject(msg);
 				System.exit(0);
 			}
 		});
-		btnNewButton.setBounds(672, 539, 100, 40);
-		contentPane.add(btnNewButton);
+		exitButton.setBounds(672, 539, 100, 40);
+		contentPane.add(exitButton);
 
-		panel = new JPanel();
-		panel.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panel.setBackground(Color.WHITE);
-		panel.setBounds(376, 374, 149, 154);
-		contentPane.add(panel);
-		gc = panel.getGraphics();
+		imagePanel = new JPanel();
+		imagePanel.setBorder(new LineBorder(new Color(0, 0, 0)));
+		imagePanel.setBackground(Color.WHITE);
+		imagePanel.setBounds(376, 374, 149, 154);
+		contentPane.add(imagePanel);
+		gc = imagePanel.getGraphics();
 		
 		// Image 영역 보관용. paint() 에서 이용한다.
 		Image defaultimg =new ImageIcon(OmokClientMainView.class.getResource("default.png")).getImage();
-		panelImage = createImage(panel.getWidth(), panel.getHeight());
+		panelImage = createImage(imagePanel.getWidth(), imagePanel.getHeight());
 		gc2 = panelImage.getGraphics();
-		gc2.setColor(panel.getBackground());
-		gc2.fillRect(0,0, panel.getWidth(),  panel.getHeight());
+		gc2.setColor(imagePanel.getBackground());
+		gc2.fillRect(0,0, imagePanel.getWidth(),  imagePanel.getHeight());
 		gc2.setColor(Color.BLACK);
-		gc2.drawRect(0,0, panel.getWidth()-1,  panel.getHeight()-1);
-		gc2.drawImage(defaultimg,  0,  0, panel.getWidth(), panel.getHeight(), panel);
+		gc2.drawRect(0,0, imagePanel.getWidth()-1,  imagePanel.getHeight()-1);
+		gc2.drawImage(defaultimg,  0,  0, imagePanel.getWidth(), imagePanel.getHeight(), imagePanel);
 		
 		JLabel titleLabel = new JLabel("<Omok Game>");
 		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -203,7 +203,7 @@ public class OmokClientMainView extends JFrame {
 		roomListScrollPane.setBounds(376, 61, 396, 212);
 		contentPane.add(roomListScrollPane);
 		
-		JLabel roomListTitleLabel = new JLabel("\uBC29 \uB9AC\uC2A4\uD2B8");
+		JLabel roomListTitleLabel = new JLabel("방 리스트");
 		roomListTitleLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		roomListTitleLabel.setFont(new Font("굴림", Font.BOLD, 14));
 		roomListTitleLabel.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -214,12 +214,12 @@ public class OmokClientMainView extends JFrame {
 		roomList = new JList(roomListModel);
 		roomList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
-		insertButton = new JButton("방 입장");
-		insertButton.setBounds(566, 283, 97, 23);
+		roomInsertButton = new JButton("방 입장");
+		roomInsertButton.setBounds(566, 283, 97, 23);
 		
-		contentPane.add(insertButton);
+		contentPane.add(roomInsertButton);
 		
-		insertButton.addActionListener(new ActionListener() {
+		roomInsertButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				int index = roomList.getSelectedIndex();
@@ -232,24 +232,24 @@ public class OmokClientMainView extends JFrame {
 		
 		roomListScrollPane.setViewportView(roomList);
 		
-		JButton btnNewButton_1 = new JButton("방 만들기");
-		btnNewButton_1.addActionListener(new ActionListener() {
+		JButton roomCreateButton = new JButton("방 만들기");
+		roomCreateButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				OmokClientRoomCreateView roomcreate = new OmokClientRoomCreateView(mainView, username, ip_addr, port_no);
 				setVisible(true);
 			}
 		});
-		btnNewButton_1.setBounds(675, 283, 97, 23);
-		contentPane.add(btnNewButton_1);
+		roomCreateButton.setBounds(675, 283, 97, 23);
+		contentPane.add(roomCreateButton);
 		
 		
 		
-		scrollPane_2 = new JScrollPane();
-		scrollPane_2.setBounds(537, 374, 235, 154);
-		contentPane.add(scrollPane_2);
+		gameLogScrollPane = new JScrollPane();
+		gameLogScrollPane.setBounds(537, 374, 235, 154);
+		contentPane.add(gameLogScrollPane);
 		
 		lblUserName_1_2 = new JLabel("전적");
-		scrollPane_2.setColumnHeaderView(lblUserName_1_2);
+		gameLogScrollPane.setColumnHeaderView(lblUserName_1_2);
 		lblUserName_1_2.setHorizontalAlignment(SwingConstants.CENTER);
 		lblUserName_1_2.setFont(new Font("굴림", Font.BOLD, 14));
 		lblUserName_1_2.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -271,16 +271,16 @@ public class OmokClientMainView extends JFrame {
 			ListenNetwork net = new ListenNetwork();
 			net.start();
 			TextSendAction action = new TextSendAction();
-			btnSend.addActionListener(action);
-			txtInput.addActionListener(action);
-			txtInput.requestFocus();
+			chatSendButton.addActionListener(action);
+			chatTextInput.addActionListener(action);
+			chatTextInput.requestFocus();
 			ImageSendAction action2 = new ImageSendAction();
-			imgBtn.addActionListener(action2);
+			imageChangeButton.addActionListener(action2);
 			MyMouseEvent mouse = new MyMouseEvent();
-			panel.addMouseMotionListener(mouse);
-			panel.addMouseListener(mouse);
+			imagePanel.addMouseMotionListener(mouse);
+			imagePanel.addMouseListener(mouse);
 			MyMouseWheelEvent wheel = new MyMouseWheelEvent();
-			panel.addMouseWheelListener(wheel);
+			imagePanel.addMouseWheelListener(wheel);
 
 
 		} catch (NumberFormatException | IOException e) {
@@ -412,7 +412,7 @@ public class OmokClientMainView extends JFrame {
 		c = new Color(255, 0, 0); // 다른 사람 것은 Red
 		gc2.setColor(c);
 		gc2.fillOval(cm.mouse_e.getX() - pen_size/2, cm.mouse_e.getY() - cm.pen_size/2, cm.pen_size, cm.pen_size);
-		gc.drawImage(panelImage, 0, 0, panel);
+		gc.drawImage(panelImage, 0, 0, imagePanel);
 	}
 
 	public void SendMouseEvent(MouseEvent e) {
@@ -448,7 +448,7 @@ public class OmokClientMainView extends JFrame {
 			gc2.setColor(c);
 			gc2.fillOval(e.getX()-pen_size/2, e.getY()-pen_size/2, pen_size, pen_size);
 			// panelImnage는 paint()에서 이용한다.
-			gc.drawImage(panelImage, 0, 0, panel);
+			gc.drawImage(panelImage, 0, 0, imagePanel);
 			SendMouseEvent(e);
 		}
 
@@ -463,7 +463,7 @@ public class OmokClientMainView extends JFrame {
 			Color c = new Color(0,0,255);
 			gc2.setColor(c);
 			gc2.fillOval(e.getX()-pen_size/2, e.getY()-pen_size/2, pen_size, pen_size);
-			gc.drawImage(panelImage, 0, 0, panel);
+			gc.drawImage(panelImage, 0, 0, imagePanel);
 			SendMouseEvent(e);
 		}
 
@@ -500,13 +500,13 @@ public class OmokClientMainView extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// Send button을 누르거나 메시지 입력하고 Enter key 치면
-			if (e.getSource() == btnSend || e.getSource() == txtInput) {
+			if (e.getSource() == chatSendButton || e.getSource() == chatTextInput) {
 				String msg = null;
 			
-				msg = txtInput.getText();
+				msg = chatTextInput.getText();
 				SendMessage(msg);
-				txtInput.setText(""); // 메세지를 보내고 나면 메세지 쓰는창을 비운다.
-				txtInput.requestFocus(); // 메세지를 보내고 커서를 다시 텍스트 필드로 위치시킨다
+				chatTextInput.setText(""); // 메세지를 보내고 나면 메세지 쓰는창을 비운다.
+				chatTextInput.requestFocus(); // 메세지를 보내고 커서를 다시 텍스트 필드로 위치시킨다
 				if (msg.contains("/exit")) // 종료 처리
 					System.exit(0);
 			}
@@ -516,7 +516,7 @@ public class OmokClientMainView extends JFrame {
 	class ImageSendAction implements ActionListener { //이미지 전송
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if (e.getSource() == imgBtn) {
+			if (e.getSource() == imageChangeButton) {
 				frame = new Frame("이미지첨부");
 				fd = new FileDialog(frame, "이미지 선택", FileDialog.LOAD);
 				fd.setVisible(true);
@@ -533,7 +533,7 @@ public class OmokClientMainView extends JFrame {
 
 	ImageIcon icon1 = new ImageIcon("src/icon1.jpg");
 	private JLabel lblUserName_1_2;
-	private JScrollPane scrollPane_2;
+	private JScrollPane gameLogScrollPane;
 
 	public void AppendIcon(ImageIcon icon) {
 		int len = textArea.getDocument().getLength();
@@ -596,8 +596,8 @@ public class OmokClientMainView extends JFrame {
 		height = ori_icon.getIconHeight();
 
 
-		gc2.drawImage(ori_img,  0,  0, panel.getWidth(), panel.getHeight(), panel);
-		gc.drawImage(panelImage, 0, 0, panel.getWidth(), panel.getHeight(), panel);
+		gc2.drawImage(ori_img,  0,  0, imagePanel.getWidth(), imagePanel.getHeight(), imagePanel);
+		gc.drawImage(panelImage, 0, 0, imagePanel.getWidth(), imagePanel.getHeight(), imagePanel);
 	}
 
 	// Windows 처럼 message 제외한 나머지 부분은 NULL 로 만들기 위한 함수

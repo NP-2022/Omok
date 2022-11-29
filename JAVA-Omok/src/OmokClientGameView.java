@@ -49,7 +49,7 @@ public class OmokClientGameView extends JFrame {
 	private String Username;
 	private String Ip_addr;
 	private String Port_no;
-	private JTextField textField;
+	private JTextField chatTextField;
 	private JLabel lblMouseEvent;
 	private Graphics gc2 = null;
 	private int pen_size = 2; // minimum 2
@@ -80,29 +80,29 @@ public class OmokClientGameView extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(659, 328, 352, 300);
-		contentPane.add(scrollPane);
+		JScrollPane chatScrollPane = new JScrollPane();
+		chatScrollPane.setBounds(659, 328, 352, 300);
+		contentPane.add(chatScrollPane);
 
 		JTextPane textArea = new JTextPane();
 		textArea.setFont(new Font("굴림체", Font.PLAIN, 14));
 		textArea.setEditable(true);
 		textArea.setCaretPosition(0);
-		scrollPane.setColumnHeaderView(textArea);
+		chatScrollPane.setColumnHeaderView(textArea);
 
-		textField = new JTextField();
-		textField.setColumns(10);
-		textField.setBounds(659, 638, 271, 40);
-		contentPane.add(textField);
+		chatTextField = new JTextField();
+		chatTextField.setColumns(10);
+		chatTextField.setBounds(659, 638, 271, 40);
+		contentPane.add(chatTextField);
 
-		JButton btnSend = new JButton("전송");
-		btnSend.addActionListener(new ActionListener() {
+		JButton chatSendButton = new JButton("전송");
+		chatSendButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnSend.setFont(new Font("굴림", Font.PLAIN, 14));
-		btnSend.setBounds(942, 637, 69, 40);
-		contentPane.add(btnSend);
+		chatSendButton.setFont(new Font("굴림", Font.PLAIN, 14));
+		chatSendButton.setBounds(942, 637, 69, 40);
+		contentPane.add(chatSendButton);
 
 		JScrollPane userListScrollPane = new JScrollPane();
 		userListScrollPane.setBounds(659, 107, 352, 212);
@@ -182,13 +182,13 @@ public class OmokClientGameView extends JFrame {
 		startButton.setBounds(220, 644, 107, 27);
 		contentPane.add(startButton);
 
-		Button modeButton = new Button("알까기");
-		modeButton.addActionListener(new ActionListener() {
+		Button undoButton = new Button("\uBB34\uB974\uAE30");
+		undoButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		modeButton.setBounds(343, 644, 107, 27);
-		contentPane.add(modeButton);
+		undoButton.setBounds(343, 644, 107, 27);
+		contentPane.add(undoButton);
 
 		Button exitButton = new Button("나가기");
 		exitButton.addActionListener(new ActionListener() {
@@ -198,9 +198,9 @@ public class OmokClientGameView extends JFrame {
 		exitButton.setBounds(470, 644, 107, 27);
 		contentPane.add(exitButton);
 
-		JLabel lblNewLabel = new JLabel("남은 시간 : 30");
-		lblNewLabel.setBounds(90, 643, 107, 28);
-		contentPane.add(lblNewLabel);
+		JLabel timeLabel = new JLabel("남은 시간 : 30");
+		timeLabel.setBounds(90, 643, 107, 28);
+		contentPane.add(timeLabel);
 
 		MyMouseEvent mouse = new MyMouseEvent();
 
@@ -320,6 +320,18 @@ public class OmokClientGameView extends JFrame {
 				gamePanel.repaint();
 			System.out.println("바둑알 데이터 처리 2");
 		}
+	}
+}
+
+
+class MapSize {
+	private final int CELL =30;
+	private final int SIZE =20;
+	public int getCell() {
+		return CELL;
+	}
+	public int getSize() {
+		return SIZE;
 	}
 }
 
