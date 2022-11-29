@@ -308,7 +308,7 @@ public class OmokClientGameView extends JFrame {
 		System.out.print("바둑알 데이터 수신 2");
 		if(cm.roomName.equals(roomname)) {
 			System.out.print(cm.stone);
-			gamePanel.setMap(cm.y, cm.x, cm.stone+1);
+			gamePanel.setMap(cm.y, cm.x, cm.stone);
 			if (gamePanel.Three(cm.y, cm.x)) {
 				gamePanel.setZero(cm.y, cm.x);
 			}
