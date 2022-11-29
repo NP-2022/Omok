@@ -27,7 +27,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
 
 
-public class JavaGameServer extends JFrame {
+public class OmokServer extends JFrame {
 
 	/**
 	 * 
@@ -51,7 +51,7 @@ public class JavaGameServer extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					JavaGameServer frame = new JavaGameServer();
+					OmokServer frame = new OmokServer();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -63,7 +63,7 @@ public class JavaGameServer extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public JavaGameServer() {
+	public OmokServer() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //창이 닫히면 프로세스 종료
 		setBounds(100, 100, 338, 440); 
 		contentPane = new JPanel();

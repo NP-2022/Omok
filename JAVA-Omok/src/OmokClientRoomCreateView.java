@@ -14,7 +14,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JSpinner;
 
-public class JavaGameClientRoomCreateView extends JFrame {
+public class OmokClientRoomCreateView extends JFrame {
 
 	
 
@@ -32,14 +32,14 @@ public class JavaGameClientRoomCreateView extends JFrame {
 	private String Ip_addr;
 	private String Port_no;
 	
-	JavaGameClientView mainClientView; // ois와 oos를 생성한 최초 Class에서 처리
+	OmokClientMainView mainView; // ois와 oos를 생성한 최초 Class에서 처리
 
 	/**
 	 * Create the frame.
 	 */
-	public JavaGameClientRoomCreateView(JavaGameClientView mainClientView, String username, String ip_addr, String port_no) {
+	public OmokClientRoomCreateView(OmokClientMainView mainView, String username, String ip_addr, String port_no) {
 		
-		this.mainClientView = mainClientView;
+		this.mainView = mainView;
 		
 		Username = username;
 		Ip_addr = ip_addr;
@@ -98,19 +98,19 @@ public class JavaGameClientRoomCreateView extends JFrame {
 	{
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			String Game = gameModeComboBox.getSelectedItem().toString();
-			String Room = txtRoom.getText().trim();
+			String gameModeName = gameModeComboBox.getSelectedItem().toString();
+			String roomName = txtRoom.getText().trim();
 			int maxPlayer = Integer.parseInt(maxPlayerComboBox.getSelectedItem().toString());
 			
-			JavaGameClientView2 view = new JavaGameClientView2(mainClientView, Username, Ip_addr, Port_no, Game, Room, maxPlayer);
-			mainClientView.gameClientView.add(view);
+			OmokClientGameView view = new OmokClientGameView(mainView, Username, Ip_addr, Port_no, gameModeName, roomName, maxPlayer);
+			mainView.gameView.add(view);
 			setVisible(false);
 			
-			ChatMsg msg = new ChatMsg(Username, "600", Game);
+			ChatMsg msg = new ChatMsg(Username, "600", gameModeName);
 			msg.roomMax = maxPlayer;
 			msg.roomName = txtRoom.getText();
-			msg.gameMode = Game;
-			mainClientView.SendObject(msg);
+			msg.gameMode = gameModeName;
+			mainView.SendObject(msg);
 		}
 	}
 }

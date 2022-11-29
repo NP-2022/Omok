@@ -13,7 +13,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class JavaGameClientMain extends JFrame {
+public class OmokClientMain extends JFrame {
 
 	/**
 	 * 
@@ -31,7 +31,7 @@ public class JavaGameClientMain extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					JavaGameClientMain frame = new JavaGameClientMain();
+					OmokClientMain frame = new OmokClientMain();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -43,7 +43,7 @@ public class JavaGameClientMain extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public JavaGameClientMain() {
+	public OmokClientMain() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 254, 321);
 		contentPane = new JPanel();
@@ -86,20 +86,20 @@ public class JavaGameClientMain extends JFrame {
 		JButton btnConnect = new JButton("Connect");
 		btnConnect.setBounds(12, 223, 205, 38);
 		contentPane.add(btnConnect);
-		Myaction action = new Myaction();
+		MyAction action = new MyAction();
 		btnConnect.addActionListener(action);
 		txtUserName.addActionListener(action);
 		txtIpAddress.addActionListener(action);
 		txtPortNumber.addActionListener(action);
 	}
-	class Myaction implements ActionListener // 내부클래스로 액션 이벤트 처리 클래스
+	class MyAction implements ActionListener // 내부클래스로 액션 이벤트 처리 클래스
 	{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			String username = txtUserName.getText().trim();
 			String ip_addr = txtIpAddress.getText().trim();
 			String port_no = txtPortNumber.getText().trim();
-			JavaGameClientView view = new JavaGameClientView(username, ip_addr, port_no);
+			OmokClientMainView view = new OmokClientMainView(username, ip_addr, port_no);
 			setVisible(false);
 		}
 	}

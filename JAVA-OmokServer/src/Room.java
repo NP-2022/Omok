@@ -9,14 +9,14 @@ public class Room {
 	public String roomName;
 	public int roomNumber;
 	public int roomMax; // 최대 인원수 (2, 3, 4)
-	public Vector<JavaGameServer.UserService> playerList = new Vector<>();
-	public Vector<JavaGameServer.UserService> watcherList = new Vector<>();
+	public Vector<OmokServer.UserService> playerList = new Vector<>();
+	public Vector<OmokServer.UserService> watcherList = new Vector<>();
 	public Vector<Stone> stoneList = new Vector<>();
-	public JavaGameServer.UserService owner;
+	public OmokServer.UserService owner;
 	public String gameMode;
 	public String ownerName;
 	
-	public Room(String roomName, JavaGameServer.UserService owner, int roomMax, String gameMode) {
+	public Room(String roomName, OmokServer.UserService owner, int roomMax, String gameMode) {
 		this.roomName = roomName;
 		this.owner = owner;
 		this.roomMax = roomMax;
@@ -36,7 +36,7 @@ public class Room {
 
 
 	public boolean hasName(String userName) {
-		for (JavaGameServer.UserService user : playerList) {
+		for (OmokServer.UserService user : playerList) {
 			if (user.UserName.equals(userName)) {
 				return true;
 			}
@@ -45,7 +45,7 @@ public class Room {
 	}
 
 
-	public void addUser(JavaGameServer.UserService userService) {
+	public void addUser(OmokServer.UserService userService) {
 		playerList.add(userService);
 	}
 

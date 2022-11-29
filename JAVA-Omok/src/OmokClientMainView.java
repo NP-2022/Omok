@@ -59,7 +59,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JMenuBar;
 
-public class JavaGameClientView extends JFrame {
+public class OmokClientMainView extends JFrame {
 	/**
 	 * 
 	 */
@@ -96,9 +96,9 @@ public class JavaGameClientView extends JFrame {
 	private Image panelImage = null; 
 	private Graphics gc2 = null;
 	
-	public JavaGameClientView mainClientView = null; // 현재 화면에 대한 레퍼런스
+	public OmokClientMainView mainView = null; // 현재 화면에 대한 레퍼런스
 //	public JavaGameClientView2 gameClientView = null; // 게임 화면 레퍼런스
-	public Vector<JavaGameClientView2> gameClientView = new Vector();
+	public Vector<OmokClientGameView> gameView = new Vector();
 
 	private JScrollPane roomListScrollPane; 
 	private JList roomList;
@@ -110,9 +110,9 @@ public class JavaGameClientView extends JFrame {
 	 * Create the frame.
 	 * @throws BadLocationException 
 	 */
-	public JavaGameClientView(String username, String ip_addr, String port_no)  {
+	public OmokClientMainView(String username, String ip_addr, String port_no)  {
 		
-		mainClientView = this;
+		mainView = this;
 
 		UserName = username;
 		Ip_addr = ip_addr;
@@ -182,7 +182,7 @@ public class JavaGameClientView extends JFrame {
 		gc = panel.getGraphics();
 		
 		// Image 영역 보관용. paint() 에서 이용한다.
-		Image defaultimg =new ImageIcon(JavaGameClientView.class.getResource("default.png")).getImage();
+		Image defaultimg =new ImageIcon(OmokClientMainView.class.getResource("default.png")).getImage();
 		panelImage = createImage(panel.getWidth(), panel.getHeight());
 		gc2 = panelImage.getGraphics();
 		gc2.setColor(panel.getBackground());
@@ -235,7 +235,7 @@ public class JavaGameClientView extends JFrame {
 		JButton btnNewButton_1 = new JButton("방 만들기");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JavaGameClientRoomCreateView roomcreate = new JavaGameClientRoomCreateView(mainClientView, username, ip_addr, port_no);
+				OmokClientRoomCreateView roomcreate = new OmokClientRoomCreateView(mainView, username, ip_addr, port_no);
 				setVisible(true);
 			}
 		});
@@ -258,10 +258,7 @@ public class JavaGameClientView extends JFrame {
 
 		try {
 			socket = new Socket(ip_addr, Integer.parseInt(port_no));
-//			is = socket.getInputStream();
-//			dis = new DataInputStream(is);
-//			os = socket.getOutputStream();
-//			dos = new DataOutputStream(os);
+
 
 			oos = new ObjectOutputStream(socket.getOutputStream());
 			oos.flush();
@@ -355,13 +352,13 @@ public class JavaGameClientView extends JFrame {
 						roomListUpdate(cm);
 						break;
 					case "703": // 유저 리스트 갱신
-						for(int i = 0; i < gameClientView.size(); i++) {
-							gameClientView.get(i).userListUpdate(cm);
+						for(int i = 0; i < gameView.size(); i++) {
+							gameView.get(i).userListUpdate(cm);
 						}
 						break;
 					case "900":
-						for(int i = 0; i < gameClientView.size(); i++) {
-							gameClientView.get(i).drawStone(cm);
+						for(int i = 0; i < gameView.size(); i++) {
+							gameView.get(i).drawStone(cm);
 						}
 						break;
 						
@@ -385,20 +382,7 @@ public class JavaGameClientView extends JFrame {
 		}
 	}
 
-//	private void drawStone(ChatMsg cm) {
-//		System.out.print("바둑알 데이터 수신 ");
-//		gameClientView.gamePanel.setMap(cm.y, cm.x, cm.stone);
-//		if (gameClientView.gamePanel.Three(cm.y, cm.x)) {
-//			gameClientView.gamePanel.setZero(cm.y, cm.x);
-//		}
-//
-//		if (gameClientView.gamePanel.Rule(cm.y, cm.x)) {
-//			gameClientView.gamePanel.init();
-//			gameClientView.gamePanel.repaint();
-//		} else
-//			gameClientView.gamePanel.repaint();
-//		System.out.println("바둑알 데이터 처리");
-//	}
+
 	
 	private void requestInsertRoom(int index) {
 		ChatMsg msg = new ChatMsg(UserName, "700", "");
@@ -407,8 +391,8 @@ public class JavaGameClientView extends JFrame {
 	}
 	
 	private void insertRoom(ChatMsg msg) { // 방 입장하기
-		JavaGameClientView2 view = new JavaGameClientView2(mainClientView, UserName, Ip_addr, Port_no, msg.gameMode, msg.roomName, msg.roomMax);
-		mainClientView.gameClientView.add(view);
+		OmokClientGameView view = new OmokClientGameView(mainView, UserName, Ip_addr, Port_no, msg.gameMode, msg.roomName, msg.roomMax);
+		mainView.gameView.add(view);
 	}
 	
 	public void roomListUpdate(ChatMsg cm) {
@@ -451,8 +435,6 @@ public class JavaGameClientView extends JFrame {
 				if (pen_size > 2)
 					pen_size--;
 			}
-			//lblMouseEvent.setText("mouseWheelMoved Rotation=" + e.getWheelRotation() 
-			//	+ " pen_size = " + pen_size + " " + e.getX() + "," + e.getY());
 
 		}
 		
@@ -520,7 +502,7 @@ public class JavaGameClientView extends JFrame {
 			// Send button을 누르거나 메시지 입력하고 Enter key 치면
 			if (e.getSource() == btnSend || e.getSource() == txtInput) {
 				String msg = null;
-				// msg = String.format("[%s] %s\n", UserName, txtInput.getText());
+			
 				msg = txtInput.getText();
 				SendMessage(msg);
 				txtInput.setText(""); // 메세지를 보내고 나면 메세지 쓰는창을 비운다.
@@ -534,14 +516,11 @@ public class JavaGameClientView extends JFrame {
 	class ImageSendAction implements ActionListener { //이미지 전송
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// 액션 이벤트가 sendBtn일때 또는 textField 에세 Enter key 치면
 			if (e.getSource() == imgBtn) {
 				frame = new Frame("이미지첨부");
 				fd = new FileDialog(frame, "이미지 선택", FileDialog.LOAD);
-				// frame.setVisible(true);
-				// fd.setDirectory(".\\");
 				fd.setVisible(true);
-				// System.out.println(fd.getDirectory() + fd.getFile());
+
 				if (fd.getDirectory().length() > 0 && fd.getFile().length() > 0) {
 					ChatMsg obcm = new ChatMsg(UserName, "300", "IMG");
 					ImageIcon img = new ImageIcon(fd.getDirectory() + fd.getFile());
@@ -565,12 +544,9 @@ public class JavaGameClientView extends JFrame {
 
 	// 화면에 출력
 	public void AppendText(String msg) {
-		// textArea.append(msg + "\n");
-		// AppendIcon(icon1);
+
 		msg = msg.trim(); // 앞뒤 blank와 \n을 제거한다.
-		//textArea.setCaretPosition(len);
-		//textArea.replaceSelection(msg + "\n");
-		
+
 		StyledDocument doc = textArea.getStyledDocument();
 		SimpleAttributeSet left = new SimpleAttributeSet();
 		StyleConstants.setAlignment(left, StyleConstants.ALIGN_LEFT);
@@ -618,31 +594,7 @@ public class JavaGameClientView extends JFrame {
 		double ratio;
 		width = ori_icon.getIconWidth();
 		height = ori_icon.getIconHeight();
-		// Image가 너무 크면 최대 가로 또는 세로 200 기준으로 축소시킨다.
-//		if (width > 200 || height > 200) {
-//			if (width > height) { // 가로 사진
-//				ratio = (double) height / width;
-//				width = 200;
-//				height = (int) (width * ratio);
-//			} else { // 세로 사진
-//				ratio = (double) width / height;
-//				height = 200;
-//				width = (int) (height * ratio);
-//			}
-//			new_img = ori_img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
-//			new_icon = new ImageIcon(new_img);
-//			textArea.insertIcon(new_icon);
-//		} else {
-//			textArea.insertIcon(ori_icon);
-//			new_img = ori_img;
-//		}
-//		len = textArea.getDocument().getLength();
-//		textArea.setCaretPosition(len);
-//		textArea.replaceSelection("\n");
-		
-		// ImageViewAction viewaction = new ImageViewAction();
-		// new_icon.addActionListener(viewaction); // 내부클래스로 액션 리스너를 상속받은 클래스로
-		// panelImage = ori_img.getScaledInstance(panel.getWidth(), panel.getHeight(), Image.SCALE_DEFAULT);
+
 
 		gc2.drawImage(ori_img,  0,  0, panel.getWidth(), panel.getHeight(), panel);
 		gc.drawImage(panelImage, 0, 0, panel.getWidth(), panel.getHeight(), panel);
@@ -658,7 +610,6 @@ public class JavaGameClientView extends JFrame {
 		try {
 			bb = msg.getBytes("euc-kr");
 		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			System.exit(0);
 		}
@@ -670,23 +621,15 @@ public class JavaGameClientView extends JFrame {
 	// Server에게 network으로 전송
 	public void SendMessage(String msg) {
 		try {
-			// dos.writeUTF(msg);
-//			byte[] bb;
-//			bb = MakePacket(msg);
-//			dos.write(bb, 0, bb.length);
 			ChatMsg obcm = new ChatMsg(UserName, "200", msg);
 			oos.writeObject(obcm);
 		} catch (IOException e) {
-			// AppendText("dos.write() error");
 			AppendText("oos.writeObject() error");
 			try {
-//				dos.close();
-//				dis.close();
 				ois.close();
 				oos.close();
 				socket.close();
 			} catch (IOException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 				System.exit(0);
 			}
@@ -697,7 +640,6 @@ public class JavaGameClientView extends JFrame {
 		try {
 			oos.writeObject(ob);
 		} catch (IOException e) {
-			// textArea.append("메세지 송신 에러!!\n");
 			AppendText("SendObject Error");
 		}
 	}
