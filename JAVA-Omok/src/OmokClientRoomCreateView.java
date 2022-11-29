@@ -83,7 +83,7 @@ public class OmokClientRoomCreateView extends JFrame {
 		maxPlayerComboBox.setBounds(101, 169, 47, 22);
 		contentPane.add(maxPlayerComboBox);
 		
-		JButton createButton = new JButton("\uBC29 \uC0DD\uC131");
+		JButton createButton = new JButton("¹æ »ý¼º");
 		createButton.setBounds(12, 223, 205, 38);
 		contentPane.add(createButton);
 		

@@ -61,7 +61,7 @@ public class OmokClientMain extends JFrame {
 		
 		MyAction action = new MyAction();
 		
-		JButton loginButton = new JButton("\uB85C\uADF8\uC778");
+		JButton loginButton = new JButton("·Î±×ÀÎ");
 		loginButton.setBounds(51, 166, 144, 33);
 		contentPane.add(loginButton);
 		loginButton.addActionListener(action);

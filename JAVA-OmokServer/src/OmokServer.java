@@ -160,8 +160,8 @@ public class OmokServer extends JFrame {
 
 		private Socket client_socket;
 		private Vector user_vc;
-		public String UserName = "";
-		public String UserStatus;
+		public String userName = "";
+		public String userStatus;
 		
 		public int roomNumber;
 		public boolean ready;
@@ -184,25 +184,25 @@ public class OmokServer extends JFrame {
 		}
 
 		public void Login() {
-			AppendText("새로운 참가자 " + UserName + " 입장.");
+			AppendText("새로운 참가자 " + userName + " 입장.");
 			WriteOne("Welcome to Java chat server\n");
-			WriteOne(UserName + "님 환영합니다.\n"); // 연결된 사용자에게 정상접속을 알림
-			String msg = "[" + UserName + "]님이 입장 하였습니다.\n";
+			WriteOne(userName + "님 환영합니다.\n"); // 연결된 사용자에게 정상접속을 알림
+			String msg = "[" + userName + "]님이 입장 하였습니다.\n";
 			WriteOthers(msg); // 아직 user_vc에 새로 입장한 user는 포함되지 않았다.
 		}
 
 		public void Logout() {
-			String msg = "[" + UserName + "]님이 퇴장 하였습니다.\n";
+			String msg = "[" + userName + "]님이 퇴장 하였습니다.\n";
 			userVec.removeElement(this); // Logout한 현재 객체를 벡터에서 지운다
 			WriteAll(msg); // 나를 제외한 다른 User들에게 전송
-			AppendText("사용자 " + "[" + UserName + "] 퇴장. 현재 참가자 수 " + userVec.size());
+			AppendText("사용자 " + "[" + userName + "] 퇴장. 현재 참가자 수 " + userVec.size());
 		}
 
 		// 모든 User들에게 방송. 각각의 UserService Thread의 WriteONe() 을 호출한다.
 		public void WriteAll(String str) {
 			for (int i = 0; i < user_vc.size(); i++) {
 				UserService user = (UserService) user_vc.elementAt(i);
-				if (user.UserStatus == "O")
+				if (user.userStatus == "O")
 					user.WriteOne(str);
 			}
 		}
@@ -210,7 +210,7 @@ public class OmokServer extends JFrame {
 		public void WriteAllObject(Object ob) {
 			for (int i = 0; i < user_vc.size(); i++) {
 				UserService user = (UserService) user_vc.elementAt(i);
-				if (user.UserStatus == "O")
+				if (user.userStatus == "O")
 					user.WriteOneObject(ob);
 			}
 		}
@@ -219,7 +219,7 @@ public class OmokServer extends JFrame {
 		public void WriteOthers(String str) {
 			for (int i = 0; i < user_vc.size(); i++) {
 				UserService user = (UserService) user_vc.elementAt(i);
-				if (user != this && user.UserStatus == "O")
+				if (user != this && user.userStatus == "O")
 					user.WriteOne(str);
 			}
 		}
@@ -300,32 +300,32 @@ public class OmokServer extends JFrame {
 			
 		}
 		
-		public void insertRoom(ChatMsg msg) {
-			Room room = roomVec.get(msg.roomNumber);
-			if(room.isFull()) {
+		public void insertRoom(ChatMsg msg) { 
+			Room room = roomVec.get(msg.roomNumber); // 방 번호로 입장 (방 목록 리스트는 서버의 방 배열과 인덱스를 공유함)
+			if(room.isFull()) { 
 				WriteOne("방이 꽉 찼습니다!");
 				return;
 			}
-			else if (room.hasName(msg.UserName)) {
+			else if (room.hasName(msg.UserName)) { // 방에 유저의 이름이 이미 있는 경우
 				WriteOne("이미 들어가 있는 방입니다!");
 				return;
 			}
-			else {
-				AppendText("플레이어 "+UserName+" "+room.roomNumber+"번 방 입장.");
-				msg = new ChatMsg(UserName, "700", "");
+			else { // 유저에게 방의 정보를 주고 입장시킴
+				AppendText("플레이어 "+userName+" "+room.roomNumber+"번 방 입장.");
+				msg = new ChatMsg(userName, "700", "");
 				msg.roomMax = room.roomMax;
 				msg.roomName = room.roomName;
 				msg.gameMode = room.gameMode;
 				msg.roomNumber = room.roomNumber;
-				room.addUser(this);
+				room.addUser(this); // // 방 벡터에 유저를 추가
 				WriteAllObject(msg);
-				for(UserService user: room.playerList) 
+				for(UserService user: room.playerList) // 방에 있는 모든 유저에게 유저 목록 리스트를 갱신 
 					user.updateUserList();
 			}
 		}
 		
 		public void updateRoomList() { // 방 목록을 갱신하는 String을 모두에게 전역으로 보냄
-			ChatMsg msg = new ChatMsg(UserName, "702", "");
+			ChatMsg msg = new ChatMsg(userName, "702", "");
 			StringBuffer data = new StringBuffer();
 			for(Room room : roomVec) {
 				data.append(String.format("[No.%d] [%s] [mode:%s] [%d/%d] [방장:%s]\n",room.roomNumber, room.roomName, room.gameMode, room.getPlayerCount(), room.roomMax, room.ownerName));
@@ -335,17 +335,17 @@ public class OmokServer extends JFrame {
 		}
 		
 		public void updateUserList() { // 이 함수를 호출한 UserService에게만 유저 목록을 갱신하는 String을 보냄
-			ChatMsg msg = new ChatMsg(UserName, "703", "");
+			ChatMsg msg = new ChatMsg(userName, "703", "");
 			Room room = roomVec.get(roomNumber);
 			StringBuffer data = new StringBuffer();
 			for(UserService user : room.playerList) {
-				data.append(String.format("[이름:%s]\n",user.UserName));
+				data.append(String.format("[이름:%s]\n",user.userName));
 			}
 			msg.data = data.toString();
 			WriteOneObject(msg);
 		}
 		
-		public void drawStone(ChatMsg msg) {
+		public void drawStone(ChatMsg msg) { // 벡터에서 
 			int roomnum = -1;
 			for(int i= 0; i < roomVec.size(); i++) {
 				if(msg.roomName.equals(roomVec.get(i).roomName)) {
@@ -363,7 +363,7 @@ public class OmokServer extends JFrame {
 			int color;
 			int usernum = -1;
 			for(color = 0; color < room.playerList.size(); color++) {
-				if(msg.UserName.equals(room.playerList.get(color).UserName)) {
+				if(msg.UserName.equals(room.playerList.get(color).userName)) {
 					usernum = color;
 					color = color + 1;
 					if(room.roomMax == 4)
@@ -409,8 +409,8 @@ public class OmokServer extends JFrame {
 					} else
 						continue;
 					if (cm.code.matches("100")) {
-						UserName = cm.UserName;
-						UserStatus = "O"; // Online 상태
+						userName = cm.UserName;
+						userStatus = "O"; // Online 상태
 						Login();
 						updateRoomList();
 					} else if (cm.code.matches("200")) {
@@ -418,7 +418,7 @@ public class OmokServer extends JFrame {
 						AppendText(msg); // server 화면에 출력
 						String[] args = msg.split(" "); // 단어들을 분리한다.
 						if (args.length == 1) { // Enter key 만 들어온 경우 Wakeup 처리만 한다.
-							UserStatus = "O";
+							userStatus = "O";
 						} else if (args[1].matches("/exit")) {
 							Logout();
 							break;
@@ -428,17 +428,17 @@ public class OmokServer extends JFrame {
 							WriteOne("-----------------------------\n");
 							for (int i = 0; i < user_vc.size(); i++) {
 								UserService user = (UserService) user_vc.elementAt(i);
-								WriteOne(user.UserName + "\t" + user.UserStatus + "\n");
+								WriteOne(user.userName + "\t" + user.userStatus + "\n");
 							}
 							WriteOne("-----------------------------\n");
 						} else if (args[1].matches("/sleep")) {
-							UserStatus = "S";
+							userStatus = "S";
 						} else if (args[1].matches("/wakeup")) {
-							UserStatus = "O";
+							userStatus = "O";
 						} else if (args[1].matches("/to")) { // 귓속말
 							for (int i = 0; i < user_vc.size(); i++) {
 								UserService user = (UserService) user_vc.elementAt(i);
-								if (user.UserName.matches(args[2]) && user.UserStatus.matches("O")) {
+								if (user.userName.matches(args[2]) && user.userStatus.matches("O")) {
 									String msg2 = "";
 									for (int j = 3; j < args.length; j++) {// 실제 message 부분
 										msg2 += args[j];
@@ -452,7 +452,7 @@ public class OmokServer extends JFrame {
 								}
 							}
 						} else { // 일반 채팅 메시지
-							UserStatus = "O";
+							userStatus = "O";
 							//WriteAll(msg + "\n"); // Write All
 							WriteAllObject(cm);
 						}
@@ -469,7 +469,7 @@ public class OmokServer extends JFrame {
 						insertRoom(cm);
 						updateRoomList();
 					}
-					else if(cm.code.matches("900")) {
+					else if(cm.code.matches("900")) { // 바둑돌 입력 처리
 						System.out.println("y: " + cm.y + "x: " + cm.x + "name: " + cm.roomName);
 						drawStone(cm);
 					}

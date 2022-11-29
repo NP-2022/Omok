@@ -182,7 +182,7 @@ public class OmokClientGameView extends JFrame {
 		startButton.setBounds(220, 644, 107, 27);
 		contentPane.add(startButton);
 
-		Button undoButton = new Button("\uBB34\uB974\uAE30");
+		Button undoButton = new Button("¹«¸£±â");
 		undoButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}

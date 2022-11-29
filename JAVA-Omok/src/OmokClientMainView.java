@@ -164,13 +164,7 @@ public class OmokClientMainView extends JFrame {
 
 		JButton exitButton = new JButton("종 료");
 		exitButton.setFont(new Font("굴림", Font.PLAIN, 14));
-		exitButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				ChatMsg msg = new ChatMsg(UserName, "400", "Bye");
-				SendObject(msg);
-				System.exit(0);
-			}
-		});
+		
 		exitButton.setBounds(672, 539, 100, 40);
 		contentPane.add(exitButton);
 
@@ -218,31 +212,11 @@ public class OmokClientMainView extends JFrame {
 		roomInsertButton.setBounds(566, 283, 97, 23);
 		
 		contentPane.add(roomInsertButton);
-		
-		roomInsertButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				int index = roomList.getSelectedIndex();
-				if(index == -1) return;
-				requestInsertRoom(index);
-				System.out.println("go to "+index+" requested.");
-			}
-			
-		});
-		
-		roomListScrollPane.setViewportView(roomList);
-		
+
 		JButton roomCreateButton = new JButton("방 만들기");
-		roomCreateButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				OmokClientRoomCreateView roomcreate = new OmokClientRoomCreateView(mainView, username, ip_addr, port_no);
-				setVisible(true);
-			}
-		});
+		roomListScrollPane.setViewportView(roomList);
 		roomCreateButton.setBounds(675, 283, 97, 23);
 		contentPane.add(roomCreateButton);
-		
-		
 		
 		gameLogScrollPane = new JScrollPane();
 		gameLogScrollPane.setBounds(537, 374, 235, 154);
@@ -254,6 +228,35 @@ public class OmokClientMainView extends JFrame {
 		lblUserName_1_2.setFont(new Font("굴림", Font.BOLD, 14));
 		lblUserName_1_2.setBorder(new LineBorder(new Color(0, 0, 0)));
 		lblUserName_1_2.setBackground(Color.WHITE);
+		
+		// 게임 종료 set
+		exitButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ChatMsg msg = new ChatMsg(UserName, "400", "Bye");
+				SendObject(msg);
+				System.exit(0);
+			}
+		});
+		
+		// 방 생성 set
+		roomCreateButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				OmokClientRoomCreateView roomcreate = new OmokClientRoomCreateView(mainView, username, ip_addr, port_no); 
+				setVisible(true);
+			}
+		});
+		
+		// 방 입장 set
+		roomInsertButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int index = roomList.getSelectedIndex();
+				if(index == -1) return;
+				requestInsertRoom(index);
+				System.out.println("go to "+index+" requested.");
+			}
+			
+		});
 		
 
 		try {
@@ -356,7 +359,7 @@ public class OmokClientMainView extends JFrame {
 							gameView.get(i).userListUpdate(cm);
 						}
 						break;
-					case "900":
+					case "900": // 바둑돌 입력 수신
 						for(int i = 0; i < gameView.size(); i++) {
 							gameView.get(i).drawStone(cm);
 						}
@@ -384,7 +387,7 @@ public class OmokClientMainView extends JFrame {
 
 
 	
-	private void requestInsertRoom(int index) {
+	private void requestInsertRoom(int index) { // 방 입장 요청함
 		ChatMsg msg = new ChatMsg(UserName, "700", "");
 		msg.roomNumber = index;
 		SendObject(msg);
@@ -395,8 +398,8 @@ public class OmokClientMainView extends JFrame {
 		mainView.gameView.add(view);
 	}
 	
-	public void roomListUpdate(ChatMsg cm) {
-		roomListModel.removeAllElements();
+	public void roomListUpdate(ChatMsg cm) { // 방 목록 갱신
+		roomListModel.removeAllElements(); // 방 리스트를 모두 지우고, 다시 업데이트 한다.
 		String list[] = cm.data.split("\n");
 		for(String item: list) {
 			roomListModel.addElement(item);

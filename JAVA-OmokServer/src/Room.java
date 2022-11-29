@@ -21,7 +21,7 @@ public class Room {
 		this.owner = owner;
 		this.roomMax = roomMax;
 		this.gameMode = gameMode;
-		this.ownerName = owner.UserName;
+		this.ownerName = owner.userName;
 		playerList.add(owner);
 	}
 	
@@ -37,7 +37,7 @@ public class Room {
 
 	public boolean hasName(String userName) {
 		for (OmokServer.UserService user : playerList) {
-			if (user.UserName.equals(userName)) {
+			if (user.userName.equals(userName)) {
 				return true;
 			}
 		}
