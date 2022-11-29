@@ -377,9 +377,10 @@ public class OmokServer extends JFrame {
 			msg.stone = color;
 //			WriteAllObject(msg);
 			
-			if(room.stoneList.size() % room.roomMax == usernum) {
+			if((room.stoneList.size() % room.roomMax) == usernum) {
 				room.addStone(stone);
-				WriteAllObject(msg);
+				for(UserService user: room.playerList) // 방에 있는 모든 유저에게 바둑돌 전송 
+					user.WriteOneObject(msg);
 			}else {
 				System.out.println("차례가 아님");
 			}

@@ -88,13 +88,13 @@ public class OmokClientRoomCreateView extends JFrame {
 		contentPane.add(createButton);
 		
 		
-		Roomaction action = new Roomaction();
+		RoomAction action = new RoomAction();
 		createButton.addActionListener(action);
 		setVisible(true);
 		
 	}
 
-	class Roomaction implements ActionListener // 내부클래스로 액션 이벤트 처리 클래스
+	class RoomAction implements ActionListener // 내부클래스로 액션 이벤트 처리 클래스
 	{
 		@Override
 		public void actionPerformed(ActionEvent e) {
