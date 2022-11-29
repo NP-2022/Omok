@@ -359,10 +359,12 @@ public class JavaGameServer extends JFrame {
 			Stone stone = new Stone();
 			stone.y = msg.y;
 			stone.x = msg.x;
-			room.addStone(stone);
+//			room.addStone(stone);
 			int color;
+			int usernum = -1;
 			for(color = 0; color < room.playerList.size(); color++) {
 				if(msg.UserName.equals(room.playerList.get(color).UserName)) {
+					usernum = color;
 					color = color + 1;
 					if(room.roomMax == 4)
 						color = (color % 2) + 1;
@@ -373,7 +375,14 @@ public class JavaGameServer extends JFrame {
 				color = color % 2;
 			}
 			msg.stone = color;
-			WriteAllObject(msg);
+//			WriteAllObject(msg);
+			
+			if(room.stoneList.size() % room.roomMax == usernum) {
+				room.addStone(stone);
+				WriteAllObject(msg);
+			}else {
+				System.out.println("Â÷·Ê°¡ ¾Æ´Ô");
+			}
 		}
 		
 		public void run() {
