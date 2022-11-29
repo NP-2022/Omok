@@ -9,20 +9,24 @@ import javax.swing.ImageIcon;
 
 class ChatMsg implements Serializable {
 	private static final long serialVersionUID = 1L;
-	public String code; 
-	public String UserName;
-	public String data;
-	public ImageIcon img;
-	public MouseEvent mouse_e;
+	public String code;				//어떤 목적의 내용인지
+	public String UserName;			//사용자 이름
+	public String data;				//내용
+	public ImageIcon img;			//이미지
+	public MouseEvent mouse_e;		//마우스 이벤트
 	public int pen_size; // pen size
-	public int roomMax;
-	public String roomName;
-	public int roomNumber;
-	public String gameMode;
+	public int roomMax;				//방 최대 플레이 인원
+	public String roomName;			//방 이름
+	public int roomNumber;			//방번호
+	public String gameMode;			//게임 종류
+	public int y;
+	public int x;
+	public int stone;
 	
-	public ChatMsg(String UserName, String code, String msg) {
+	public ChatMsg(String UserName, String code, String msg) {	//유저 이름, 코드, 메세지 내용
 		this.code = code;
 		this.UserName = UserName;
 		this.data = msg;
 	}
+	
 }

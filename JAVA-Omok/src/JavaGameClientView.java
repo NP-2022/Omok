@@ -52,6 +52,9 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
+
+//import JavaGameServer.UserService;
+
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JMenuBar;
@@ -94,7 +97,8 @@ public class JavaGameClientView extends JFrame {
 	private Graphics gc2 = null;
 	
 	public JavaGameClientView mainClientView = null; // 현재 화면에 대한 레퍼런스
-	public JavaGameClientView2 gameClientView = null; // 게임 화면 레퍼런스
+//	public JavaGameClientView2 gameClientView = null; // 게임 화면 레퍼런스
+	public Vector<JavaGameClientView2> gameClientView = new Vector();
 
 	private JScrollPane roomListScrollPane; 
 	private JList roomList;
@@ -351,8 +355,16 @@ public class JavaGameClientView extends JFrame {
 						roomListUpdate(cm);
 						break;
 					case "703": // 유저 리스트 갱신
-						gameClientView.userListUpdate(cm);
+						for(int i = 0; i < gameClientView.size(); i++) {
+							gameClientView.get(i).userListUpdate(cm);
+						}
 						break;
+					case "900":
+						for(int i = 0; i < gameClientView.size(); i++) {
+							gameClientView.get(i).drawStone(cm);
+						}
+						break;
+						
 					}
 				} catch (IOException e) {
 					AppendText("ois.readObject() error");
@@ -373,6 +385,21 @@ public class JavaGameClientView extends JFrame {
 		}
 	}
 
+//	private void drawStone(ChatMsg cm) {
+//		System.out.print("바둑알 데이터 수신 ");
+//		gameClientView.gamePanel.setMap(cm.y, cm.x, cm.stone);
+//		if (gameClientView.gamePanel.Three(cm.y, cm.x)) {
+//			gameClientView.gamePanel.setZero(cm.y, cm.x);
+//		}
+//
+//		if (gameClientView.gamePanel.Rule(cm.y, cm.x)) {
+//			gameClientView.gamePanel.init();
+//			gameClientView.gamePanel.repaint();
+//		} else
+//			gameClientView.gamePanel.repaint();
+//		System.out.println("바둑알 데이터 처리");
+//	}
+	
 	private void requestInsertRoom(int index) {
 		ChatMsg msg = new ChatMsg(UserName, "700", "");
 		msg.roomNumber = index;
@@ -381,7 +408,7 @@ public class JavaGameClientView extends JFrame {
 	
 	private void insertRoom(ChatMsg msg) { // 방 입장하기
 		JavaGameClientView2 view = new JavaGameClientView2(mainClientView, UserName, Ip_addr, Port_no, msg.gameMode, msg.roomName, msg.roomMax);
-		mainClientView.gameClientView = view;
+		mainClientView.gameClientView.add(view);
 	}
 	
 	public void roomListUpdate(ChatMsg cm) {
@@ -410,6 +437,8 @@ public class JavaGameClientView extends JFrame {
 		cm.pen_size = pen_size;
 		SendObject(cm);
 	}
+	
+	
 
 	class MyMouseWheelEvent implements MouseWheelListener {
 		@Override

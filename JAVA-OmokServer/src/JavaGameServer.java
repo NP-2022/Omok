@@ -26,6 +26,7 @@ import java.util.Vector;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
 
+
 public class JavaGameServer extends JFrame {
 
 	/**
@@ -344,6 +345,37 @@ public class JavaGameServer extends JFrame {
 			WriteOneObject(msg);
 		}
 		
+		public void drawStone(ChatMsg msg) {
+			int roomnum = -1;
+			for(int i= 0; i < roomVec.size(); i++) {
+				if(msg.roomName.equals(roomVec.get(i).roomName)) {
+					roomnum = i;
+					break;
+				}
+			}
+			System.out.println(roomnum);
+			msg.roomNumber = roomnum;
+			Room room = roomVec.get(roomnum);
+			Stone stone = new Stone();
+			stone.y = msg.y;
+			stone.x = msg.x;
+			room.addStone(stone);
+			int color;
+			for(color = 0; color < room.playerList.size(); color++) {
+				if(msg.UserName.equals(room.playerList.get(color).UserName)) {
+					color = color + 1;
+					if(room.roomMax == 4)
+						color = (color % 2) + 1;
+					break;
+				}
+			}
+			if(room.roomMax == 4) {
+				color = color % 2;
+			}
+			msg.stone = color;
+			WriteAllObject(msg);
+		}
+		
 		public void run() {
 			while (true) { // 사용자 접속을 계속해서 받기 위해 while문
 				try {
@@ -428,7 +460,10 @@ public class JavaGameServer extends JFrame {
 						insertRoom(cm);
 						updateRoomList();
 					}
-					
+					else if(cm.code.matches("900")) {
+						System.out.println("y: " + cm.y + "x: " + cm.x + "name: " + cm.roomName);
+						drawStone(cm);
+					}
 					else { // 300, 500, ... 기타 object는 모두 방송한다.
 						WriteAllObject(cm);
 					} 

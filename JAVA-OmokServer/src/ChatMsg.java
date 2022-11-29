@@ -20,6 +20,9 @@ class ChatMsg implements Serializable {
 	public String roomName;
 	public int roomNumber;
 	public String gameMode;
+	public int y;
+	public int x;
+	public int stone;
 	
 	public ChatMsg(String UserName, String code, String msg) {
 		this.code = code;

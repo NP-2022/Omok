@@ -4,6 +4,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.util.Arrays;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -17,6 +18,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.Color;
 import javax.swing.border.LineBorder;
+
 
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
@@ -54,7 +56,8 @@ public class JavaGameClientView2 extends JFrame {
 	// 그려진 Image를 보관하는 용도, paint() 함수에서 이용한다.
 	private Image panelImage = null;
 	private Graphics gc;
-	private TablePanel1 gamePanel;
+	public TablePanel1 gamePanel;
+	public String roomname;
 	JPanel panel;
 	
 	private JList userList;
@@ -65,11 +68,10 @@ public class JavaGameClientView2 extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public JavaGameClientView2(JavaGameClientView mainClientView, String username, String ip_addr, String port_no, String Game, String Room,
-			int PersonNum) {
-		
+	public JavaGameClientView2(JavaGameClientView mainClientView, String username, String ip_addr, String port_no, String Game, String Room, int PersonNum) {
+		this.Username = username;
 		this.mainClientView = mainClientView;
-		
+		this.roomname = Room;
 		setResizable(false);
 		// setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(900, 100, 1036, 720);
@@ -205,6 +207,7 @@ public class JavaGameClientView2 extends JFrame {
 		gamePanel.addMouseListener(mouse);
 		setVisible(true);
 
+
 	}
 
 	class MyMouseEvent implements MouseListener, MouseMotionListener {
@@ -237,21 +240,30 @@ public class JavaGameClientView2 extends JFrame {
 //			gc2.setColor(c);
 //			gc2.fillOval(e.getX()-pen_size/2, e.getY()-pen_size/2, pen_size, pen_size);
 //			gc.drawImage(panelImage, 0, 0, panel);
+			
 
 			x = (int) Math.round(e.getX() / (double) 30) - 1;
 			y = (int) Math.round(e.getY() / (double) 30);
-
-			gamePanel.setMap(y, x, 1);
-			if (gamePanel.Three(y, x)) {
-				gamePanel.setZero(y, x);
-			}
-
-			// panel_4.drawStone(gc);
-			if (gamePanel.Rule(y, x)) {
-				gamePanel.init();
-				gamePanel.repaint();
-			} else
-				gamePanel.repaint();
+			
+			
+			
+			ChatMsg msg = new ChatMsg(Username, "900", "Stone");
+			msg.y = y;
+			msg.x = x;
+			msg.roomName = roomname;
+			
+			mainClientView.SendObject(msg);
+			
+//			gamePanel.setMap(y, x, 1);
+//			if (gamePanel.Three(y, x)) {
+//				gamePanel.setZero(y, x);
+//			}
+//
+//			if (gamePanel.Rule(y, x)) {
+//				gamePanel.init();
+//				gamePanel.repaint();
+//			} else
+//				gamePanel.repaint();
 			// SendMouseEvent(e);
 		}
 
@@ -290,6 +302,24 @@ public class JavaGameClientView2 extends JFrame {
 			userListModel.addElement(item);
 		}
 		System.out.println("userList updated");
+	}
+	
+	public void drawStone(ChatMsg cm) {
+		System.out.print("바둑알 데이터 수신 2");
+		if(cm.roomName.equals(roomname)) {
+			System.out.print(cm.stone);
+			gamePanel.setMap(cm.y, cm.x, cm.stone+1);
+			if (gamePanel.Three(cm.y, cm.x)) {
+				gamePanel.setZero(cm.y, cm.x);
+			}
+
+			if (gamePanel.Rule(cm.y, cm.x)) {
+				gamePanel.init();
+				gamePanel.repaint();
+			} else
+				gamePanel.repaint();
+			System.out.println("바둑알 데이터 처리 2");
+		}
 	}
 }
 
@@ -429,7 +459,7 @@ class TablePanel1 extends JPanel {
 	}
 
 	public void drawBlack(Graphics g, int x, int y) {
-		g.drawImage(Custom, x * size.getCell() + 15, y * size.getCell() - 15, 28, 28, this);
+		g.drawImage(Black, x * size.getCell() + 15, y * size.getCell() - 15, 28, 28, this);
 	}
 
 	public void drawWhite(Graphics g, int x, int y) {
