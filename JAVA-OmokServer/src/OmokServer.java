@@ -165,7 +165,7 @@ public class OmokServer extends JFrame {
 		
 		public int roomNumber;
 		public boolean ready;
-		public boolean userTurn;
+		//public boolean userTurn;
 
 		public UserService(Socket client_socket) {
 			// TODO Auto-generated constructor stub
@@ -338,8 +338,17 @@ public class OmokServer extends JFrame {
 			ChatMsg msg = new ChatMsg(userName, "703", "");
 			Room room = roomVec.get(roomNumber);
 			StringBuffer data = new StringBuffer();
+			int i = 0;
+			String stoneName = "";
 			for(UserService user : room.playerList) {
-				data.append(String.format("[이름:%s]\n",user.userName));
+				switch(i) {
+				case 0: stoneName = "흑돌"; break;
+				case 1: stoneName = "백돌"; break;
+				case 2: stoneName = "적돌"; break;
+				//case 3: stoneName = "미정"; break;
+				}
+				data.append(String.format("[Player%d] [이름:%s] [돌:%s]\n",i+1, user.userName, stoneName));
+				i++;
 			}
 			msg.data = data.toString();
 			WriteOneObject(msg);
@@ -353,7 +362,7 @@ public class OmokServer extends JFrame {
 					break;
 				}
 			}
-			System.out.println(roomnum);
+			System.out.println(roomnum + "room DrawStone");
 			msg.roomNumber = roomnum;
 			Room room = roomVec.get(roomnum);
 			Stone stone = new Stone();
@@ -379,11 +388,35 @@ public class OmokServer extends JFrame {
 			
 			if((room.stoneList.size() % room.roomMax) == usernum) {
 				room.addStone(stone);
+				System.out.println("stone Size : " + room.stoneList.size());
 				for(UserService user: room.playerList) // 방에 있는 모든 유저에게 바둑돌 전송 
 					user.WriteOneObject(msg);
 			}else {
 				System.out.println("차례가 아님");
 			}
+		}
+		
+		
+		public void undoStone(ChatMsg msg) {
+			int roomnum = -1;
+			for(int i= 0; i < roomVec.size(); i++) {
+				if(msg.roomName.equals(roomVec.get(i).roomName)) {
+					roomnum = i;
+					break;
+				}
+			}
+			
+			msg.roomNumber = roomnum;
+			Room room = roomVec.get(roomnum);
+			room.undoCount++;
+			if(room.undoCount == room.roomMax) {
+				room.undoStone();
+				System.out.println(roomnum+" room undoStone");
+				room.undoCount = 0;
+			}
+			System.out.println("stone Size : " + room.stoneList.size());
+			for(UserService user: room.playerList) // 방에 있는 모든 유저에게 undo 전송 
+				user.WriteOneObject(msg);
 		}
 		
 		public void run() {
@@ -473,6 +506,10 @@ public class OmokServer extends JFrame {
 					else if(cm.code.matches("900")) { // 바둑돌 입력 처리
 						System.out.println("y: " + cm.y + "x: " + cm.x + "name: " + cm.roomName);
 						drawStone(cm);
+					}
+					else if(cm.code.matches("901")) { // 바둑돌 undo 처리 (무르기)
+						System.out.println("Stone Undo -> name: " + cm.roomName);
+						undoStone(cm);
 					}
 					else { // 300, 500, ... 기타 object는 모두 방송한다.
 						WriteAllObject(cm);

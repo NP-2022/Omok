@@ -58,6 +58,8 @@ public class OmokClientGameView extends JFrame {
 	private Graphics gc;
 	public TablePanel1 gamePanel;
 	public String roomname;
+	public int maxPlayer; // 최대 인원수
+	public int currentPlayer;
 	JPanel panel;
 	
 	private JList userList;
@@ -72,6 +74,10 @@ public class OmokClientGameView extends JFrame {
 		this.Username = username;
 		this.mainView = mainView;
 		this.roomname = roomName;
+		this.maxPlayer = maxPlayer;
+		
+		currentPlayer = 0;
+		
 		setResizable(false);
 		// setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(900, 100, 1036, 720);
@@ -252,6 +258,15 @@ public class OmokClientGameView extends JFrame {
 			msg.x = x;
 			msg.roomName = roomname;
 			
+			if (gamePanel.isFilled(y, x)) { // 돌이 이미 있으면 return
+				return;
+			}
+			
+			if (gamePanel.Three(y, x)) {
+				System.out.println("33입니다.");
+				return;
+			}
+			
 			mainView.SendObject(msg);
 			
 //			gamePanel.setMap(y, x, 1);
@@ -305,116 +320,93 @@ public class OmokClientGameView extends JFrame {
 	}
 	
 	public void drawStone(ChatMsg cm) {
-		System.out.print("바둑알 데이터 수신 2");
-		System.out.print(cm.stone);
+		System.out.println("Client draw Stone : player"+cm.stone);
 		gamePanel.setMap(cm.y, cm.x, cm.stone);
+		currentPlayer = (currentPlayer+1) % maxPlayer; // 플레이어는 1~max ( 실 사용시 +1 )
+		
+		/*
 		if (gamePanel.Three(cm.y, cm.x)) {
-			gamePanel.setZero(cm.y, cm.x);
-		}
-
+			cm.code = "901"; // 33이면 입력한 바둑돌 되돌리기
+			mainView.SendObject(cm);
+			return;	
+		}	
+		*/
+		
 		if (gamePanel.Rule(cm.y, cm.x)) {
-			gamePanel.init();
-			gamePanel.repaint();
-		} else
-			gamePanel.repaint();
-		System.out.println("바둑알 데이터 처리 2");
+			gamePanel.init(); // 수정 필요, 지금은 끝나면 바로 게임 다시 시작
+		}
+		gamePanel.repaint();
+		System.out.println(" 바둑알 입력됨.");
 	}
 	
-}
-
-
-class MapSize {
-	private final int CELL =30;
-	private final int SIZE =20;
-	public int getCell() {
-		return CELL;
+	public void undoStone(ChatMsg cm) {
+		gamePanel.setZero(cm.y , cm.x);
+		gamePanel.repaint();
+		
+		System.out.println(" 바둑알 제거됨.");
 	}
-	public int getSize() {
-		return SIZE;
-	}
-}
-
-class TablePanel1 extends JPanel {
-	private MapSize size = new MapSize();
-	private final int STONE_SIZE = 28;
-	private int MaxSize = 20;
-	private int Map[][] = new int[MaxSize + 1][MaxSize];
-
-	Image Black = new ImageIcon(OmokClientMainView.class.getResource("Black.png")).getImage();
-	Image White = new ImageIcon(OmokClientMainView.class.getResource("White.png")).getImage();
-	Image Red = new ImageIcon(OmokClientMainView.class.getResource("Red.png")).getImage();
-	Image Custom = new ImageIcon(OmokClientMainView.class.getResource("Custom.png")).getImage();
-
-	public void init() {
-		for (int i = 0; i < MaxSize; i++) {
-			for (int j = 0; j < MaxSize; j++) {
-				Map[i][j] = 0;
+	
+	
+	
+	
+	class TablePanel1 extends JPanel {
+		
+		class MapSize {
+			private final int CELL =30;
+			private final int SIZE =20;
+			public int getCell() {
+				return CELL;
+			}
+			public int getSize() {
+				return SIZE;
 			}
 		}
-	}
+		
+		private MapSize size = new MapSize();
+		private final int STONE_SIZE = 28;
+		private int MaxSize = 20;
+		private int Map[][] = new int[MaxSize + 1][MaxSize];
 
-	public void setMap(int y, int x, int color) {
-		if (Map[y][x] == 0)
-			Map[y][x] = color;
-	}
-
-	public void setZero(int y, int x) {
-		Map[y][x] = 0;
-	}
-
-	public Boolean Three(int y, int x) {
-		int nowColor = Map[y][x];
-		int dir[][] = { { 1, 0 }, { -1, 0 }, { 0, 1 }, { 0, -1 }, { -1, 1 }, { 1, -1 }, { -1, -1 }, { 1, 1 } };
-		int three = 0;
-
-		for (int i = 0; i < 8; i = i + 2) {
-			int same_cnt = 1;
-			int cunY = y;
-			int cunX = x;
-
-			for (int j = 0; j < 3; j++) {
-				cunY = cunY + dir[i][0];
-				cunX = cunX + dir[i][1];
-				if (cunY < 0 || cunY >= MaxSize + 1 || cunX < 0 || cunX >= MaxSize)
-					break;
-				if (nowColor != Map[cunY][cunX])
-					break;
-
-				same_cnt++;
+		Image Black = new ImageIcon(OmokClientMainView.class.getResource("Black.png")).getImage();
+		Image White = new ImageIcon(OmokClientMainView.class.getResource("White.png")).getImage();
+		Image Red = new ImageIcon(OmokClientMainView.class.getResource("Red.png")).getImage();
+		Image Custom = new ImageIcon(OmokClientMainView.class.getResource("Custom.png")).getImage();
+		
+		public void init() {
+			for (int i = 0; i < MaxSize; i++) {
+				for (int j = 0; j < MaxSize; j++) {
+					Map[i][j] = 0;
+				}
 			}
-			cunY = y;
-			cunX = x;
-			for (int j = 0; j < 3; j++) {
-				cunY = cunY + dir[i + 1][0];
-				cunX = cunX + dir[i + 1][1];
-				if (cunY < 0 || cunY >= MaxSize + 1 || cunX < 0 || cunX >= MaxSize)
-					break;
-				if (nowColor != Map[cunY][cunX])
-					break;
-				same_cnt++;
-			}
-			if (same_cnt == 3) {
-				three += 1;
-			}
-
+			currentPlayer = 0;
 		}
-		if (three == 2) {
-			return true;
-		} else
-			return false;
-	}
 
-	public Boolean Rule(int y, int x) {
-		int nowColor = Map[y][x];
-		int dir[][] = { { 1, 0 }, { -1, 0 }, { 0, 1 }, { 0, -1 }, { -1, 1 }, { 1, -1 }, { -1, -1 }, { 1, 1 } };
+		public void setMap(int y, int x, int color) {
+			if (Map[y][x] == 0)
+				Map[y][x] = color;
+		}
 
-		if (nowColor != 0) {
+		public void setZero(int y, int x) {
+			Map[y][x] = 0;
+		}
+		
+		public Boolean isFilled(int y, int x) {
+			return Map[y][x] != 0;
+		}
+
+		public Boolean Three(int y, int x) {
+			Map[y][x] = (currentPlayer+1); // ( current는 0 ~ max-1 의 값을 가짐 )
+			System.out.println("33 check : Player"+ (currentPlayer+1));
+			int nowColor = Map[y][x];
+			int dir[][] = { { 1, 0 }, { -1, 0 }, { 0, 1 }, { 0, -1 }, { -1, 1 }, { 1, -1 }, { -1, -1 }, { 1, 1 } };
+			int three = 0;
+
 			for (int i = 0; i < 8; i = i + 2) {
 				int same_cnt = 1;
 				int cunY = y;
 				int cunX = x;
 
-				for (int j = 0; j < 5; j++) {
+				for (int j = 0; j < 3; j++) {
 					cunY = cunY + dir[i][0];
 					cunX = cunX + dir[i][1];
 					if (cunY < 0 || cunY >= MaxSize + 1 || cunX < 0 || cunX >= MaxSize)
@@ -426,7 +418,7 @@ class TablePanel1 extends JPanel {
 				}
 				cunY = y;
 				cunX = x;
-				for (int j = 0; j < 5; j++) {
+				for (int j = 0; j < 3; j++) {
 					cunY = cunY + dir[i + 1][0];
 					cunX = cunX + dir[i + 1][1];
 					if (cunY < 0 || cunY >= MaxSize + 1 || cunX < 0 || cunX >= MaxSize)
@@ -435,46 +427,94 @@ class TablePanel1 extends JPanel {
 						break;
 					same_cnt++;
 				}
-				if (same_cnt >= 5) {
-					return true;
+				if (same_cnt == 3) {
+					three += 1;
+				}
+
+			}
+			Map[y][x] = 0;
+			if (three == 2) {
+				return true;
+			} else
+				return false;
+		}
+
+		public Boolean Rule(int y, int x) {
+			int nowColor = Map[y][x];
+			int dir[][] = { { 1, 0 }, { -1, 0 }, { 0, 1 }, { 0, -1 }, { -1, 1 }, { 1, -1 }, { -1, -1 }, { 1, 1 } };
+
+			if (nowColor != 0) {
+				for (int i = 0; i < 8; i = i + 2) {
+					int same_cnt = 1;
+					int cunY = y;
+					int cunX = x;
+
+					for (int j = 0; j < 5; j++) {
+						cunY = cunY + dir[i][0];
+						cunX = cunX + dir[i][1];
+						if (cunY < 0 || cunY >= MaxSize + 1 || cunX < 0 || cunX >= MaxSize)
+							break;
+						if (nowColor != Map[cunY][cunX])
+							break;
+
+						same_cnt++;
+					}
+					cunY = y;
+					cunX = x;
+					for (int j = 0; j < 5; j++) {
+						cunY = cunY + dir[i + 1][0];
+						cunX = cunX + dir[i + 1][1];
+						if (cunY < 0 || cunY >= MaxSize + 1 || cunX < 0 || cunX >= MaxSize)
+							break;
+						if (nowColor != Map[cunY][cunX])
+							break;
+						same_cnt++;
+					}
+					if (same_cnt >= 5) {
+						return true;
+					}
+				}
+			}
+			return false;
+		}
+
+		public void paintComponent(Graphics g) {
+			super.paintComponent(g);
+			for (int i = 1; i <= size.getSize(); i++) {
+				g.drawLine(size.getCell(), i * size.getCell(), size.getCell() * size.getSize(), i * size.getCell());
+				g.drawLine(i * size.getCell(), size.getCell(), i * size.getCell(), size.getCell() * size.getSize());
+			}
+			drawStone(g);
+		}
+
+		public void drawStone(Graphics g) {
+			for (int y = 1; y < size.getSize() + 1; y++) {
+				for (int x = 0; x < size.getSize(); x++) {
+					if (Map[y][x] == 1)
+						drawBlack(g, x, y);
+					else if (Map[y][x] == 2)
+						drawWhite(g, x, y);
+					else if (Map[y][x] == 3)
+						drawRed(g, x, y);
 				}
 			}
 		}
-		return false;
-	}
 
-	public void paintComponent(Graphics g) {
-		super.paintComponent(g);
-		for (int i = 1; i <= size.getSize(); i++) {
-			g.drawLine(size.getCell(), i * size.getCell(), size.getCell() * size.getSize(), i * size.getCell());
-			g.drawLine(i * size.getCell(), size.getCell(), i * size.getCell(), size.getCell() * size.getSize());
+		public void drawRed(Graphics g, int x, int y) {
+			g.drawImage(Red, x * size.getCell() + 15, y * size.getCell() - 15, 28, 28, this);
 		}
-		drawStone(g);
-	}
 
-	public void drawStone(Graphics g) {
-		for (int y = 1; y < size.getSize() + 1; y++) {
-			for (int x = 0; x < size.getSize(); x++) {
-				if (Map[y][x] == 1)
-					drawBlack(g, x, y);
-				else if (Map[y][x] == 2)
-					drawWhite(g, x, y);
-				else if (Map[y][x] == 3)
-					drawRed(g, x, y);
-			}
+		public void drawBlack(Graphics g, int x, int y) {
+			g.drawImage(Black, x * size.getCell() + 15, y * size.getCell() - 15, 28, 28, this);
 		}
-	}
 
-	public void drawRed(Graphics g, int x, int y) {
-		g.drawImage(Red, x * size.getCell() + 15, y * size.getCell() - 15, 28, 28, this);
-	}
+		public void drawWhite(Graphics g, int x, int y) {
+			g.drawImage(White, x * size.getCell() + 15, y * size.getCell() - 15, 28, 28, this);
+		}
 
-	public void drawBlack(Graphics g, int x, int y) {
-		g.drawImage(Black, x * size.getCell() + 15, y * size.getCell() - 15, 28, 28, this);
 	}
-
-	public void drawWhite(Graphics g, int x, int y) {
-		g.drawImage(White, x * size.getCell() + 15, y * size.getCell() - 15, 28, 28, this);
-	}
-
+	
 }
+
+
+

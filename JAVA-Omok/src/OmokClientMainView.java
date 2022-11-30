@@ -1,4 +1,4 @@
-// JavaObjClientView.java ObjecStram 기반 Client
+	// JavaObjClientView.java ObjecStram 기반 Client
 //실질적인 채팅 창
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -362,6 +362,11 @@ public class OmokClientMainView extends JFrame {
 					case "900": // 바둑돌 입력 수신
 						for(int i = 0; i < gameView.size(); i++) {
 							gameView.get(i).drawStone(cm);
+						}
+						break;
+					case "901": // 바둑돌 undo 수신
+						for(int i = 0; i < gameView.size(); i++) {
+							gameView.get(i).undoStone(cm);
 						}
 						break;
 						

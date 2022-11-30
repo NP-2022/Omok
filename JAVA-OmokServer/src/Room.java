@@ -15,6 +15,7 @@ public class Room {
 	public OmokServer.UserService owner;
 	public String gameMode;
 	public String ownerName;
+	public int undoCount = 0;
 	
 	public Room(String roomName, OmokServer.UserService owner, int roomMax, String gameMode) {
 		this.roomName = roomName;
@@ -32,6 +33,10 @@ public class Room {
 	
 	public void addStone(Stone stone) {
 		this.stoneList.add(stone);
+	}
+	
+	public void undoStone() {
+		this.stoneList.remove(stoneList.size()-1);
 	}
 
 
