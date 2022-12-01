@@ -317,8 +317,12 @@ public class OmokServer extends JFrame {
 				msg.roomNumber = room.roomNumber;
 				room.addUser(this); // // 방 벡터에 유저를 추가
 				WriteAllObject(msg);
-				for (UserService user : room.playerList) // 방에 있는 모든 유저에게 유저 목록 리스트를 갱신
+				for (UserService user : room.playerList) { // 방에 있는 모든 유저에게 유저 목록 리스트를 갱신
 					user.updateUserList(msg);
+				}
+				msg.code ="201";
+				msg.data = "["+userName+"] 님이 입장했습니다.";
+				sendGameMessage(msg);
 			}
 		}
 
@@ -431,6 +435,9 @@ public class OmokServer extends JFrame {
 					System.out.println("stone Size : " + room.stoneList.size());
 					for (UserService user : room.playerList) // 방에 있는 모든 유저에게 바둑돌 전송
 						user.WriteOneObject(msg);
+					msg.code = "201";
+					msg.data = "["+msg.userName+"]님이 돌을 놓았습니다.";
+					sendGameMessage(msg);
 				} else {
 					System.out.println("차례가 아님");
 				}
@@ -460,6 +467,7 @@ public class OmokServer extends JFrame {
 		}
 		
 		public void sendGameMessage(ChatMsg msg) {
+			System.out.println("sendGameMessage Called : "+msg.code+ " " + msg.roomName + " " +msg.userName);
 			int roomnum = -1;
 			for (int i = 0; i < roomVec.size(); i++) {
 				if (msg.roomName.equals(roomVec.get(i).roomName)) {
@@ -471,8 +479,10 @@ public class OmokServer extends JFrame {
 			msg.roomNumber = roomnum;
 			Room room = roomVec.get(roomnum);
 			
-			for (UserService user : room.playerList) // 방에 있는 모든 유저에게 message 전송
+			for (UserService user : room.playerList) { // 방에 있는 모든 유저에게 message 전송
 				user.WriteOneObject(msg);
+				System.out.println("sendGameMessage WriteOneObject : "+msg.code+ " " + msg.roomName + " " +msg.userName);
+			}
 		}
 
 		public void run() {

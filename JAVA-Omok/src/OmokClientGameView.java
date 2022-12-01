@@ -283,11 +283,12 @@ public class OmokClientGameView extends JFrame {
 			msg.roomName = roomName;
 
 			if (gamePanel.isFilled(y, x)) { // 돌이 이미 있으면 return
+				AppendText("돌이 이미 있는 타일입니다.");
 				return;
 			}
 
 			if (gamePanel.Three(y, x)) {
-				System.out.println("33입니다.");
+				AppendText("이곳은 33 룰에 의해 돌을 놓을 수 없습니다.");
 				return;
 			}
 

@@ -323,9 +323,10 @@ public class OmokClientMainView extends JFrame {
 					}
 					if (obcm == null)
 						break;
-					if (obcm instanceof ChatMsg) {
+					if (obcm instanceof ChatMsg || true) {
 						cm = (ChatMsg) obcm;
 						msg = String.format("[%s]\n%s", cm.userName, cm.data);
+						System.out.println(String.format("name:[%s] code:[%s] data:[%s]",cm.userName,cm.code,cm.data));
 					} else
 						continue;
 					switch (cm.code) {
@@ -339,6 +340,7 @@ public class OmokClientMainView extends JFrame {
 						for(int i = 0; i < gameView.size(); i++) {
 							gameView.get(i).receiveGameMessage(cm);
 						}
+						break;
 					case "300": // Image Ã·ºÎ
 //						if (cm.UserName.equals(UserName))
 //							AppendTextR("[" + cm.UserName + "]");
