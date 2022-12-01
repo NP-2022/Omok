@@ -321,7 +321,8 @@ public class OmokServer extends JFrame {
 			}
 			System.out.println("후, 방의 인원은 : " + room.playerList.size());
 			if (room.playerList.size() != 0) {
-				room.ownerName = room.playerList.get(0).userName;
+				room.owner = room.playerList.get(0);  //방장 바꾸기
+				room.ownerName = room.owner.userName; 
 				for (UserService user : room.playerList) { // 방에 있는 모든 유저에게 유저 목록 리스트를 갱신
 					user.updateUserList(msg);
 				}
