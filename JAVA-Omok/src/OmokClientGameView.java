@@ -333,12 +333,35 @@ public class OmokClientGameView extends JFrame {
 		*/
 		
 		if (gamePanel.Rule(cm.y, cm.x)) {
-			gamePanel.init(); // 수정 필요, 지금은 끝나면 바로 게임 다시 시작
-		}
+			gamePanel.setMap(cm.y, cm.x, cm.stone);
+			gamePanel.repaint();
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			gamePanel.setAll(cm.stone);
+			gamePanel.repaint();
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			gamePanel.init();
+			ChatMsg msg = new ChatMsg(Username, "802", cm.UserName + "이 승리");
+			msg.roomName = roomname;
+			mainView.SendObject(msg); //게임 종료를 서버에 알림
+			gamePanel.repaint();
+		}else {
 		gamePanel.repaint();
 		System.out.println(" 바둑알 입력됨.");
+		}
+		
 	}
 	
+		
 	public void undoStone(ChatMsg cm) {
 		gamePanel.setZero(cm.y , cm.x);
 		gamePanel.repaint();
@@ -373,9 +396,17 @@ public class OmokClientGameView extends JFrame {
 		Image Custom = new ImageIcon(OmokClientMainView.class.getResource("Custom.png")).getImage();
 		
 		public void init() {
-			for (int i = 0; i < MaxSize; i++) {
+			for (int i = 0; i < MaxSize + 1; i++) {
 				for (int j = 0; j < MaxSize; j++) {
 					Map[i][j] = 0;
+				}
+			}
+			currentPlayer = 0;
+		}
+		public void setAll(int color) {
+			for (int i = 0; i < MaxSize + 1; i++) {
+				for (int j = 0; j < MaxSize; j++) {
+					Map[i][j] = color;
 				}
 			}
 			currentPlayer = 0;
