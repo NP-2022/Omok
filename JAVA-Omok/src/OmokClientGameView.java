@@ -82,6 +82,7 @@ public class OmokClientGameView extends JFrame {
 		this.roomName = roomName;
 		this.maxPlayer = maxPlayer;
 
+		this.setTitle(roomName);
 		currentPlayer = 0;
 
 		setResizable(false);

@@ -320,9 +320,11 @@ public class OmokServer extends JFrame {
 				for (UserService user : room.playerList) { // 방에 있는 모든 유저에게 유저 목록 리스트를 갱신
 					user.updateUserList(msg);
 				}
-				msg.code ="201";
-				msg.data = "["+userName+"] 님이 입장했습니다.";
-				sendGameMessage(msg);
+				ChatMsg cm = new ChatMsg(userName, "201", "");
+				cm.roomName = room.roomName;
+				cm.roomNumber = room.roomNumber;
+				cm.data = "["+userName+"] 님이 입장했습니다.";
+				sendGameMessage(cm);
 			}
 		}
 
@@ -435,9 +437,10 @@ public class OmokServer extends JFrame {
 					System.out.println("stone Size : " + room.stoneList.size());
 					for (UserService user : room.playerList) // 방에 있는 모든 유저에게 바둑돌 전송
 						user.WriteOneObject(msg);
-					msg.code = "201";
-					msg.data = "["+msg.userName+"]님이 돌을 놓았습니다.";
-					sendGameMessage(msg);
+					ChatMsg cm = new ChatMsg(msg.userName, "201", "");
+					cm.roomName = msg.roomName;
+					cm.data = "["+msg.userName+"]님이 돌을 놓았습니다.";
+					sendGameMessage(cm);
 				} else {
 					System.out.println("차례가 아님");
 				}
