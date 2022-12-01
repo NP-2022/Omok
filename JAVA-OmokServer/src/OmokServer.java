@@ -342,27 +342,44 @@ public class OmokServer extends JFrame {
 			int i = 0;
 			String stoneName = "";
 			for (UserService user : room.playerList) {
-				switch (i) {
-				case 0:
-					stoneName = "흑돌";
-					break;
-				case 1:
-					stoneName = "백돌";
-					break;
-				case 2:
-					stoneName = "적돌";
-					break;
-				// case 3: stoneName = "미정"; break;
+				if (room.roomMax == 4) {
+					switch (i) {
+					case 0:
+						stoneName = "흑돌";
+						break;
+					case 1:
+						stoneName = "백돌";
+						break;
+					case 2:
+						stoneName = "흑돌";
+						break;
+					case 3:
+						stoneName = "백돌";
+						break;
+					}
+				} else {
+					switch (i) {
+					case 0:
+						stoneName = "흑돌";
+						break;
+					case 1:
+						stoneName = "백돌";
+						break;
+					case 2:
+						stoneName = "적돌";
+						break;
+					// case 3: stoneName = "미정"; break;
+					}
 				}
 				data.append(String.format("[Player%d] [이름:%s] [돌:%s]\n", i + 1, user.userName, stoneName));
 				i++;
 			}
-			msg.data = data.toString();
+			cm.data = data.toString();
 			System.out.println("11111111111--  " + msg.code);
 			WriteOneObject(cm);
 		}
-		
-		public void finishGame(ChatMsg msg) { //게임 종료를 알림
+
+		public void finishGame(ChatMsg msg) { // 게임 종료를 알림
 			int roomnum = -1;
 			for (int i = 0; i < roomVec.size(); i++) {
 				if (msg.roomName.equals(roomVec.get(i).roomName)) {
@@ -397,7 +414,7 @@ public class OmokServer extends JFrame {
 					color = color + 1;
 					if (room.roomMax == 4) {
 						color = (color % 2);
-						if(color == 0)
+						if (color == 0)
 							color = 2;
 					}
 					break;
@@ -525,11 +542,10 @@ public class OmokServer extends JFrame {
 					else if (cm.code.matches("700")) { // 방 입장 처리
 						insertRoom(cm);
 						updateRoomList();
-					} else if(cm.code.matches("802")) { //게임 종료
+					} else if (cm.code.matches("802")) { // 게임 종료
 						finishGame(cm);
 						System.out.println(cm.data);
-					}	 
-					else if (cm.code.matches("900")) { // 바둑돌 입력 처리
+					} else if (cm.code.matches("900")) { // 바둑돌 입력 처리
 						System.out.println("y: " + cm.y + "x: " + cm.x + "name: " + cm.roomName);
 						drawStone(cm);
 					} else if (cm.code.matches("901")) { // 바둑돌 undo 처리 (무르기)
