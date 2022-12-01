@@ -393,9 +393,9 @@ public class OmokServer extends JFrame {
 					usernum = color;
 					color = color + 1;
 					if (room.roomMax == 4) {
-						color = (color / 2) + 1;
-						if(color == 3)
-							color = 1;
+						color = (color % 2);
+						if(color == 0)
+							color = 2;
 					}
 					break;
 				}
