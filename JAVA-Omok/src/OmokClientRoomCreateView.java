@@ -102,7 +102,7 @@ public class OmokClientRoomCreateView extends JFrame {
 			String roomName = roomNameTextField.getText().trim();
 			int maxPlayer = Integer.parseInt(maxPlayerComboBox.getSelectedItem().toString());
 			
-			OmokClientGameView view = new OmokClientGameView(mainView, Username, Ip_addr, Port_no, gameModeName, roomName, maxPlayer);
+			OmokClientGameView view = new OmokClientGameView(mainView, Username, Ip_addr, Port_no, gameModeName, roomName, maxPlayer, true);
 			mainView.gameView.add(view);
 			setVisible(false);
 			

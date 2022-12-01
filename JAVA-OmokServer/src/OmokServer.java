@@ -163,7 +163,7 @@ public class OmokServer extends JFrame {
 		public String userStatus;
 
 		public int roomNumber;
-		public boolean ready;
+		public boolean ready = false;
 		// public boolean userTurn;
 
 		public UserService(Socket client_socket) {
@@ -284,6 +284,20 @@ public class OmokServer extends JFrame {
 				}
 				Logout();
 			}
+		}
+		
+		public Room getRoom(ChatMsg msg) {
+			int roomnum = -1;
+			for (int i = 0; i < roomVec.size(); i++) {
+				if (msg.roomName.equals(roomVec.get(i).roomName)) {
+					roomnum = i;
+					break;
+				}
+			}
+
+			msg.roomNumber = roomnum;
+			Room room = roomVec.get(roomnum);
+			return room;
 		}
 
 		public void createRoom(ChatMsg msg) {
@@ -451,6 +465,16 @@ public class OmokServer extends JFrame {
 			System.out.println(roomnum + "room DrawStone");
 			msg.roomNumber = roomnum;
 			Room room = roomVec.get(roomnum);
+			
+			if(!room.isStarted) {
+				ChatMsg cm = new ChatMsg(msg.userName, "201", "");
+				cm.roomName = msg.roomName;
+				cm.data = "게임 시작 전입니다.";
+				WriteOneObject(cm);
+				return;
+			}
+				
+			
 			Stone stone = new Stone();
 			stone.y = msg.y;
 			stone.x = msg.x;
@@ -531,6 +555,58 @@ public class OmokServer extends JFrame {
 						"sendGameMessage WriteOneObject : " + msg.code + " " + msg.roomName + " " + msg.userName);
 			}
 		}
+		
+		public void startGame(ChatMsg msg) { // 게임 시작 메소드
+			Room room = getRoom(msg);
+			
+			if(!room.isFull()) {
+				ChatMsg cm = new ChatMsg(userName, "201", "게임 시작 인원이 부족합니다.");
+				cm.roomName = room.roomName;
+				sendGameMessage(cm);
+				return;
+			}
+			
+			if(!room.isReady()) {
+				ChatMsg cm = new ChatMsg(userName, "201", "모든 인원이 준비해야 시작 할 수 있습니다.");
+				cm.roomName = room.roomName;
+				sendGameMessage(cm);
+				return;
+			}
+			
+			room.isStarted = true;
+			ChatMsg startCm = new ChatMsg(userName, "201", "게임을 시작합니다.");
+			startCm.roomName = room.roomName;
+			sendGameMessage(startCm);
+			
+			ChatMsg cm = new ChatMsg(userName, "800", "");
+			cm.roomName = room.roomName;
+			for (UserService user : room.playerList) { // 방에 있는 모든 유저에게 전송
+				user.WriteOneObject(cm);
+			}
+		}
+		
+		public void readyMethod(ChatMsg cm) {
+			// 준비 상태 바꾸고 msg 전달
+			String msg = ready ? "["+userName+"]님 준비 취소" : "["+userName+"]님 준비 완료";
+			
+			ready = !ready; // ready 토글
+						
+			Room room = getRoom(cm);
+			
+			ChatMsg readyCm = new ChatMsg(userName, "201", msg);
+			readyCm.roomName = room.roomName;
+			
+			String readyState = ready ? "true" : "false";
+			
+			ChatMsg readyToggleCm = new ChatMsg(userName, "801", readyState); // 준비 버튼 토글시키기
+			readyToggleCm.roomName = room.roomName;
+			
+			for (UserService user : room.playerList) { // 방에 있는 모든 유저에게 전송
+				user.WriteOneObject(readyCm);
+			}
+			WriteOneObject(readyToggleCm); // 당사자 버튼만 변경
+				
+		}
 
 		public void run() {
 			while (true) { // 사용자 접속을 계속해서 받기 위해 while문
@@ -576,7 +652,7 @@ public class OmokServer extends JFrame {
 							for (int i = 0; i < user_vc.size(); i++) {
 								UserService user = (UserService) user_vc.elementAt(i);
 								WriteOne(user.userName + "\t" + user.userStatus + "\n");
-							}
+							} 
 							WriteOne("-----------------------------\n");
 						} else if (args[1].matches("/sleep")) {
 							userStatus = "S";
@@ -621,7 +697,12 @@ public class OmokServer extends JFrame {
 						exitRoom(cm);
 						updateRoomList();
 					}
-
+					else if (cm.code.matches("800")){
+						startGame(cm);
+					}
+					else if (cm.code.matches("801")){
+						readyMethod(cm);
+					}
 					else if (cm.code.matches("802")) { // 게임 종료
 						finishGame(cm);
 						System.out.println(cm.data);

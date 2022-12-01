@@ -371,6 +371,15 @@ public class OmokClientMainView extends JFrame {
 							gameView.get(i).userListUpdate(cm);
 						}
 						break;
+					case "800": 
+						for(int i = 0; i < gameView.size(); i++) {
+							gameView.get(i).gameStart(cm);
+						}
+					case "801": 
+						for(int i = 0; i < gameView.size(); i++) {
+							gameView.get(i).gameReady(cm);
+						}
+						break;
 					case "900": // 바둑돌 입력 수신
 						for(int i = 0; i < gameView.size(); i++) {
 							gameView.get(i).drawStone(cm);
@@ -412,7 +421,7 @@ public class OmokClientMainView extends JFrame {
 	
 	private void insertRoom(ChatMsg msg) { // 방 입장하기
 		System.out.println("방 입장 중111111");
-		OmokClientGameView view = new OmokClientGameView(mainView, UserName, Ip_addr, Port_no, msg.gameMode, msg.roomName, msg.roomMax);
+		OmokClientGameView view = new OmokClientGameView(mainView, UserName, Ip_addr, Port_no, msg.gameMode, msg.roomName, msg.roomMax, false);
 		mainView.gameView.add(view);
 		System.out.println(mainView.gameView.size());
 	}
@@ -499,7 +508,7 @@ public class OmokClientMainView extends JFrame {
 		@Override
 		public void mouseExited(MouseEvent e) {
 			//lblMouseEvent.setText(e.getButton() + " mouseExited " + e.getX() + "," + e.getY());
-			// panel.setBackground(Color.CYAN);
+			// panel.setBackground(Color.CYAN); 
 
 		}
 

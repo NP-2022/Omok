@@ -16,6 +16,7 @@ public class Room {
 	public String gameMode;
 	public String ownerName;
 	public int undoCount = 0;
+	public boolean isStarted = false;
 	
 	public Room(String roomName, OmokServer.UserService owner, int roomMax, String gameMode) {
 		this.roomName = roomName;
@@ -29,6 +30,14 @@ public class Room {
 	
 	public boolean isFull() {
 		return playerList.size() >= roomMax;
+	}
+	
+	public boolean isReady() {
+		for(OmokServer.UserService user : playerList) {
+			if(!user.ready && user != owner)
+				return false;
+		}
+		return true;
 	}
 	
 	public void addStone(Stone stone) {

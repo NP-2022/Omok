@@ -65,7 +65,9 @@ public class OmokClientGameView extends JFrame {
 	public int currentPlayer;
 	public JTextPane textArea;
 	public JButton chatSendButton;
-	JPanel panel;
+	public JPanel panel;
+	public Button startReadyButton;
+	public boolean isOwner; // 방장인지?
 
 	private JList userList;
 	private DefaultListModel userListModel; // 방 목록
@@ -76,12 +78,12 @@ public class OmokClientGameView extends JFrame {
 	 * Create the frame.
 	 */
 	public OmokClientGameView(OmokClientMainView mainView, String username, String ip_addr, String port_no,
-			String gameModeName, String roomName, int maxPlayer) {
+			String gameModeName, String roomName, int maxPlayer, boolean isOwner) {
 		this.userName = username;
 		this.mainView = mainView;
 		this.roomName = roomName;
 		this.maxPlayer = maxPlayer;
-
+		this.isOwner = isOwner;
 		this.setTitle(roomName);
 		currentPlayer = 0;
 
@@ -185,13 +187,10 @@ public class OmokClientGameView extends JFrame {
 		contentPane.add(gamePanel);
 		gc = gamePanel.getGraphics();
 
-		Button startButton = new Button("시작");
-		startButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		startButton.setBounds(220, 644, 107, 27);
-		contentPane.add(startButton);
+		startReadyButton = new Button("시작");
+		if(!isOwner) startReadyButton.setLabel("준비");
+		startReadyButton.setBounds(220, 644, 107, 27);
+		contentPane.add(startReadyButton);
 
 		Button undoButton = new Button("무르기");
 		undoButton.addActionListener(new ActionListener() {
@@ -228,6 +227,9 @@ public class OmokClientGameView extends JFrame {
 		chatTextField.addActionListener(action);
 		chatTextField.requestFocus();
 		
+		MyAction myAction = new MyAction();
+		startReadyButton.addActionListener(myAction);
+		
 		setVisible(true);
 		
 
@@ -247,6 +249,23 @@ public class OmokClientGameView extends JFrame {
 				chatTextField.requestFocus(); // 메세지를 보내고 커서를 다시 텍스트 필드로 위치시킨다
 				if (msg.contains("/exit")) // 종료 처리
 					System.exit(0);
+			}
+		}
+	}
+	
+	class MyAction implements ActionListener { // 시작, 준비 버튼 Action 정의
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			String label = ((Button)e.getSource()).getLabel(); 
+			if(label.equals("시작")) {
+				ChatMsg cm = new ChatMsg(userName, "800", "");
+				cm.roomName = roomName;
+				mainView.SendObject(cm);
+			}
+			else if (label.equals("준비") || label.equals("준비 취소")) {
+				ChatMsg cm = new ChatMsg(userName, "801", "");
+				cm.roomName = roomName;
+				mainView.SendObject(cm);
 			}
 		}
 	}
@@ -405,6 +424,21 @@ public class OmokClientGameView extends JFrame {
 		if(!cm.roomName.equals(roomName)) return;
 		AppendText(cm.data);
 		
+	}
+	
+	public void gameStart(ChatMsg cm) {
+		if(!cm.roomName.equals(roomName)) return;
+		
+		gamePanel.init();
+		startReadyButton.setEnabled(false);
+	}
+	
+	public void gameReady(ChatMsg cm) {
+		if(isOwner) return;
+		
+		String label = cm.data.equals("true") ? "준비 취소" : "준비";
+			
+		startReadyButton.setLabel(label);
 	}
 	
 	public void AppendText(String msg) {
