@@ -386,24 +386,7 @@ public class OmokClientGameView extends JFrame {
 			if (gamePanel.Rule(cm.y, cm.x)) {
 				gamePanel.setMap(cm.y, cm.x, cm.stone);
 				gamePanel.repaint();
-				try {
-					Thread.sleep(1000);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				gamePanel.setAll(cm.stone);
-				gamePanel.repaint();
-				try {
-					Thread.sleep(1000);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				gamePanel.init();
-				ChatMsg msg = new ChatMsg(userName, "802", cm.userName + "이 승리");
-				msg.roomName = roomName;
-				mainView.SendObject(msg); // 게임 종료를 서버에 알림
+				gameEnd(cm);
 				gamePanel.repaint();
 			} else {
 				gamePanel.repaint();
@@ -439,6 +422,31 @@ public class OmokClientGameView extends JFrame {
 		String label = cm.data.equals("true") ? "준비 취소" : "준비";
 			
 		startReadyButton.setLabel(label);
+	}
+	
+	public void gameEnd(ChatMsg cm) {
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		gamePanel.setAll(cm.stone);
+		gamePanel.repaint();
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		gamePanel.init();
+		ChatMsg msg = new ChatMsg(userName, "802", cm.userName + "이 승리");
+		msg.roomName = roomName;
+		
+		if(isOwner) mainView.SendObject(msg); // 게임 종료를 서버에 알림
+		// 방장만 보내는 이유 : 한명만 보내게 하기 위해서
+		
+		startReadyButton.setEnabled(true);
 	}
 	
 	public void AppendText(String msg) {

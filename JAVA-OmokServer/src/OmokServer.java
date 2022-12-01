@@ -442,18 +442,6 @@ public class OmokServer extends JFrame {
 			WriteOneObject(cm);
 		}
 
-		public void finishGame(ChatMsg msg) { // 게임 종료를 알림
-			int roomnum = -1;
-			for (int i = 0; i < roomVec.size(); i++) {
-				if (msg.roomName.equals(roomVec.get(i).roomName)) {
-					roomnum = i;
-					break;
-				}
-			}
-			Room room = roomVec.get(roomnum);
-			room.stoneList.clear();
-		}
-
 		public void drawStone(ChatMsg msg) { // 벡터에서
 			int roomnum = -1;
 			for (int i = 0; i < roomVec.size(); i++) {
@@ -538,16 +526,8 @@ public class OmokServer extends JFrame {
 
 		public void sendGameMessage(ChatMsg msg) {
 			System.out.println("sendGameMessage Called : " + msg.code + " " + msg.roomName + " " + msg.userName);
-			int roomnum = -1;
-			for (int i = 0; i < roomVec.size(); i++) {
-				if (msg.roomName.equals(roomVec.get(i).roomName)) {
-					roomnum = i;
-					break;
-				}
-			}
-
-			msg.roomNumber = roomnum;
-			Room room = roomVec.get(roomnum);
+			
+			Room room = getRoom(msg);
 
 			for (UserService user : room.playerList) { // 방에 있는 모든 유저에게 message 전송
 				user.WriteOneObject(msg);
@@ -607,6 +587,26 @@ public class OmokServer extends JFrame {
 			WriteOneObject(readyToggleCm); // 당사자 버튼만 변경
 				
 		}
+		
+		public void finishGame(ChatMsg msg) { // 게임 종료를 알림
+			Room room = getRoom(msg);
+			room.stoneList.clear();
+			room.isStarted = false;
+			
+			for (UserService user : room.playerList) { // 방에 있는 모든 유저에게 전송
+				user.ready = false;
+				ChatMsg readyToggleCm = new ChatMsg(userName, "801", "false"); // 준비 버튼 토글시키기
+				readyToggleCm.roomName = room.roomName;
+				user.WriteOneObject(readyToggleCm); // 유저 준비 모두 취소시킴
+				
+				ChatMsg finishCm = new ChatMsg(userName, "201", "["+userName+"] 승리, 게임 종료");
+				finishCm.roomName = room.roomName;
+				user.WriteOneObject(finishCm);
+			}
+			
+			
+		}
+
 
 		public void run() {
 			while (true) { // 사용자 접속을 계속해서 받기 위해 while문

@@ -4584,3 +4584,432 @@ Caused by: java.lang.NegativeArraySizeException: Bad attempt to create table wit
 	at org.eclipse.jdt.internal.compiler.util.HashtableOfObject.<init>(HashtableOfObject.java:44)
 	at org.eclipse.jdt.internal.core.index.DiskIndex.readCategoryTable(DiskIndex.java:681)
 	... 9 more
+
+!ENTRY org.eclipse.jdt.core 4 4 2022-12-02 03:49:13.747
+!MESSAGE Failed to save JDT index: Index for /JAVA-Omok
+!STACK 0
+java.io.IOException: Failed to read index data from file:/C:/Users/chlwl/github/Omok/.metadata/.plugins/org.eclipse.jdt.core/3892605963.index at offset 12799 and size -65536
+	at org.eclipse.jdt.internal.core.index.DiskIndex.readCategoryTable(DiskIndex.java:685)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.mergeCategory(DiskIndex.java:485)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.mergeCategories(DiskIndex.java:477)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.mergeWith(DiskIndex.java:579)
+	at org.eclipse.jdt.internal.core.index.Index.save(Index.java:230)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.saveIndex(IndexManager.java:1150)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.saveIndexes(IndexManager.java:1209)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.notifyIdle(IndexManager.java:826)
+	at org.eclipse.jdt.internal.core.search.processing.JobManager.run(JobManager.java:458)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: java.lang.NegativeArraySizeException: Bad attempt to create table with -65536 elements
+	at org.eclipse.jdt.internal.compiler.util.HashtableOfObject.<init>(HashtableOfObject.java:44)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.readCategoryTable(DiskIndex.java:681)
+	... 9 more
+
+!ENTRY org.eclipse.jdt.core 4 4 2022-12-02 03:49:14.433
+!MESSAGE Failed to update meta index
+!STACK 0
+java.io.IOException: Failed to read index data from file:/C:/Users/chlwl/github/Omok/.metadata/.plugins/org.eclipse.jdt.core/3892605963.index at offset 17016 and size 1332572011
+	at org.eclipse.jdt.internal.core.index.DiskIndex.readCategoryTable(DiskIndex.java:685)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.addQueryResults(DiskIndex.java:180)
+	at org.eclipse.jdt.internal.core.index.Index.query(Index.java:169)
+	at org.eclipse.jdt.internal.core.index.Index.getMetaIndexQualifications(Index.java:259)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager$MetaIndexUpdateRequest.execute(IndexManager.java:1794)
+	at org.eclipse.jdt.internal.core.search.processing.JobManager.run(JobManager.java:478)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: java.lang.OutOfMemoryError: Java heap space
+
+!ENTRY org.eclipse.jdt.core 4 4 2022-12-02 03:49:48.813
+!MESSAGE Failed to save JDT index: Index for /JAVA-Omok
+!STACK 0
+java.io.IOException: Failed to read index data from file:/C:/Users/chlwl/github/Omok/.metadata/.plugins/org.eclipse.jdt.core/3892605963.index at offset 12799 and size -65536
+	at org.eclipse.jdt.internal.core.index.DiskIndex.readCategoryTable(DiskIndex.java:685)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.mergeCategory(DiskIndex.java:485)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.mergeCategories(DiskIndex.java:477)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.mergeWith(DiskIndex.java:579)
+	at org.eclipse.jdt.internal.core.index.Index.save(Index.java:230)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.saveIndex(IndexManager.java:1150)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.saveIndexes(IndexManager.java:1209)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.notifyIdle(IndexManager.java:826)
+	at org.eclipse.jdt.internal.core.search.processing.JobManager.run(JobManager.java:458)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: java.lang.NegativeArraySizeException: Bad attempt to create table with -65536 elements
+	at org.eclipse.jdt.internal.compiler.util.HashtableOfObject.<init>(HashtableOfObject.java:44)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.readCategoryTable(DiskIndex.java:681)
+	... 9 more
+
+!ENTRY org.eclipse.core.resources 4 0 2022-12-02 03:50:26.168
+!MESSAGE Error occurred while reading master table file
+!STACK 0
+java.nio.charset.MalformedInputException: Input length = 1
+	at java.base/java.nio.charset.CoderResult.throwException(CoderResult.java:274)
+	at java.base/sun.nio.cs.StreamDecoder.implRead(StreamDecoder.java:326)
+	at java.base/sun.nio.cs.StreamDecoder.read(StreamDecoder.java:188)
+	at java.base/java.io.InputStreamReader.read(InputStreamReader.java:177)
+	at java.base/java.io.BufferedReader.fill(BufferedReader.java:162)
+	at java.base/java.io.BufferedReader.readLine(BufferedReader.java:329)
+	at java.base/java.io.BufferedReader.readLine(BufferedReader.java:396)
+	at java.base/java.nio.file.Files.readAllLines(Files.java:3415)
+	at org.eclipse.core.internal.resources.SaveManager.getBadSequenceNumberErrorMessage(SaveManager.java:1641)
+	at org.eclipse.core.internal.resources.SaveManager.validateMasterTableBeforeSave(SaveManager.java:1622)
+	at org.eclipse.core.internal.resources.SaveManager.saveMasterTable(SaveManager.java:1275)
+	at org.eclipse.core.internal.resources.SaveManager.saveMasterTable(SaveManager.java:1266)
+	at org.eclipse.core.internal.resources.SaveManager.save(SaveManager.java:1239)
+	at org.eclipse.core.internal.resources.SaveManager.save(SaveManager.java:1150)
+	at org.eclipse.core.internal.resources.DelayedSnapshotJob.run(DelayedSnapshotJob.java:51)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+
+!ENTRY org.eclipse.core.jobs 4 2 2022-12-02 03:50:26.170
+!MESSAGE An internal error occurred during: "Periodic workspace save.".
+!STACK 0
+java.lang.IllegalArgumentException: Cannot set lower sequence number for root (previous: 65, new: 61). Location: C:\Users\chlwl\github\Omok\.metadata\.plugins\org.eclipse.core.resources\.safetable\org.eclipse.core.resourcesTimestamps and tree sequence numbers from file:
+	at org.eclipse.core.runtime.Assert.isLegal(Assert.java:66)
+	at org.eclipse.core.internal.resources.SaveManager.validateMasterTableBeforeSave(SaveManager.java:1623)
+	at org.eclipse.core.internal.resources.SaveManager.saveMasterTable(SaveManager.java:1275)
+	at org.eclipse.core.internal.resources.SaveManager.saveMasterTable(SaveManager.java:1266)
+	at org.eclipse.core.internal.resources.SaveManager.save(SaveManager.java:1239)
+	at org.eclipse.core.internal.resources.SaveManager.save(SaveManager.java:1150)
+	at org.eclipse.core.internal.resources.DelayedSnapshotJob.run(DelayedSnapshotJob.java:51)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+
+!ENTRY org.eclipse.jdt.core 4 4 2022-12-02 03:51:50.373
+!MESSAGE Failed to save JDT index: Index for /JAVA-Omok
+!STACK 0
+java.io.IOException: Failed to read index data from file:/C:/Users/chlwl/github/Omok/.metadata/.plugins/org.eclipse.jdt.core/3892605963.index at offset 12799 and size -65536
+	at org.eclipse.jdt.internal.core.index.DiskIndex.readCategoryTable(DiskIndex.java:685)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.mergeCategory(DiskIndex.java:485)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.mergeCategories(DiskIndex.java:477)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.mergeWith(DiskIndex.java:579)
+	at org.eclipse.jdt.internal.core.index.Index.save(Index.java:230)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.saveIndex(IndexManager.java:1150)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.saveIndexes(IndexManager.java:1209)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.notifyIdle(IndexManager.java:826)
+	at org.eclipse.jdt.internal.core.search.processing.JobManager.run(JobManager.java:458)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: java.lang.NegativeArraySizeException: Bad attempt to create table with -65536 elements
+	at org.eclipse.jdt.internal.compiler.util.HashtableOfObject.<init>(HashtableOfObject.java:44)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.readCategoryTable(DiskIndex.java:681)
+	... 9 more
+
+!ENTRY org.eclipse.jdt.core 4 4 2022-12-02 03:51:51.033
+!MESSAGE Failed to update meta index
+!STACK 0
+java.io.IOException: Failed to read index data from file:/C:/Users/chlwl/github/Omok/.metadata/.plugins/org.eclipse.jdt.core/3892605963.index at offset 17016 and size 1332572011
+	at org.eclipse.jdt.internal.core.index.DiskIndex.readCategoryTable(DiskIndex.java:685)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.addQueryResults(DiskIndex.java:180)
+	at org.eclipse.jdt.internal.core.index.Index.query(Index.java:169)
+	at org.eclipse.jdt.internal.core.index.Index.getMetaIndexQualifications(Index.java:259)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager$MetaIndexUpdateRequest.execute(IndexManager.java:1794)
+	at org.eclipse.jdt.internal.core.search.processing.JobManager.run(JobManager.java:478)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: java.lang.OutOfMemoryError: Java heap space
+
+!ENTRY org.eclipse.jdt.core 4 4 2022-12-02 03:56:11.439
+!MESSAGE Failed to save JDT index: Index for /JAVA-Omok
+!STACK 0
+java.io.IOException: Failed to read index data from file:/C:/Users/chlwl/github/Omok/.metadata/.plugins/org.eclipse.jdt.core/3892605963.index at offset 12799 and size -65536
+	at org.eclipse.jdt.internal.core.index.DiskIndex.readCategoryTable(DiskIndex.java:685)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.mergeCategory(DiskIndex.java:485)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.mergeCategories(DiskIndex.java:477)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.mergeWith(DiskIndex.java:579)
+	at org.eclipse.jdt.internal.core.index.Index.save(Index.java:230)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.saveIndex(IndexManager.java:1150)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.saveIndexes(IndexManager.java:1209)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.notifyIdle(IndexManager.java:826)
+	at org.eclipse.jdt.internal.core.search.processing.JobManager.run(JobManager.java:458)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: java.lang.NegativeArraySizeException: Bad attempt to create table with -65536 elements
+	at org.eclipse.jdt.internal.compiler.util.HashtableOfObject.<init>(HashtableOfObject.java:44)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.readCategoryTable(DiskIndex.java:681)
+	... 9 more
+
+!ENTRY org.eclipse.jdt.core 4 4 2022-12-02 03:56:19.224
+!MESSAGE Failed to save JDT index: Index for /JAVA-Omok
+!STACK 0
+java.io.IOException: Failed to read index data from file:/C:/Users/chlwl/github/Omok/.metadata/.plugins/org.eclipse.jdt.core/3892605963.index at offset 12799 and size -65536
+	at org.eclipse.jdt.internal.core.index.DiskIndex.readCategoryTable(DiskIndex.java:685)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.mergeCategory(DiskIndex.java:485)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.mergeCategories(DiskIndex.java:477)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.mergeWith(DiskIndex.java:579)
+	at org.eclipse.jdt.internal.core.index.Index.save(Index.java:230)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.saveIndex(IndexManager.java:1150)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.saveIndexes(IndexManager.java:1209)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.notifyIdle(IndexManager.java:826)
+	at org.eclipse.jdt.internal.core.search.processing.JobManager.run(JobManager.java:458)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: java.lang.NegativeArraySizeException: Bad attempt to create table with -65536 elements
+	at org.eclipse.jdt.internal.compiler.util.HashtableOfObject.<init>(HashtableOfObject.java:44)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.readCategoryTable(DiskIndex.java:681)
+	... 9 more
+
+!ENTRY org.eclipse.core.resources 4 0 2022-12-02 03:56:50.442
+!MESSAGE Error occurred while reading master table file
+!STACK 0
+java.nio.charset.MalformedInputException: Input length = 1
+	at java.base/java.nio.charset.CoderResult.throwException(CoderResult.java:274)
+	at java.base/sun.nio.cs.StreamDecoder.implRead(StreamDecoder.java:326)
+	at java.base/sun.nio.cs.StreamDecoder.read(StreamDecoder.java:188)
+	at java.base/java.io.InputStreamReader.read(InputStreamReader.java:177)
+	at java.base/java.io.BufferedReader.fill(BufferedReader.java:162)
+	at java.base/java.io.BufferedReader.readLine(BufferedReader.java:329)
+	at java.base/java.io.BufferedReader.readLine(BufferedReader.java:396)
+	at java.base/java.nio.file.Files.readAllLines(Files.java:3415)
+	at org.eclipse.core.internal.resources.SaveManager.getBadSequenceNumberErrorMessage(SaveManager.java:1641)
+	at org.eclipse.core.internal.resources.SaveManager.validateMasterTableBeforeSave(SaveManager.java:1622)
+	at org.eclipse.core.internal.resources.SaveManager.saveMasterTable(SaveManager.java:1275)
+	at org.eclipse.core.internal.resources.SaveManager.saveMasterTable(SaveManager.java:1266)
+	at org.eclipse.core.internal.resources.SaveManager.save(SaveManager.java:1239)
+	at org.eclipse.core.internal.resources.SaveManager.save(SaveManager.java:1150)
+	at org.eclipse.core.internal.resources.DelayedSnapshotJob.run(DelayedSnapshotJob.java:51)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+
+!ENTRY org.eclipse.core.jobs 4 2 2022-12-02 03:56:50.443
+!MESSAGE An internal error occurred during: "Periodic workspace save.".
+!STACK 0
+java.lang.IllegalArgumentException: Cannot set lower sequence number for root (previous: 65, new: 61). Location: C:\Users\chlwl\github\Omok\.metadata\.plugins\org.eclipse.core.resources\.safetable\org.eclipse.core.resourcesTimestamps and tree sequence numbers from file:
+	at org.eclipse.core.runtime.Assert.isLegal(Assert.java:66)
+	at org.eclipse.core.internal.resources.SaveManager.validateMasterTableBeforeSave(SaveManager.java:1623)
+	at org.eclipse.core.internal.resources.SaveManager.saveMasterTable(SaveManager.java:1275)
+	at org.eclipse.core.internal.resources.SaveManager.saveMasterTable(SaveManager.java:1266)
+	at org.eclipse.core.internal.resources.SaveManager.save(SaveManager.java:1239)
+	at org.eclipse.core.internal.resources.SaveManager.save(SaveManager.java:1150)
+	at org.eclipse.core.internal.resources.DelayedSnapshotJob.run(DelayedSnapshotJob.java:51)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+
+!ENTRY org.eclipse.jdt.core 4 4 2022-12-02 03:56:54.191
+!MESSAGE Failed to save JDT index: Index for /JAVA-Omok
+!STACK 0
+java.io.IOException: Failed to read index data from file:/C:/Users/chlwl/github/Omok/.metadata/.plugins/org.eclipse.jdt.core/3892605963.index at offset 12799 and size -65536
+	at org.eclipse.jdt.internal.core.index.DiskIndex.readCategoryTable(DiskIndex.java:685)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.mergeCategory(DiskIndex.java:485)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.mergeCategories(DiskIndex.java:477)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.mergeWith(DiskIndex.java:579)
+	at org.eclipse.jdt.internal.core.index.Index.save(Index.java:230)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.saveIndex(IndexManager.java:1150)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.saveIndexes(IndexManager.java:1209)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.notifyIdle(IndexManager.java:826)
+	at org.eclipse.jdt.internal.core.search.processing.JobManager.run(JobManager.java:458)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: java.lang.NegativeArraySizeException: Bad attempt to create table with -65536 elements
+	at org.eclipse.jdt.internal.compiler.util.HashtableOfObject.<init>(HashtableOfObject.java:44)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.readCategoryTable(DiskIndex.java:681)
+	... 9 more
+
+!ENTRY org.eclipse.jdt.core 4 4 2022-12-02 03:57:09.565
+!MESSAGE Failed to save JDT index: Index for /JAVA-Omok
+!STACK 0
+java.io.IOException: Failed to read index data from file:/C:/Users/chlwl/github/Omok/.metadata/.plugins/org.eclipse.jdt.core/3892605963.index at offset 12799 and size -65536
+	at org.eclipse.jdt.internal.core.index.DiskIndex.readCategoryTable(DiskIndex.java:685)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.mergeCategory(DiskIndex.java:485)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.mergeCategories(DiskIndex.java:477)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.mergeWith(DiskIndex.java:579)
+	at org.eclipse.jdt.internal.core.index.Index.save(Index.java:230)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.saveIndex(IndexManager.java:1150)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.saveIndexes(IndexManager.java:1209)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.notifyIdle(IndexManager.java:826)
+	at org.eclipse.jdt.internal.core.search.processing.JobManager.run(JobManager.java:458)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: java.lang.NegativeArraySizeException: Bad attempt to create table with -65536 elements
+	at org.eclipse.jdt.internal.compiler.util.HashtableOfObject.<init>(HashtableOfObject.java:44)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.readCategoryTable(DiskIndex.java:681)
+	... 9 more
+
+!ENTRY org.eclipse.jdt.core 4 4 2022-12-02 03:57:23.881
+!MESSAGE Failed to save JDT index: Index for /JAVA-Omok
+!STACK 0
+java.io.IOException: Failed to read index data from file:/C:/Users/chlwl/github/Omok/.metadata/.plugins/org.eclipse.jdt.core/3892605963.index at offset 12799 and size -65536
+	at org.eclipse.jdt.internal.core.index.DiskIndex.readCategoryTable(DiskIndex.java:685)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.mergeCategory(DiskIndex.java:485)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.mergeCategories(DiskIndex.java:477)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.mergeWith(DiskIndex.java:579)
+	at org.eclipse.jdt.internal.core.index.Index.save(Index.java:230)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.saveIndex(IndexManager.java:1150)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.saveIndexes(IndexManager.java:1209)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.notifyIdle(IndexManager.java:826)
+	at org.eclipse.jdt.internal.core.search.processing.JobManager.run(JobManager.java:458)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: java.lang.NegativeArraySizeException: Bad attempt to create table with -65536 elements
+	at org.eclipse.jdt.internal.compiler.util.HashtableOfObject.<init>(HashtableOfObject.java:44)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.readCategoryTable(DiskIndex.java:681)
+	... 9 more
+
+!ENTRY org.eclipse.jdt.core 4 4 2022-12-02 03:59:53.101
+!MESSAGE Failed to save JDT index: Index for /JAVA-Omok
+!STACK 0
+java.io.IOException: Failed to read index data from file:/C:/Users/chlwl/github/Omok/.metadata/.plugins/org.eclipse.jdt.core/3892605963.index at offset 12799 and size -65536
+	at org.eclipse.jdt.internal.core.index.DiskIndex.readCategoryTable(DiskIndex.java:685)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.mergeCategory(DiskIndex.java:485)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.mergeCategories(DiskIndex.java:477)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.mergeWith(DiskIndex.java:579)
+	at org.eclipse.jdt.internal.core.index.Index.save(Index.java:230)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.saveIndex(IndexManager.java:1150)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.saveIndexes(IndexManager.java:1209)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.notifyIdle(IndexManager.java:826)
+	at org.eclipse.jdt.internal.core.search.processing.JobManager.run(JobManager.java:458)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: java.lang.NegativeArraySizeException: Bad attempt to create table with -65536 elements
+	at org.eclipse.jdt.internal.compiler.util.HashtableOfObject.<init>(HashtableOfObject.java:44)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.readCategoryTable(DiskIndex.java:681)
+	... 9 more
+
+!ENTRY org.eclipse.jdt.core 4 4 2022-12-02 03:59:53.883
+!MESSAGE Failed to update meta index
+!STACK 0
+java.io.IOException: Failed to read index data from file:/C:/Users/chlwl/github/Omok/.metadata/.plugins/org.eclipse.jdt.core/3892605963.index at offset 17016 and size 1332572011
+	at org.eclipse.jdt.internal.core.index.DiskIndex.readCategoryTable(DiskIndex.java:685)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.addQueryResults(DiskIndex.java:180)
+	at org.eclipse.jdt.internal.core.index.Index.query(Index.java:169)
+	at org.eclipse.jdt.internal.core.index.Index.getMetaIndexQualifications(Index.java:259)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager$MetaIndexUpdateRequest.execute(IndexManager.java:1794)
+	at org.eclipse.jdt.internal.core.search.processing.JobManager.run(JobManager.java:478)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: java.lang.OutOfMemoryError: Java heap space
+
+!ENTRY org.eclipse.jdt.core 4 4 2022-12-02 04:00:22.391
+!MESSAGE Failed to save JDT index: Index for /JAVA-Omok
+!STACK 0
+java.io.IOException: Failed to read index data from file:/C:/Users/chlwl/github/Omok/.metadata/.plugins/org.eclipse.jdt.core/3892605963.index at offset 12799 and size -65536
+	at org.eclipse.jdt.internal.core.index.DiskIndex.readCategoryTable(DiskIndex.java:685)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.mergeCategory(DiskIndex.java:485)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.mergeCategories(DiskIndex.java:477)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.mergeWith(DiskIndex.java:579)
+	at org.eclipse.jdt.internal.core.index.Index.save(Index.java:230)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.saveIndex(IndexManager.java:1150)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.saveIndexes(IndexManager.java:1209)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.notifyIdle(IndexManager.java:826)
+	at org.eclipse.jdt.internal.core.search.processing.JobManager.run(JobManager.java:458)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: java.lang.NegativeArraySizeException: Bad attempt to create table with -65536 elements
+	at org.eclipse.jdt.internal.compiler.util.HashtableOfObject.<init>(HashtableOfObject.java:44)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.readCategoryTable(DiskIndex.java:681)
+	... 9 more
+
+!ENTRY org.eclipse.core.resources 4 0 2022-12-02 04:01:54.209
+!MESSAGE Error occurred while reading master table file
+!STACK 0
+java.nio.charset.MalformedInputException: Input length = 1
+	at java.base/java.nio.charset.CoderResult.throwException(CoderResult.java:274)
+	at java.base/sun.nio.cs.StreamDecoder.implRead(StreamDecoder.java:326)
+	at java.base/sun.nio.cs.StreamDecoder.read(StreamDecoder.java:188)
+	at java.base/java.io.InputStreamReader.read(InputStreamReader.java:177)
+	at java.base/java.io.BufferedReader.fill(BufferedReader.java:162)
+	at java.base/java.io.BufferedReader.readLine(BufferedReader.java:329)
+	at java.base/java.io.BufferedReader.readLine(BufferedReader.java:396)
+	at java.base/java.nio.file.Files.readAllLines(Files.java:3415)
+	at org.eclipse.core.internal.resources.SaveManager.getBadSequenceNumberErrorMessage(SaveManager.java:1641)
+	at org.eclipse.core.internal.resources.SaveManager.validateMasterTableBeforeSave(SaveManager.java:1622)
+	at org.eclipse.core.internal.resources.SaveManager.saveMasterTable(SaveManager.java:1275)
+	at org.eclipse.core.internal.resources.SaveManager.saveMasterTable(SaveManager.java:1266)
+	at org.eclipse.core.internal.resources.SaveManager.save(SaveManager.java:1239)
+	at org.eclipse.core.internal.resources.SaveManager.save(SaveManager.java:1150)
+	at org.eclipse.core.internal.resources.DelayedSnapshotJob.run(DelayedSnapshotJob.java:51)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+
+!ENTRY org.eclipse.core.jobs 4 2 2022-12-02 04:01:54.211
+!MESSAGE An internal error occurred during: "Periodic workspace save.".
+!STACK 0
+java.lang.IllegalArgumentException: Cannot set lower sequence number for root (previous: 65, new: 61). Location: C:\Users\chlwl\github\Omok\.metadata\.plugins\org.eclipse.core.resources\.safetable\org.eclipse.core.resourcesTimestamps and tree sequence numbers from file:
+	at org.eclipse.core.runtime.Assert.isLegal(Assert.java:66)
+	at org.eclipse.core.internal.resources.SaveManager.validateMasterTableBeforeSave(SaveManager.java:1623)
+	at org.eclipse.core.internal.resources.SaveManager.saveMasterTable(SaveManager.java:1275)
+	at org.eclipse.core.internal.resources.SaveManager.saveMasterTable(SaveManager.java:1266)
+	at org.eclipse.core.internal.resources.SaveManager.save(SaveManager.java:1239)
+	at org.eclipse.core.internal.resources.SaveManager.save(SaveManager.java:1150)
+	at org.eclipse.core.internal.resources.DelayedSnapshotJob.run(DelayedSnapshotJob.java:51)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+
+!ENTRY org.eclipse.jdt.core 4 4 2022-12-02 04:06:49.189
+!MESSAGE Failed to save JDT index: Index for /JAVA-Omok
+!STACK 0
+java.io.IOException: Failed to read index data from file:/C:/Users/chlwl/github/Omok/.metadata/.plugins/org.eclipse.jdt.core/3892605963.index at offset 12799 and size -65536
+	at org.eclipse.jdt.internal.core.index.DiskIndex.readCategoryTable(DiskIndex.java:685)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.mergeCategory(DiskIndex.java:485)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.mergeCategories(DiskIndex.java:477)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.mergeWith(DiskIndex.java:579)
+	at org.eclipse.jdt.internal.core.index.Index.save(Index.java:230)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.saveIndex(IndexManager.java:1150)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.saveIndexes(IndexManager.java:1209)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.notifyIdle(IndexManager.java:826)
+	at org.eclipse.jdt.internal.core.search.processing.JobManager.run(JobManager.java:458)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: java.lang.NegativeArraySizeException: Bad attempt to create table with -65536 elements
+	at org.eclipse.jdt.internal.compiler.util.HashtableOfObject.<init>(HashtableOfObject.java:44)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.readCategoryTable(DiskIndex.java:681)
+	... 9 more
+
+!ENTRY org.eclipse.core.resources 4 0 2022-12-02 04:11:49.205
+!MESSAGE Error occurred while reading master table file
+!STACK 0
+java.nio.charset.MalformedInputException: Input length = 1
+	at java.base/java.nio.charset.CoderResult.throwException(CoderResult.java:274)
+	at java.base/sun.nio.cs.StreamDecoder.implRead(StreamDecoder.java:326)
+	at java.base/sun.nio.cs.StreamDecoder.read(StreamDecoder.java:188)
+	at java.base/java.io.InputStreamReader.read(InputStreamReader.java:177)
+	at java.base/java.io.BufferedReader.fill(BufferedReader.java:162)
+	at java.base/java.io.BufferedReader.readLine(BufferedReader.java:329)
+	at java.base/java.io.BufferedReader.readLine(BufferedReader.java:396)
+	at java.base/java.nio.file.Files.readAllLines(Files.java:3415)
+	at org.eclipse.core.internal.resources.SaveManager.getBadSequenceNumberErrorMessage(SaveManager.java:1641)
+	at org.eclipse.core.internal.resources.SaveManager.validateMasterTableBeforeSave(SaveManager.java:1622)
+	at org.eclipse.core.internal.resources.SaveManager.saveMasterTable(SaveManager.java:1275)
+	at org.eclipse.core.internal.resources.SaveManager.saveMasterTable(SaveManager.java:1266)
+	at org.eclipse.core.internal.resources.SaveManager.save(SaveManager.java:1239)
+	at org.eclipse.core.internal.resources.SaveManager.save(SaveManager.java:1150)
+	at org.eclipse.core.internal.resources.DelayedSnapshotJob.run(DelayedSnapshotJob.java:51)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+
+!ENTRY org.eclipse.core.jobs 4 2 2022-12-02 04:11:49.206
+!MESSAGE An internal error occurred during: "Periodic workspace save.".
+!STACK 0
+java.lang.IllegalArgumentException: Cannot set lower sequence number for root (previous: 65, new: 61). Location: C:\Users\chlwl\github\Omok\.metadata\.plugins\org.eclipse.core.resources\.safetable\org.eclipse.core.resourcesTimestamps and tree sequence numbers from file:
+	at org.eclipse.core.runtime.Assert.isLegal(Assert.java:66)
+	at org.eclipse.core.internal.resources.SaveManager.validateMasterTableBeforeSave(SaveManager.java:1623)
+	at org.eclipse.core.internal.resources.SaveManager.saveMasterTable(SaveManager.java:1275)
+	at org.eclipse.core.internal.resources.SaveManager.saveMasterTable(SaveManager.java:1266)
+	at org.eclipse.core.internal.resources.SaveManager.save(SaveManager.java:1239)
+	at org.eclipse.core.internal.resources.SaveManager.save(SaveManager.java:1150)
+	at org.eclipse.core.internal.resources.DelayedSnapshotJob.run(DelayedSnapshotJob.java:51)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+
+!ENTRY org.eclipse.jdt.core 4 4 2022-12-02 04:13:06.741
+!MESSAGE Failed to save JDT index: Index for /JAVA-Omok
+!STACK 0
+java.io.IOException: Failed to read index data from file:/C:/Users/chlwl/github/Omok/.metadata/.plugins/org.eclipse.jdt.core/3892605963.index at offset 12799 and size -65536
+	at org.eclipse.jdt.internal.core.index.DiskIndex.readCategoryTable(DiskIndex.java:685)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.mergeCategory(DiskIndex.java:485)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.mergeCategories(DiskIndex.java:477)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.mergeWith(DiskIndex.java:579)
+	at org.eclipse.jdt.internal.core.index.Index.save(Index.java:230)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.saveIndex(IndexManager.java:1150)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.saveIndexes(IndexManager.java:1209)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.notifyIdle(IndexManager.java:826)
+	at org.eclipse.jdt.internal.core.search.processing.JobManager.run(JobManager.java:458)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: java.lang.NegativeArraySizeException: Bad attempt to create table with -65536 elements
+	at org.eclipse.jdt.internal.compiler.util.HashtableOfObject.<init>(HashtableOfObject.java:44)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.readCategoryTable(DiskIndex.java:681)
+	... 9 more
+
+!ENTRY org.eclipse.jdt.core 4 4 2022-12-02 04:13:07.595
+!MESSAGE Failed to update meta index
+!STACK 0
+java.io.IOException: Failed to read index data from file:/C:/Users/chlwl/github/Omok/.metadata/.plugins/org.eclipse.jdt.core/3892605963.index at offset 17016 and size 1332572011
+	at org.eclipse.jdt.internal.core.index.DiskIndex.readCategoryTable(DiskIndex.java:685)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.addQueryResults(DiskIndex.java:180)
+	at org.eclipse.jdt.internal.core.index.Index.query(Index.java:169)
+	at org.eclipse.jdt.internal.core.index.Index.getMetaIndexQualifications(Index.java:259)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager$MetaIndexUpdateRequest.execute(IndexManager.java:1794)
+	at org.eclipse.jdt.internal.core.search.processing.JobManager.run(JobManager.java:478)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: java.lang.OutOfMemoryError: Java heap space
+
+!ENTRY org.eclipse.jdt.core 4 4 2022-12-02 04:13:09.090
+!MESSAGE Failed to update meta index
+!STACK 0
+java.io.IOException: Failed to read index data from file:/C:/Users/chlwl/github/Omok/.metadata/.plugins/org.eclipse.jdt.core/3892605963.index at offset 17016 and size 1332572011
+	at org.eclipse.jdt.internal.core.index.DiskIndex.readCategoryTable(DiskIndex.java:685)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.addQueryResults(DiskIndex.java:180)
+	at org.eclipse.jdt.internal.core.index.Index.query(Index.java:169)
+	at org.eclipse.jdt.internal.core.index.Index.getMetaIndexQualifications(Index.java:259)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager$MetaIndexUpdateRequest.execute(IndexManager.java:1794)
+	at org.eclipse.jdt.internal.core.search.processing.JobManager.run(JobManager.java:478)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: java.lang.OutOfMemoryError: Java heap space
