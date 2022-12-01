@@ -399,8 +399,10 @@ public class OmokClientMainView extends JFrame {
 	}
 	
 	private void insertRoom(ChatMsg msg) { // 방 입장하기
+		System.out.println("방 입장 중111111");
 		OmokClientGameView view = new OmokClientGameView(mainView, UserName, Ip_addr, Port_no, msg.gameMode, msg.roomName, msg.roomMax);
 		mainView.gameView.add(view);
+		System.out.println(mainView.gameView.size());
 	}
 	
 	public void roomListUpdate(ChatMsg cm) { // 방 목록 갱신

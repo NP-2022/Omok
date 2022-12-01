@@ -296,7 +296,7 @@ public class OmokServer extends JFrame {
 			AppendText(roomNumber + "번 방 생성 완료. 현재 방 개수 " + roomVec.size());
 
 			for (UserService user : room.playerList)
-				user.updateUserList();
+				user.updateUserList(msg);
 
 		}
 
@@ -318,7 +318,7 @@ public class OmokServer extends JFrame {
 				room.addUser(this); // // 방 벡터에 유저를 추가
 				WriteAllObject(msg);
 				for (UserService user : room.playerList) // 방에 있는 모든 유저에게 유저 목록 리스트를 갱신
-					user.updateUserList();
+					user.updateUserList(msg);
 			}
 		}
 
@@ -333,9 +333,11 @@ public class OmokServer extends JFrame {
 			WriteAllObject(msg);
 		}
 
-		public void updateUserList() { // 이 함수를 호출한 UserService에게만 유저 목록을 갱신하는 String을 보냄
-			ChatMsg msg = new ChatMsg(userName, "703", "");
-			Room room = roomVec.get(roomNumber);
+		public void updateUserList(ChatMsg msg) { // 이 함수를 호출한 UserService에게만 유저 목록을 갱신하는 String을 보냄
+			ChatMsg cm = new ChatMsg(userName, "703", "");
+			cm.roomNumber = msg.roomNumber;
+			cm.roomName = msg.roomName;
+			Room room = roomVec.get(cm.roomNumber);
 			StringBuffer data = new StringBuffer();
 			int i = 0;
 			String stoneName = "";
@@ -356,7 +358,8 @@ public class OmokServer extends JFrame {
 				i++;
 			}
 			msg.data = data.toString();
-			WriteOneObject(msg);
+			System.out.println("11111111111--  " + msg.code);
+			WriteOneObject(cm);
 		}
 		
 		public void finishGame(ChatMsg msg) { //게임 종료를 알림
