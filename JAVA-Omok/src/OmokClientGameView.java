@@ -196,6 +196,8 @@ public class OmokClientGameView extends JFrame {
 		Button undoButton = new Button("무르기");
 		undoButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+//				ChatMsg msg = new ChatMsg(userName, "901", "무르기 요청");
+//				mainView.SendObject(msg);
 			}
 		});
 		undoButton.setBounds(343, 644, 107, 27);
@@ -204,6 +206,10 @@ public class OmokClientGameView extends JFrame {
 		Button exitButton = new Button("나가기");
 		exitButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+				ChatMsg msg = new ChatMsg(userName, "701", "나가기");
+				msg.roomName = roomName;
+				mainView.SendObject(msg);
 			}
 		});
 		exitButton.setBounds(470, 644, 107, 27);
@@ -223,6 +229,7 @@ public class OmokClientGameView extends JFrame {
 		chatTextField.requestFocus();
 		
 		setVisible(true);
+		
 
 	}
 	

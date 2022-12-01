@@ -155,7 +155,7 @@ public class OmokClientMainView extends JFrame {
 		setVisible(true);
 
 		AppendText("User " + username + " connecting " + ip_addr + " " + port_no);
-		userNameLabel.setText("username");
+		userNameLabel.setText(UserName);
 
 		imageChangeButton = new JButton("이미지 변경");
 		imageChangeButton.setFont(new Font("굴림", Font.PLAIN, 16));
@@ -356,6 +356,12 @@ public class OmokClientMainView extends JFrame {
 					case "700": // 누군가가 방에 입장
 						if(cm.userName.equals(UserName)) // 방에 입장한 클라이언트 본인일 경우
 							insertRoom(cm);
+						for(int i = 0; i < gameView.size(); i++) {
+							if(gameView.get(i).roomName.equals(cm.roomName)) {
+								gameView.get(i).gamePanel.init();
+								gameView.get(i).gamePanel.repaint();
+							}
+						}
 						break;
 					case "702": // 방 리스트 갱신
 						roomListUpdate(cm);
