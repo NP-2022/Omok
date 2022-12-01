@@ -325,22 +325,26 @@ public class OmokClientMainView extends JFrame {
 						break;
 					if (obcm instanceof ChatMsg) {
 						cm = (ChatMsg) obcm;
-						msg = String.format("[%s]\n%s", cm.UserName, cm.data);
+						msg = String.format("[%s]\n%s", cm.userName, cm.data);
 					} else
 						continue;
 					switch (cm.code) {
 					case "200": // chat message
-						if (cm.UserName.equals(UserName))
+						if (cm.userName.equals(UserName))
 							AppendTextR(msg); // 내 메세지는 우측에
 						else
 							AppendText(msg);
 						break;
+					case "201": // 게임 내부 채팅 메세지
+						for(int i = 0; i < gameView.size(); i++) {
+							gameView.get(i).receiveGameMessage(cm);
+						}
 					case "300": // Image 첨부
 //						if (cm.UserName.equals(UserName))
 //							AppendTextR("[" + cm.UserName + "]");
 //						else
 //							AppendText("[" + cm.UserName + "]");
-						AppendImage(cm.img);
+						//AppendImage(cm.img);
 						break;
 					case "500": // Mouse Event 수신
 						DoMouseEvent(cm);
@@ -348,7 +352,7 @@ public class OmokClientMainView extends JFrame {
 					case "600": // 새로운 방 생성 됨
 						break;
 					case "700": // 누군가가 방에 입장
-						if(cm.UserName.equals(UserName)) // 방에 입장한 클라이언트 본인일 경우
+						if(cm.userName.equals(UserName)) // 방에 입장한 클라이언트 본인일 경우
 							insertRoom(cm);
 						break;
 					case "702": // 방 리스트 갱신
@@ -417,7 +421,7 @@ public class OmokClientMainView extends JFrame {
 	// Mouse Event 수신 처리
 	public void DoMouseEvent(ChatMsg cm) {
 		Color c;
-		if (cm.UserName.matches(UserName)) // 본인 것은 이미 Local 로 그렸다.
+		if (cm.userName.matches(UserName)) // 본인 것은 이미 Local 로 그렸다.
 			return;
 		c = new Color(255, 0, 0); // 다른 사람 것은 Red
 		gc2.setColor(c);
@@ -594,6 +598,7 @@ public class OmokClientMainView extends JFrame {
 
 	}
 	
+	/*
 	public void AppendImage(ImageIcon ori_icon) {
 		int len = textArea.getDocument().getLength();
 		textArea.setCaretPosition(len); // place caret at the end (with no selection)
@@ -609,6 +614,7 @@ public class OmokClientMainView extends JFrame {
 		gc2.drawImage(ori_img,  0,  0, imagePanel.getWidth(), imagePanel.getHeight(), imagePanel);
 		gc.drawImage(panelImage, 0, 0, imagePanel.getWidth(), imagePanel.getHeight(), imagePanel);
 	}
+	*/
 
 	// Windows 처럼 message 제외한 나머지 부분은 NULL 로 만들기 위한 함수
 	public byte[] MakePacket(String msg) {

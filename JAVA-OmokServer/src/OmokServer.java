@@ -141,7 +141,7 @@ public class OmokServer extends JFrame {
 	public void AppendObject(ChatMsg msg) {
 		// textArea.append("사용자로부터 들어온 object : " + str+"\n");
 		textArea.append("code = " + msg.code + "\n");
-		textArea.append("id = " + msg.UserName + "\n");
+		textArea.append("id = " + msg.userName + "\n");
 		textArea.append("data = " + msg.data + "\n");
 		textArea.setCaretPosition(textArea.getText().length());
 	}
@@ -305,7 +305,7 @@ public class OmokServer extends JFrame {
 			if (room.isFull()) {
 				WriteOne("방이 꽉 찼습니다!");
 				return;
-			} else if (room.hasName(msg.UserName)) { // 방에 유저의 이름이 이미 있는 경우
+			} else if (room.hasName(msg.userName)) { // 방에 유저의 이름이 이미 있는 경우
 				WriteOne("이미 들어가 있는 방입니다!");
 				return;
 			} else { // 유저에게 방의 정보를 주고 입장시킴
@@ -409,7 +409,7 @@ public class OmokServer extends JFrame {
 			int color;
 			int usernum = -1;
 			for (color = 0; color < room.playerList.size(); color++) {
-				if (msg.UserName.equals(room.playerList.get(color).userName)) {
+				if (msg.userName.equals(room.playerList.get(color).userName)) {
 					usernum = color;
 					color = color + 1;
 					if (room.roomMax == 4) {
@@ -458,6 +458,22 @@ public class OmokServer extends JFrame {
 			for (UserService user : room.playerList) // 방에 있는 모든 유저에게 undo 전송
 				user.WriteOneObject(msg);
 		}
+		
+		public void sendGameMessage(ChatMsg msg) {
+			int roomnum = -1;
+			for (int i = 0; i < roomVec.size(); i++) {
+				if (msg.roomName.equals(roomVec.get(i).roomName)) {
+					roomnum = i;
+					break;
+				}
+			}
+
+			msg.roomNumber = roomnum;
+			Room room = roomVec.get(roomnum);
+			
+			for (UserService user : room.playerList) // 방에 있는 모든 유저에게 message 전송
+				user.WriteOneObject(msg);
+		}
 
 		public void run() {
 			while (true) { // 사용자 접속을 계속해서 받기 위해 while문
@@ -483,12 +499,12 @@ public class OmokServer extends JFrame {
 					} else
 						continue;
 					if (cm.code.matches("100")) {
-						userName = cm.UserName;
+						userName = cm.userName;
 						userStatus = "O"; // Online 상태
 						Login();
 						updateRoomList();
 					} else if (cm.code.matches("200")) {
-						msg = String.format("[%s] %s", cm.UserName, cm.data);
+						msg = String.format("[%s] %s", cm.userName, cm.data);
 						AppendText(msg); // server 화면에 출력
 						String[] args = msg.split(" "); // 단어들을 분리한다.
 						if (args.length == 1) { // Enter key 만 들어온 경우 Wakeup 처리만 한다.
@@ -530,6 +546,8 @@ public class OmokServer extends JFrame {
 							// WriteAll(msg + "\n"); // Write All
 							WriteAllObject(cm);
 						}
+					} else if (cm.code.matches("201")) {
+						sendGameMessage(cm);
 					} else if (cm.code.matches("400")) { // logout message 처리
 						Logout();
 						break;

@@ -18,6 +18,10 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.Color;
 import javax.swing.border.LineBorder;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
 
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
@@ -45,7 +49,7 @@ public class OmokClientGameView extends JFrame {
 	private JTextField txtGame;
 	private JTextField txtRoom;
 	private JTextField txtPersonNum;
-	private String Username;
+	private String userName;
 	private String Ip_addr;
 	private String Port_no;
 	private JTextField chatTextField;
@@ -56,9 +60,11 @@ public class OmokClientGameView extends JFrame {
 	private Image panelImage = null;
 	private Graphics gc;
 	public TablePanel1 gamePanel;
-	public String roomname;
+	public String roomName;
 	public int maxPlayer; // 최대 인원수
 	public int currentPlayer;
+	public JTextPane textArea;
+	public JButton chatSendButton;
 	JPanel panel;
 
 	private JList userList;
@@ -71,9 +77,9 @@ public class OmokClientGameView extends JFrame {
 	 */
 	public OmokClientGameView(OmokClientMainView mainView, String username, String ip_addr, String port_no,
 			String gameModeName, String roomName, int maxPlayer) {
-		this.Username = username;
+		this.userName = username;
 		this.mainView = mainView;
-		this.roomname = roomName;
+		this.roomName = roomName;
 		this.maxPlayer = maxPlayer;
 
 		currentPlayer = 0;
@@ -90,18 +96,18 @@ public class OmokClientGameView extends JFrame {
 		chatScrollPane.setBounds(659, 328, 352, 300);
 		contentPane.add(chatScrollPane);
 
-		JTextPane textArea = new JTextPane();
+		textArea = new JTextPane();
 		textArea.setFont(new Font("굴림체", Font.PLAIN, 14));
 		textArea.setEditable(true);
 		textArea.setCaretPosition(0);
-		chatScrollPane.setColumnHeaderView(textArea);
+		chatScrollPane.setViewportView(textArea);
 
 		chatTextField = new JTextField();
 		chatTextField.setColumns(10);
 		chatTextField.setBounds(659, 638, 271, 40);
 		contentPane.add(chatTextField);
 
-		JButton chatSendButton = new JButton("전송");
+		chatSendButton = new JButton("전송");
 		chatSendButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
@@ -209,8 +215,32 @@ public class OmokClientGameView extends JFrame {
 		MyMouseEvent mouse = new MyMouseEvent();
 
 		gamePanel.addMouseListener(mouse);
+		
+		TextSendAction action = new TextSendAction();
+		chatSendButton.addActionListener(action);
+		chatTextField.addActionListener(action);
+		chatTextField.requestFocus();
+		
 		setVisible(true);
 
+	}
+	
+	class TextSendAction implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// Send button을 누르거나 메시지 입력하고 Enter key 치면
+			if (e.getSource() == chatSendButton || e.getSource() == chatTextField) {
+				String msg = null;
+				msg = String.format("[%s] %s", userName, chatTextField.getText());
+				ChatMsg cm = new ChatMsg(userName, "201", msg);
+				cm.roomName = roomName;
+				mainView.SendObject(cm);
+				chatTextField.setText(""); // 메세지를 보내고 나면 메세지 쓰는창을 비운다.
+				chatTextField.requestFocus(); // 메세지를 보내고 커서를 다시 텍스트 필드로 위치시킨다
+				if (msg.contains("/exit")) // 종료 처리
+					System.exit(0);
+			}
+		}
 	}
 
 	class MyMouseEvent implements MouseListener, MouseMotionListener {
@@ -247,10 +277,10 @@ public class OmokClientGameView extends JFrame {
 			x = (int) Math.round(e.getX() / (double) 30) - 1;
 			y = (int) Math.round(e.getY() / (double) 30);
 
-			ChatMsg msg = new ChatMsg(Username, "900", "Stone");
+			ChatMsg msg = new ChatMsg(userName, "900", "Stone");
 			msg.y = y;
 			msg.x = x;
-			msg.roomName = roomname;
+			msg.roomName = roomName;
 
 			if (gamePanel.isFilled(y, x)) { // 돌이 이미 있으면 return
 				return;
@@ -305,7 +335,7 @@ public class OmokClientGameView extends JFrame {
 	}
 
 	public void userListUpdate(ChatMsg msg) {
-		if (roomname.equals(msg.roomName)) {
+		if (roomName.equals(msg.roomName)) {
 			userListModel.removeAllElements();
 			String list[] = msg.data.split("\n");
 			for (String item : list) {
@@ -316,7 +346,7 @@ public class OmokClientGameView extends JFrame {
 	}
 
 	public void drawStone(ChatMsg cm) {
-		if (roomname.equals(cm.roomName)) {
+		if (roomName.equals(cm.roomName)) {
 			System.out.println("Client draw Stone : player" + cm.stone);
 			gamePanel.setMap(cm.y, cm.x, cm.stone);
 			currentPlayer = (currentPlayer + 1) % maxPlayer; // 플레이어는 1~max ( 실 사용시 +1 )
@@ -343,8 +373,8 @@ public class OmokClientGameView extends JFrame {
 					e.printStackTrace();
 				}
 				gamePanel.init();
-				ChatMsg msg = new ChatMsg(Username, "802", cm.UserName + "이 승리");
-				msg.roomName = roomname;
+				ChatMsg msg = new ChatMsg(userName, "802", cm.userName + "이 승리");
+				msg.roomName = roomName;
 				mainView.SendObject(msg); // 게임 종료를 서버에 알림
 				gamePanel.repaint();
 			} else {
@@ -361,6 +391,73 @@ public class OmokClientGameView extends JFrame {
 
 		System.out.println(" 바둑알 제거됨.");
 	}
+	
+	public void receiveGameMessage(ChatMsg cm) {
+		if(!cm.roomName.equals(roomName)) return;
+		AppendText(cm.data);
+		
+	}
+	
+	public void AppendText(String msg) {
+
+		msg = msg.trim(); // 앞뒤 blank와 \n을 제거한다.
+
+		StyledDocument doc = textArea.getStyledDocument();
+		SimpleAttributeSet left = new SimpleAttributeSet();
+		StyleConstants.setAlignment(left, StyleConstants.ALIGN_LEFT);
+		StyleConstants.setForeground(left, Color.BLACK);
+	    doc.setParagraphAttributes(doc.getLength(), 1, left, false);
+		try {
+			doc.insertString(doc.getLength(), msg+"\n", left );
+		} catch (BadLocationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		int len = textArea.getDocument().getLength();
+		textArea.setCaretPosition(len);
+		//textArea.replaceSelection("\n");
+
+
+	}
+	// 화면 우측에 출력
+	public void AppendTextR(String msg) {
+		msg = msg.trim(); // 앞뒤 blank와 \n을 제거한다.	
+		StyledDocument doc = textArea.getStyledDocument();
+		SimpleAttributeSet right = new SimpleAttributeSet();
+		StyleConstants.setAlignment(right, StyleConstants.ALIGN_RIGHT);
+		StyleConstants.setForeground(right, Color.BLUE);	
+	    doc.setParagraphAttributes(doc.getLength(), 1, right, false);
+		try {
+			doc.insertString(doc.getLength(),msg+"\n", right );
+		} catch (BadLocationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		int len = textArea.getDocument().getLength();
+		textArea.setCaretPosition(len);
+		//textArea.replaceSelection("\n");
+
+	}
+	
+	/* 이모티콘 넣으면 사용할 부분
+	public void AppendImage(ImageIcon ori_icon) {
+		int len = textArea.getDocument().getLength();
+		textArea.setCaretPosition(len); // place caret at the end (with no selection)
+		Image ori_img = ori_icon.getImage();
+		Image new_img;
+		ImageIcon new_icon;
+		int width, height;
+		double ratio;
+		width = ori_icon.getIconWidth();
+		height = ori_icon.getIconHeight();
+
+
+		gc2.drawImage(ori_img,  0,  0, imagePanel.getWidth(), imagePanel.getHeight(), imagePanel);
+		gc.drawImage(panelImage, 0, 0, imagePanel.getWidth(), imagePanel.getHeight(), imagePanel);
+	}
+	*/
+	
+	///////////////// 오목 패널 부분 ////////////////////
 
 	class TablePanel1 extends JPanel {
 
