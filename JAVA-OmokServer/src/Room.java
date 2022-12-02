@@ -1,5 +1,3 @@
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Vector;
 
 
@@ -19,7 +17,6 @@ public class Room {
 	public String ownerName;
 	public int undoCount = 0;
 	public boolean isStarted = false;
-	public HashMap<String, Boolean> readyMap = new HashMap<>();
 	
 	public Room(String roomName, OmokServer.UserService owner, int roomMax, String gameMode) {
 		this.roomName = roomName;
@@ -28,24 +25,6 @@ public class Room {
 		this.gameMode = gameMode;
 		this.ownerName = owner.userName;
 		playerList.add(owner);
-		readyMap.put(owner.userName, false);
-	}
-	
-	// 이름으로 준비 상태 해시맵으로 저장
-	public void updateReadyState(String userName, Boolean readyState) {
-		readyMap.put(userName, readyState);
-	}
-	
-	// 이름으로 준비 상태 해시맵에서 가져옴
-	public boolean getReadyState(String userName) {
-		return readyMap.get(userName);
-	}
-	
-	public void toggleReadyState(String userName) {
-		if(getReadyState(userName) == true) 
-			readyMap.put(userName, false);
-		else
-			readyMap.put(userName, true); 
 	}
 	
 	
@@ -55,7 +34,7 @@ public class Room {
 	
 	public boolean isReady() {
 		for(OmokServer.UserService user : playerList) {
-			if(getReadyState(user.userName) == false && user != owner)
+			if(!user.ready && user != owner)
 				return false;
 		}
 		return true;

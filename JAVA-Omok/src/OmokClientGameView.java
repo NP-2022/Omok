@@ -4,8 +4,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.util.Arrays;
 
 import javax.swing.JFrame;
@@ -93,6 +91,7 @@ public class OmokClientGameView extends JFrame {
 		currentPlayer = 0;
 
 		setResizable(false);
+		// setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(900, 100, 1036, 720);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -207,14 +206,6 @@ public class OmokClientGameView extends JFrame {
 		contentPane.add(undoButton);
 
 		Button exitButton = new Button("나가기");
-		
-		addWindowListener(new WindowAdapter() { // 이 창 X키로 끌 시에도 보내기
-			public void windowClosing(WindowEvent e) {
-				ChatMsg msg = new ChatMsg(userName, "701", "나가기");
-				msg.roomName = roomName;
-				mainView.SendObject(msg);
-			}
-		});
 		exitButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
@@ -223,7 +214,6 @@ public class OmokClientGameView extends JFrame {
 				mainView.SendObject(msg);
 			}
 		});
-		
 		exitButton.setBounds(470, 644, 107, 27);
 		contentPane.add(exitButton);
 
@@ -501,14 +491,6 @@ public class OmokClientGameView extends JFrame {
 		// 방장만 보내는 이유 : 한명만 보내게 하기 위해서
 		
 		startReadyButton.setEnabled(true);
-	}
-	
-	public void gameStop(ChatMsg cm) {
-		gamePanel.init();
-		AppendText("유저 이탈로 게임을 중단합니다.");
-		
-		startReadyButton.setEnabled(true);
-		startReadyButton.setLabel(isOwner? "시작":"준비");
 	}
 	
 	public void AppendText(String msg) {
