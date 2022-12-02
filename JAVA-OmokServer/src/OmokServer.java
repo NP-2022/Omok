@@ -315,16 +315,9 @@ public class OmokServer extends JFrame {
 		}
 
 		public void exitRoom(ChatMsg msg) {
-			int roomnum = -1;
-			for (int i = 0; i < roomVec.size(); i++) {
-				if (msg.roomName.equals(roomVec.get(i).roomName)) {
-					roomnum = i;
-					break;
-				}
-			}
+			Room room = getRoom(msg);
 			System.out.println(msg.userName + "가 방에서 퇴장했습니다.");
 
-			Room room = roomVec.get(roomnum);
 			System.out.println("전, 방의 인원은 : " + room.playerList.size());
 			for (int i = 0; i < room.playerList.size(); i++) {
 				OmokServer.UserService user = room.playerList.get(i);
@@ -443,16 +436,8 @@ public class OmokServer extends JFrame {
 		}
 
 		public void drawStone(ChatMsg msg) { // 벡터에서
-			int roomnum = -1;
-			for (int i = 0; i < roomVec.size(); i++) {
-				if (msg.roomName.equals(roomVec.get(i).roomName)) {
-					roomnum = i;
-					break;
-				}
-			}
-			System.out.println(roomnum + "room DrawStone");
-			msg.roomNumber = roomnum;
-			Room room = roomVec.get(roomnum);
+			Room room = getRoom(msg);
+			System.out.println(msg.roomNumber + "room DrawStone");
 			
 			if(!room.isStarted) {
 				ChatMsg cm = new ChatMsg(msg.userName, "201", "");
@@ -503,20 +488,11 @@ public class OmokServer extends JFrame {
 		}
 
 		public void undoStone(ChatMsg msg) {
-			int roomnum = -1;
-			for (int i = 0; i < roomVec.size(); i++) {
-				if (msg.roomName.equals(roomVec.get(i).roomName)) {
-					roomnum = i;
-					break;
-				}
-			}
-
-			msg.roomNumber = roomnum;
-			Room room = roomVec.get(roomnum);
+			Room room = getRoom(msg);
 			room.undoCount++;
 			if (room.undoCount == room.roomMax) {
 				room.undoStone();
-				System.out.println(roomnum + " room undoStone");
+				System.out.println(msg.roomNumber + " room undoStone");
 				room.undoCount = 0;
 			}
 			System.out.println("stone Size : " + room.stoneList.size());
