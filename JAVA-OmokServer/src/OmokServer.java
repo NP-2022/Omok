@@ -163,8 +163,6 @@ public class OmokServer extends JFrame {
 		public String userStatus;
 
 		public int roomNumber;
-		public boolean ready = false;
-		// public boolean userTurn;
 
 		public UserService(Socket client_socket) {
 			// TODO Auto-generated constructor stub
@@ -315,8 +313,8 @@ public class OmokServer extends JFrame {
 		}
 
 		public void exitRoom(ChatMsg msg) {
-			ready = false;
 			Room room = getRoom(msg);
+			room.updateReadyState(msg.userName, false); // ready 배열 관리
 			System.out.println(msg.userName + "가 방에서 퇴장했습니다.");
 
 			System.out.println("전, 방의 인원은 : " + room.playerList.size());
@@ -354,6 +352,7 @@ public class OmokServer extends JFrame {
 
 		public void insertRoom(ChatMsg msg) {
 			Room room = roomVec.get(msg.roomNumber); // 방 번호로 입장 (방 목록 리스트는 서버의 방 배열과 인덱스를 공유함)
+			room.updateReadyState(msg.userName, false); // ready 배열 관리
 			if (room.isStarted) {
 				WriteOne("게임이 진행중인 방입니다!");
 				return;
@@ -549,16 +548,15 @@ public class OmokServer extends JFrame {
 		
 		public void readyMethod(ChatMsg cm) {
 			// 준비 상태 바꾸고 msg 전달
-			String msg = ready ? "["+userName+"]님 준비 취소" : "["+userName+"]님 준비 완료";
-			
-			ready = !ready; // ready 토글
-						
 			Room room = getRoom(cm);
+			String msg = room.getReadyState(userName) ? "["+userName+"]님 준비 취소" : "["+userName+"]님 준비 완료";
 			
-			ChatMsg readyCm = new ChatMsg(userName, "201", msg);
+			room.toggleReadyState(userName);
+			
+			ChatMsg readyCm = new ChatMsg(userName, "201", msg); // 준비 상태 게임 내 채팅으로 전송
 			readyCm.roomName = room.roomName;
 			
-			String readyState = ready ? "true" : "false";
+			String readyState = room.getReadyState(userName) ? "true" : "false"; // 준비 버튼 토글시키기 위한 문자열
 			
 			ChatMsg readyToggleCm = new ChatMsg(userName, "801", readyState); // 준비 버튼 토글시키기
 			readyToggleCm.roomName = room.roomName;
@@ -576,10 +574,10 @@ public class OmokServer extends JFrame {
 			room.isStarted = false;
 			
 			for (UserService user : room.playerList) { // 방에 있는 모든 유저에게 전송
-				user.ready = false;
-				ChatMsg readyToggleCm = new ChatMsg(userName, "801", "false"); // 준비 버튼 토글시키기
-				readyToggleCm.roomName = room.roomName;
-				user.WriteOneObject(readyToggleCm); // 유저 준비 모두 취소시킴
+				room.updateReadyState(user.userName, false);
+				//ChatMsg readyToggleCm = new ChatMsg(userName, "801", "false"); // 준비 버튼 토글시키기
+				//readyToggleCm.roomName = room.roomName;
+				//user.WriteOneObject(readyToggleCm); // 유저 준비 버튼을 모두 취소시킴
 				
 				ChatMsg finishCm = new ChatMsg(userName, "201", "["+userName+"] 승리, 게임 종료");
 				finishCm.roomName = room.roomName;
@@ -593,7 +591,7 @@ public class OmokServer extends JFrame {
 			room.isStarted = false;
 			
 			for (UserService user : room.playerList) { // 방에 있는 모든 유저에게 전송
-				user.ready = false;
+				room.updateReadyState(user.userName, false);
 				ChatMsg readyToggleCm = new ChatMsg(userName, "801", "false"); // 준비 버튼 토글시키기
 				readyToggleCm.roomName = room.roomName;
 				user.WriteOneObject(readyToggleCm); // 유저 준비 모두 취소시킴
