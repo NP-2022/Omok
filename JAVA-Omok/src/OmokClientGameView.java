@@ -370,6 +370,13 @@ public class OmokClientGameView extends JFrame {
 				userListModel.addElement(item);
 			}
 			System.out.println("userList updated");
+			String owner[] = list[0].split(" ");
+			System.out.println(owner[1].substring(4, owner[1].length() -1) + "   방장이름<<<<<<<<<");
+			if(userName.equals(owner[1].substring(4, owner[1].length() -1))) {
+				startReadyButton.setLabel("시작");
+				startReadyButton.setEnabled(true);
+				this.isOwner = true;
+			}
 		}
 	}
 
