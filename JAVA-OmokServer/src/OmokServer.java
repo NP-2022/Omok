@@ -1,4 +1,4 @@
-//JavaObjServer.java ObjectStream ±â¹İ Ã¤ÆÃ Server
+//JavaObjServer.java ObjectStream ê¸°ë°˜ ì±„íŒ… Server
 
 import java.awt.EventQueue;
 
@@ -36,12 +36,12 @@ public class OmokServer extends JFrame {
 	JTextArea textArea;
 	private JTextField txtPortNumber;
 
-	private ServerSocket socket; // ¼­¹ö¼ÒÄÏ
-	private Socket client_socket; // accept() ¿¡¼­ »ı¼ºµÈ client ¼ÒÄÏ
-	private Vector<UserService> userVec = new Vector(); // ¿¬°áµÈ »ç¿ëÀÚ¸¦ ÀúÀåÇÒ º¤ÅÍ
-	private static final int BUF_LEN = 128; // Windows Ã³·³ BUF_LEN À» Á¤ÀÇ
+	private ServerSocket socket; // ì„œë²„ì†Œì¼“
+	private Socket client_socket; // accept() ì—ì„œ ìƒì„±ëœ client ì†Œì¼“
+	private Vector<UserService> userVec = new Vector(); // ì—°ê²°ëœ ì‚¬ìš©ìë¥¼ ì €ì¥í•  ë²¡í„°
+	private static final int BUF_LEN = 128; // Windows ì²˜ëŸ¼ BUF_LEN ì„ ì •ì˜
 
-	private Vector<Room> roomVec = new Vector(); // »ı¼ºµÈ ¹æÀ» ÀúÀåÇÒ º¤ÅÍ
+	private Vector<Room> roomVec = new Vector(); // ìƒì„±ëœ ë°©ì„ ì €ì¥í•  ë²¡í„°
 
 	/**
 	 * Launch the application.
@@ -63,7 +63,7 @@ public class OmokServer extends JFrame {
 	 * Create the frame.
 	 */
 	public OmokServer() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Ã¢ÀÌ ´İÈ÷¸é ÇÁ·Î¼¼½º Á¾·á
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // ì°½ì´ ë‹«íˆë©´ í”„ë¡œì„¸ìŠ¤ ì¢…ë£Œ
 		setBounds(100, 100, 338, 440);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -90,7 +90,7 @@ public class OmokServer extends JFrame {
 		txtPortNumber.setColumns(10);
 
 		JButton btnServerStart = new JButton("Server Start");
-		btnServerStart.addActionListener(new ActionListener() { // ¹öÆ° ´­¸®¸é ¼­¹ö ½ÃÀÛ
+		btnServerStart.addActionListener(new ActionListener() { // ë²„íŠ¼ ëˆŒë¦¬ë©´ ì„œë²„ ì‹œì‘
 			public void actionPerformed(ActionEvent e) {
 				try {
 					socket = new ServerSocket(Integer.parseInt(txtPortNumber.getText()));
@@ -100,8 +100,8 @@ public class OmokServer extends JFrame {
 				}
 				AppendText("Chat Server Running..");
 				btnServerStart.setText("Chat Server Running..");
-				btnServerStart.setEnabled(false); // ¼­¹ö¸¦ ´õÀÌ»ó ½ÇÇà½ÃÅ°Áö ¸ø ÇÏ°Ô ¸·´Â´Ù
-				txtPortNumber.setEnabled(false); // ´õÀÌ»ó Æ÷Æ®¹øÈ£ ¼öÁ¤¸ø ÇÏ°Ô ¸·´Â´Ù
+				btnServerStart.setEnabled(false); // ì„œë²„ë¥¼ ë”ì´ìƒ ì‹¤í–‰ì‹œí‚¤ì§€ ëª» í•˜ê²Œ ë§‰ëŠ”ë‹¤
+				txtPortNumber.setEnabled(false); // ë”ì´ìƒ í¬íŠ¸ë²ˆí˜¸ ìˆ˜ì •ëª» í•˜ê²Œ ë§‰ëŠ”ë‹¤
 				AcceptServer accept_server = new AcceptServer();
 				accept_server.start();
 			}
@@ -110,20 +110,20 @@ public class OmokServer extends JFrame {
 		contentPane.add(btnServerStart);
 	}
 
-	// »õ·Î¿î Âü°¡ÀÚ accept() ÇÏ°í user thread¸¦ »õ·Î »ı¼ºÇÑ´Ù.
+	// ìƒˆë¡œìš´ ì°¸ê°€ì accept() í•˜ê³  user threadë¥¼ ìƒˆë¡œ ìƒì„±í•œë‹¤.
 	class AcceptServer extends Thread {
 		@SuppressWarnings("unchecked")
 		public void run() {
-			while (true) { // »ç¿ëÀÚ Á¢¼ÓÀ» °è¼ÓÇØ¼­ ¹Ş±â À§ÇØ while¹®
+			while (true) { // ì‚¬ìš©ì ì ‘ì†ì„ ê³„ì†í•´ì„œ ë°›ê¸° ìœ„í•´ whileë¬¸
 				try {
 					AppendText("Waiting new clients ...");
-					client_socket = socket.accept(); // accept°¡ ÀÏ¾î³ª±â Àü±îÁö´Â ¹«ÇÑ ´ë±âÁß
-					AppendText("»õ·Î¿î Âü°¡ÀÚ from " + client_socket);
-					// User ´ç ÇÏ³ª¾¿ Thread »ı¼º
+					client_socket = socket.accept(); // acceptê°€ ì¼ì–´ë‚˜ê¸° ì „ê¹Œì§€ëŠ” ë¬´í•œ ëŒ€ê¸°ì¤‘
+					AppendText("ìƒˆë¡œìš´ ì°¸ê°€ì from " + client_socket);
+					// User ë‹¹ í•˜ë‚˜ì”© Thread ìƒì„±
 					UserService new_user = new UserService(client_socket);
-					userVec.add(new_user); // »õ·Î¿î Âü°¡ÀÚ ¹è¿­¿¡ Ãß°¡
-					new_user.start(); // ¸¸µç °´Ã¼ÀÇ ½º·¹µå ½ÇÇà
-					AppendText("ÇöÀç Âü°¡ÀÚ ¼ö " + userVec.size());
+					userVec.add(new_user); // ìƒˆë¡œìš´ ì°¸ê°€ì ë°°ì—´ì— ì¶”ê°€
+					new_user.start(); // ë§Œë“  ê°ì²´ì˜ ìŠ¤ë ˆë“œ ì‹¤í–‰
+					AppendText("í˜„ì¬ ì°¸ê°€ì ìˆ˜ " + userVec.size());
 				} catch (IOException e) {
 					AppendText("accept() error");
 					// System.exit(0);
@@ -133,21 +133,21 @@ public class OmokServer extends JFrame {
 	}
 
 	public void AppendText(String str) {
-		// textArea.append("»ç¿ëÀÚ·ÎºÎÅÍ µé¾î¿Â ¸Ş¼¼Áö : " + str+"\n");
+		// textArea.append("ì‚¬ìš©ìë¡œë¶€í„° ë“¤ì–´ì˜¨ ë©”ì„¸ì§€ : " + str+"\n");
 		textArea.append(str + "\n");
 		textArea.setCaretPosition(textArea.getText().length());
 	}
 
 	public void AppendObject(ChatMsg msg) {
-		// textArea.append("»ç¿ëÀÚ·ÎºÎÅÍ µé¾î¿Â object : " + str+"\n");
+		// textArea.append("ì‚¬ìš©ìë¡œë¶€í„° ë“¤ì–´ì˜¨ object : " + str+"\n");
 		textArea.append("code = " + msg.code + "\n");
 		textArea.append("id = " + msg.userName + "\n");
 		textArea.append("data = " + msg.data + "\n");
 		textArea.setCaretPosition(textArea.getText().length());
 	}
 
-	// User ´ç »ı¼ºµÇ´Â Thread
-	// Read One ¿¡¼­ ´ë±â -> Write All
+	// User ë‹¹ ìƒì„±ë˜ëŠ” Thread
+	// Read One ì—ì„œ ëŒ€ê¸° -> Write All
 	class UserService extends Thread {
 		private InputStream is;
 		private OutputStream os;
@@ -163,12 +163,10 @@ public class OmokServer extends JFrame {
 		public String userStatus;
 
 		public int roomNumber;
-		public boolean ready = false;
-		// public boolean userTurn;
 
 		public UserService(Socket client_socket) {
 			// TODO Auto-generated constructor stub
-			// ¸Å°³º¯¼ö·Î ³Ñ¾î¿Â ÀÚ·á ÀúÀå
+			// ë§¤ê°œë³€ìˆ˜ë¡œ ë„˜ì–´ì˜¨ ìë£Œ ì €ì¥
 			this.client_socket = client_socket;
 			this.user_vc = userVec;
 			try {
@@ -182,21 +180,21 @@ public class OmokServer extends JFrame {
 		}
 
 		public void Login() {
-			AppendText("»õ·Î¿î Âü°¡ÀÚ " + userName + " ÀÔÀå.");
+			AppendText("ìƒˆë¡œìš´ ì°¸ê°€ì " + userName + " ì…ì¥.");
 			WriteOne("Welcome to Java chat server\n");
-			WriteOne(userName + "´Ô È¯¿µÇÕ´Ï´Ù.\n"); // ¿¬°áµÈ »ç¿ëÀÚ¿¡°Ô Á¤»óÁ¢¼ÓÀ» ¾Ë¸²
-			String msg = "[" + userName + "]´ÔÀÌ ÀÔÀå ÇÏ¿´½À´Ï´Ù.\n";
-			WriteOthers(msg); // ¾ÆÁ÷ user_vc¿¡ »õ·Î ÀÔÀåÇÑ user´Â Æ÷ÇÔµÇÁö ¾Ê¾Ò´Ù.
+			WriteOne(userName + "ë‹˜ í™˜ì˜í•©ë‹ˆë‹¤.\n"); // ì—°ê²°ëœ ì‚¬ìš©ìì—ê²Œ ì •ìƒì ‘ì†ì„ ì•Œë¦¼
+			String msg = "[" + userName + "]ë‹˜ì´ ì…ì¥ í•˜ì˜€ìŠµë‹ˆë‹¤.\n";
+			WriteOthers(msg); // ì•„ì§ user_vcì— ìƒˆë¡œ ì…ì¥í•œ userëŠ” í¬í•¨ë˜ì§€ ì•Šì•˜ë‹¤.
 		}
 
 		public void Logout() {
-			String msg = "[" + userName + "]´ÔÀÌ ÅğÀå ÇÏ¿´½À´Ï´Ù.\n";
-			userVec.removeElement(this); // LogoutÇÑ ÇöÀç °´Ã¼¸¦ º¤ÅÍ¿¡¼­ Áö¿î´Ù
-			WriteAll(msg); // ³ª¸¦ Á¦¿ÜÇÑ ´Ù¸¥ Userµé¿¡°Ô Àü¼Û
-			AppendText("»ç¿ëÀÚ " + "[" + userName + "] ÅğÀå. ÇöÀç Âü°¡ÀÚ ¼ö " + userVec.size());
+			String msg = "[" + userName + "]ë‹˜ì´ í‡´ì¥ í•˜ì˜€ìŠµë‹ˆë‹¤.\n";
+			userVec.removeElement(this); // Logoutí•œ í˜„ì¬ ê°ì²´ë¥¼ ë²¡í„°ì—ì„œ ì§€ìš´ë‹¤
+			WriteAll(msg); // ë‚˜ë¥¼ ì œì™¸í•œ ë‹¤ë¥¸ Userë“¤ì—ê²Œ ì „ì†¡
+			AppendText("ì‚¬ìš©ì " + "[" + userName + "] í‡´ì¥. í˜„ì¬ ì°¸ê°€ì ìˆ˜ " + userVec.size());
 		}
 
-		// ¸ğµç Userµé¿¡°Ô ¹æ¼Û. °¢°¢ÀÇ UserService ThreadÀÇ WriteONe() À» È£ÃâÇÑ´Ù.
+		// ëª¨ë“  Userë“¤ì—ê²Œ ë°©ì†¡. ê°ê°ì˜ UserService Threadì˜ WriteONe() ì„ í˜¸ì¶œí•œë‹¤.
 		public void WriteAll(String str) {
 			for (int i = 0; i < user_vc.size(); i++) {
 				UserService user = (UserService) user_vc.elementAt(i);
@@ -205,7 +203,7 @@ public class OmokServer extends JFrame {
 			}
 		}
 
-		// ¸ğµç Userµé¿¡°Ô Object¸¦ ¹æ¼Û. Ã¤ÆÃ message¿Í image object¸¦ º¸³¾ ¼ö ÀÖ´Ù
+		// ëª¨ë“  Userë“¤ì—ê²Œ Objectë¥¼ ë°©ì†¡. ì±„íŒ… messageì™€ image objectë¥¼ ë³´ë‚¼ ìˆ˜ ìˆë‹¤
 		public void WriteAllObject(Object ob) {
 			for (int i = 0; i < user_vc.size(); i++) {
 				UserService user = (UserService) user_vc.elementAt(i);
@@ -214,7 +212,7 @@ public class OmokServer extends JFrame {
 			}
 		}
 
-		// ³ª¸¦ Á¦¿ÜÇÑ Userµé¿¡°Ô ¹æ¼Û. °¢°¢ÀÇ UserService ThreadÀÇ WriteONe() À» È£ÃâÇÑ´Ù.
+		// ë‚˜ë¥¼ ì œì™¸í•œ Userë“¤ì—ê²Œ ë°©ì†¡. ê°ê°ì˜ UserService Threadì˜ WriteONe() ì„ í˜¸ì¶œí•œë‹¤.
 		public void WriteOthers(String str) {
 			for (int i = 0; i < user_vc.size(); i++) {
 				UserService user = (UserService) user_vc.elementAt(i);
@@ -223,7 +221,7 @@ public class OmokServer extends JFrame {
 			}
 		}
 
-		// UserService Thread°¡ ´ã´çÇÏ´Â Client ¿¡°Ô 1:1 Àü¼Û
+		// UserService Threadê°€ ë‹´ë‹¹í•˜ëŠ” Client ì—ê²Œ 1:1 ì „ì†¡
 		public void WriteOne(String msg) {
 			try {
 				ChatMsg obcm = new ChatMsg("SERVER", "200", msg);
@@ -241,14 +239,14 @@ public class OmokServer extends JFrame {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				Logout(); // ¿¡·¯°¡³­ ÇöÀç °´Ã¼¸¦ º¤ÅÍ¿¡¼­ Áö¿î´Ù
+				Logout(); // ì—ëŸ¬ê°€ë‚œ í˜„ì¬ ê°ì²´ë¥¼ ë²¡í„°ì—ì„œ ì§€ìš´ë‹¤
 			}
 		}
 
-		// ±Ó¼Ó¸» Àü¼Û
+		// ê·“ì†ë§ ì „ì†¡
 		public void WritePrivate(String msg) {
 			try {
-				ChatMsg obcm = new ChatMsg("±Ó¼Ó¸»", "200", msg);
+				ChatMsg obcm = new ChatMsg("ê·“ì†ë§", "200", msg);
 				oos.writeObject(obcm);
 			} catch (IOException e) {
 				AppendText("dos.writeObject() error");
@@ -262,7 +260,7 @@ public class OmokServer extends JFrame {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				Logout(); // ¿¡·¯°¡³­ ÇöÀç °´Ã¼¸¦ º¤ÅÍ¿¡¼­ Áö¿î´Ù
+				Logout(); // ì—ëŸ¬ê°€ë‚œ í˜„ì¬ ê°ì²´ë¥¼ ë²¡í„°ì—ì„œ ì§€ìš´ë‹¤
 			}
 		}
 
@@ -301,13 +299,13 @@ public class OmokServer extends JFrame {
 		}
 
 		public void createRoom(ChatMsg msg) {
-			Room room = new Room(msg.roomName, this, msg.roomMax, msg.gameMode); // ¹æ »ı¼º (¹æ ¹øÈ£, ¹æ ÀÌ¸§, ¹æÀå ÀÌ¸§, ¹æ ÃÖ´ë ÀÎ¿ø¼ö)
-			roomVec.add(room); // ¹æ º¤ÅÍ¿¡ ¹æ Ãß°¡
+			Room room = new Room(msg.roomName, this, msg.roomMax, msg.gameMode); // ë°© ìƒì„± (ë°© ë²ˆí˜¸, ë°© ì´ë¦„, ë°©ì¥ ì´ë¦„, ë°© ìµœëŒ€ ì¸ì›ìˆ˜)
+			roomVec.add(room); // ë°© ë²¡í„°ì— ë°© ì¶”ê°€
 			int vecIndex = roomVec.indexOf(room);
 			room.roomNumber = vecIndex;
-			this.roomNumber = vecIndex; // ÀÌ À¯ÀúÀÇ ¹æ ¹øÈ£ ÁöÁ¤
+			this.roomNumber = vecIndex; // ì´ ìœ ì €ì˜ ë°© ë²ˆí˜¸ ì§€ì •
 			msg.roomNumber = vecIndex;
-			AppendText(roomNumber + "¹ø ¹æ »ı¼º ¿Ï·á. ÇöÀç ¹æ °³¼ö " + roomVec.size());
+			AppendText(roomNumber + "ë²ˆ ë°© ìƒì„± ì™„ë£Œ. í˜„ì¬ ë°© ê°œìˆ˜ " + roomVec.size());
 
 			for (UserService user : room.playerList)
 				user.updateUserList(msg);
@@ -315,17 +313,11 @@ public class OmokServer extends JFrame {
 		}
 
 		public void exitRoom(ChatMsg msg) {
-			int roomnum = -1;
-			for (int i = 0; i < roomVec.size(); i++) {
-				if (msg.roomName.equals(roomVec.get(i).roomName)) {
-					roomnum = i;
-					break;
-				}
-			}
-			System.out.println(msg.userName + "°¡ ¹æ¿¡¼­ ÅğÀåÇß½À´Ï´Ù.");
+			Room room = getRoom(msg);
+			room.updateReadyState(msg.userName, false); // ready ë°°ì—´ ê´€ë¦¬
+			System.out.println(msg.userName + "ê°€ ë°©ì—ì„œ í‡´ì¥í–ˆìŠµë‹ˆë‹¤.");
 
-			Room room = roomVec.get(roomnum);
-			System.out.println("Àü, ¹æÀÇ ÀÎ¿øÀº : " + room.playerList.size());
+			System.out.println("ì „, ë°©ì˜ ì¸ì›ì€ : " + room.playerList.size());
 			for (int i = 0; i < room.playerList.size(); i++) {
 				OmokServer.UserService user = room.playerList.get(i);
 				if (user.userName.equals(msg.userName)) {
@@ -333,22 +325,23 @@ public class OmokServer extends JFrame {
 					break;
 				}
 			}
-			System.out.println("ÈÄ, ¹æÀÇ ÀÎ¿øÀº : " + room.playerList.size());
+			System.out.println("í›„, ë°©ì˜ ì¸ì›ì€ : " + room.playerList.size());
 			if (room.playerList.size() != 0) {
 				room.isStarted = false;
-				for (UserService user : room.playerList) { // ÁØºñ»óÅÂ ¸®¼Â
+				for (UserService user : room.playerList) { // ì¤€ë¹„ìƒíƒœ ë¦¬ì…‹
 					user.ready = false;
 				}
-				room.owner = room.playerList.get(0); // ¹æÀå ¹Ù²Ù±â
+				room.owner = room.playerList.get(0); // ë°©ì¥ ë°”ê¾¸ê¸°
 				room.ownerName = room.owner.userName;
-				for (UserService user : room.playerList) { // ¹æ¿¡ ÀÖ´Â ¸ğµç À¯Àú¿¡°Ô À¯Àú ¸ñ·Ï ¸®½ºÆ®¸¦ °»½Å
+				for (UserService user : room.playerList) { // ë°©ì— ìˆëŠ” ëª¨ë“  ìœ ì €ì—ê²Œ ìœ ì € ëª©ë¡ ë¦¬ìŠ¤íŠ¸ë¥¼ ê°±ì‹ 
 					user.updateUserList(msg);
 				}
 				ChatMsg cm = new ChatMsg(userName, "201", "");
 				cm.roomName = room.roomName;
 				cm.roomNumber = room.roomNumber;
-				cm.data = "[" + userName + "] ´ÔÀÌ ÅğÀåÇß½À´Ï´Ù.";
+				cm.data = "[" + userName + "] ë‹˜ì´ í‡´ì¥í–ˆìŠµë‹ˆë‹¤.";
 				sendGameMessage(cm);
+				if(room.isStarted) stopGame(cm); // ê²Œì„ ë„ì¤‘ ìœ ì € ì´íƒˆ ì‹œ ê²Œì„ì„ ì¤‘ë‹¨í•¨.
 			} else {
 				for (int i = 0; i < roomVec.size(); i++) {
 					Room emptyroom = roomVec.get(i);
@@ -357,50 +350,55 @@ public class OmokServer extends JFrame {
 						break;
 					}
 				}
-				System.out.println(msg.roomName + "¹æÀÌ ºñ¾ú½À´Ï´Ù.");
+				System.out.println(msg.roomName + "ë°©ì´ ë¹„ì—ˆìŠµë‹ˆë‹¤.");
 			}
 		}
 
 		public void insertRoom(ChatMsg msg) {
-			Room room = roomVec.get(msg.roomNumber); // ¹æ ¹øÈ£·Î ÀÔÀå (¹æ ¸ñ·Ï ¸®½ºÆ®´Â ¼­¹öÀÇ ¹æ ¹è¿­°ú ÀÎµ¦½º¸¦ °øÀ¯ÇÔ)
+			Room room = roomVec.get(msg.roomNumber); // ë°© ë²ˆí˜¸ë¡œ ì…ì¥ (ë°© ëª©ë¡ ë¦¬ìŠ¤íŠ¸ëŠ” ì„œë²„ì˜ ë°© ë°°ì—´ê³¼ ì¸ë±ìŠ¤ë¥¼ ê³µìœ í•¨)
+			room.updateReadyState(msg.userName, false); // ready ë°°ì—´ ê´€ë¦¬
+			if (room.isStarted) {
+				WriteOne("ê²Œì„ì´ ì§„í–‰ì¤‘ì¸ ë°©ì…ë‹ˆë‹¤!");
+				return;
+			}
 			if (room.isFull()) {
-				WriteOne("¹æÀÌ ²Ë Ã¡½À´Ï´Ù!");
+				WriteOne("ë°©ì´ ê½‰ ì°¼ìŠµë‹ˆë‹¤!");
 				return;
-			} else if (room.hasName(msg.userName)) { // ¹æ¿¡ À¯ÀúÀÇ ÀÌ¸§ÀÌ ÀÌ¹Ì ÀÖ´Â °æ¿ì
-				WriteOne("ÀÌ¹Ì µé¾î°¡ ÀÖ´Â ¹æÀÔ´Ï´Ù!");
+			} else if (room.hasName(msg.userName)) { // ë°©ì— ìœ ì €ì˜ ì´ë¦„ì´ ì´ë¯¸ ìˆëŠ” ê²½ìš°
+				WriteOne("ì´ë¯¸ ë“¤ì–´ê°€ ìˆëŠ” ë°©ì…ë‹ˆë‹¤!");
 				return;
-			} else { // À¯Àú¿¡°Ô ¹æÀÇ Á¤º¸¸¦ ÁÖ°í ÀÔÀå½ÃÅ´
-				AppendText("ÇÃ·¹ÀÌ¾î " + userName + " " + room.roomNumber + "¹ø ¹æ ÀÔÀå.");
+			} else { // ìœ ì €ì—ê²Œ ë°©ì˜ ì •ë³´ë¥¼ ì£¼ê³  ì…ì¥ì‹œí‚´
+				AppendText("í”Œë ˆì´ì–´ " + userName + " " + room.roomNumber + "ë²ˆ ë°© ì…ì¥.");
 				msg = new ChatMsg(userName, "700", "");
 				msg.roomMax = room.roomMax;
 				msg.roomName = room.roomName;
 				msg.gameMode = room.gameMode;
 				msg.roomNumber = room.roomNumber;
-				room.addUser(this); // // ¹æ º¤ÅÍ¿¡ À¯Àú¸¦ Ãß°¡
+				room.addUser(this); // // ë°© ë²¡í„°ì— ìœ ì €ë¥¼ ì¶”ê°€
 				WriteAllObject(msg);
-				for (UserService user : room.playerList) { // ¹æ¿¡ ÀÖ´Â ¸ğµç À¯Àú¿¡°Ô À¯Àú ¸ñ·Ï ¸®½ºÆ®¸¦ °»½Å
+				for (UserService user : room.playerList) { // ë°©ì— ìˆëŠ” ëª¨ë“  ìœ ì €ì—ê²Œ ìœ ì € ëª©ë¡ ë¦¬ìŠ¤íŠ¸ë¥¼ ê°±ì‹ 
 					user.updateUserList(msg);
 				}
 				ChatMsg cm = new ChatMsg(userName, "201", "");
 				cm.roomName = room.roomName;
 				cm.roomNumber = room.roomNumber;
-				cm.data = "[" + userName + "] ´ÔÀÌ ÀÔÀåÇß½À´Ï´Ù.";
+				cm.data = "[" + userName + "] ë‹˜ì´ ì…ì¥í–ˆìŠµë‹ˆë‹¤.";
 				sendGameMessage(cm);
 			}
 		}
 
-		public void updateRoomList() { // ¹æ ¸ñ·ÏÀ» °»½ÅÇÏ´Â StringÀ» ¸ğµÎ¿¡°Ô Àü¿ªÀ¸·Î º¸³¿
+		public void updateRoomList() { // ë°© ëª©ë¡ì„ ê°±ì‹ í•˜ëŠ” Stringì„ ëª¨ë‘ì—ê²Œ ì „ì—­ìœ¼ë¡œ ë³´ëƒ„
 			ChatMsg msg = new ChatMsg(userName, "702", "");
 			StringBuffer data = new StringBuffer();
 			for (Room room : roomVec) {
-				data.append(String.format("[No.%d] [%s] [mode:%s] [%d/%d] [¹æÀå:%s]\n", room.roomNumber, room.roomName,
+				data.append(String.format("[No.%d] [%s] [mode:%s] [%d/%d] [ë°©ì¥:%s]\n", room.roomNumber, room.roomName,
 						room.gameMode, room.getPlayerCount(), room.roomMax, room.ownerName));
 			}
 			msg.data = data.toString();
 			WriteAllObject(msg);
 		}
 
-		public void updateUserList(ChatMsg msg) { // ÀÌ ÇÔ¼ö¸¦ È£ÃâÇÑ UserService¿¡°Ô¸¸ À¯Àú ¸ñ·ÏÀ» °»½ÅÇÏ´Â StringÀ» º¸³¿
+		public void updateUserList(ChatMsg msg) { // ì´ í•¨ìˆ˜ë¥¼ í˜¸ì¶œí•œ UserServiceì—ê²Œë§Œ ìœ ì € ëª©ë¡ì„ ê°±ì‹ í•˜ëŠ” Stringì„ ë³´ëƒ„
 			ChatMsg cm = new ChatMsg(userName, "703", "");
 			cm.roomNumber = msg.roomNumber;
 			cm.roomName = msg.roomName;
@@ -412,33 +410,33 @@ public class OmokServer extends JFrame {
 				if (room.roomMax == 4) {
 					switch (i) {
 					case 0:
-						stoneName = "Èæµ¹";
+						stoneName = "í‘ëŒ";
 						break;
 					case 1:
-						stoneName = "¹éµ¹";
+						stoneName = "ë°±ëŒ";
 						break;
 					case 2:
-						stoneName = "Èæµ¹";
+						stoneName = "í‘ëŒ";
 						break;
 					case 3:
-						stoneName = "¹éµ¹";
+						stoneName = "ë°±ëŒ";
 						break;
 					}
 				} else {
 					switch (i) {
 					case 0:
-						stoneName = "Èæµ¹";
+						stoneName = "í‘ëŒ";
 						break;
 					case 1:
-						stoneName = "¹éµ¹";
+						stoneName = "ë°±ëŒ";
 						break;
 					case 2:
-						stoneName = "Àûµ¹";
+						stoneName = "ì ëŒ";
 						break;
-					// case 3: stoneName = "¹ÌÁ¤"; break;
+					// case 3: stoneName = "ë¯¸ì •"; break;
 					}
 				}
-				data.append(String.format("[Player%d] [ÀÌ¸§:%s] [µ¹:%s]\n", i + 1, user.userName, stoneName));
+				data.append(String.format("[Player%d] [ì´ë¦„:%s] [ëŒ:%s]\n", i + 1, user.userName, stoneName));
 				i++;
 			}
 			cm.data = data.toString();
@@ -446,22 +444,15 @@ public class OmokServer extends JFrame {
 			WriteOneObject(cm);
 		}
 
-		public void drawStone(ChatMsg msg) { // º¤ÅÍ¿¡¼­
-			int roomnum = -1;
-			for (int i = 0; i < roomVec.size(); i++) {
-				if (msg.roomName.equals(roomVec.get(i).roomName)) {
-					roomnum = i;
-					break;
-				}
-			}
-			System.out.println(roomnum + "room DrawStone");
-			msg.roomNumber = roomnum;
-			Room room = roomVec.get(roomnum);
+		public void drawStone(ChatMsg msg) { // ë²¡í„°ì—ì„œ
+			Room room = getRoom(msg);
+			System.out.println(msg.roomNumber + "room DrawStone");
+			
+			if(!room.isStarted) {
 
-			if (!room.isStarted) {
 				ChatMsg cm = new ChatMsg(msg.userName, "201", "");
 				cm.roomName = msg.roomName;
-				cm.data = "°ÔÀÓ ½ÃÀÛ ÀüÀÔ´Ï´Ù.";
+				cm.data = "ê²Œì„ ì‹œì‘ ì „ì…ë‹ˆë‹¤.";
 				WriteOneObject(cm);
 				return;
 			}
@@ -487,7 +478,7 @@ public class OmokServer extends JFrame {
 //			if (room.roomMax == 4) {
 //				color = color % 2;
 //			}
-			if (stone.y == 0 && stone.x == 0) { // Á¦ÇÑ ½Ã°£ Á¾·á½Ã ³Ñ¾î³í ¹ÙµÏ¾ËÃ³¸®
+			if (stone.y == 0 && stone.x == 0) { // ì œí•œ ì‹œê°„ ì¢…ë£Œì‹œ ë„˜ì–´ë…¼ ë°”ë‘‘ì•Œì²˜ë¦¬
 				msg.stone = 0;
 				if (room.roomMax == room.playerList.size()) {
 					if ((room.stoneList.size() % room.roomMax) == usernum) {
@@ -509,38 +500,29 @@ public class OmokServer extends JFrame {
 					if ((room.stoneList.size() % room.roomMax) == usernum) {
 						room.addStone(stone);
 						System.out.println("stone Size : " + room.stoneList.size());
-						for (UserService user : room.playerList) // ¹æ¿¡ ÀÖ´Â ¸ğµç À¯Àú¿¡°Ô ¹ÙµÏµ¹ Àü¼Û
+						for (UserService user : room.playerList) // ë°©ì— ìˆëŠ” ëª¨ë“  ìœ ì €ì—ê²Œ ë°”ë‘‘ëŒ ì „ì†¡
 							user.WriteOneObject(msg);
 						ChatMsg cm = new ChatMsg(msg.userName, "201", "");
 						cm.roomName = msg.roomName;
-						cm.data = "[" + msg.userName + "]´ÔÀÌ µ¹À» ³õ¾Ò½À´Ï´Ù.";
+						cm.data = "[" + msg.userName + "]ë‹˜ì´ ëŒì„ ë†“ì•˜ìŠµë‹ˆë‹¤.";
 						sendGameMessage(cm);
 					} else {
-						System.out.println("Â÷·Ê°¡ ¾Æ´Ô");
+						System.out.println("ì°¨ë¡€ê°€ ì•„ë‹˜");
 					}
 				}
 			}
 		}
 
 		public void undoStone(ChatMsg msg) {
-			int roomnum = -1;
-			for (int i = 0; i < roomVec.size(); i++) {
-				if (msg.roomName.equals(roomVec.get(i).roomName)) {
-					roomnum = i;
-					break;
-				}
-			}
-
-			msg.roomNumber = roomnum;
-			Room room = roomVec.get(roomnum);
+			Room room = getRoom(msg);
 			room.undoCount++;
 			if (room.undoCount == room.roomMax) {
 				room.undoStone();
-				System.out.println(roomnum + " room undoStone");
+				System.out.println(msg.roomNumber + " room undoStone");
 				room.undoCount = 0;
 			}
 			System.out.println("stone Size : " + room.stoneList.size());
-			for (UserService user : room.playerList) // ¹æ¿¡ ÀÖ´Â ¸ğµç À¯Àú¿¡°Ô undo Àü¼Û
+			for (UserService user : room.playerList) // ë°©ì— ìˆëŠ” ëª¨ë“  ìœ ì €ì—ê²Œ undo ì „ì†¡
 				user.WriteOneObject(msg);
 		}
 
@@ -549,85 +531,104 @@ public class OmokServer extends JFrame {
 
 			Room room = getRoom(msg);
 
-			for (UserService user : room.playerList) { // ¹æ¿¡ ÀÖ´Â ¸ğµç À¯Àú¿¡°Ô message Àü¼Û
+			for (UserService user : room.playerList) { // ë°©ì— ìˆëŠ” ëª¨ë“  ìœ ì €ì—ê²Œ message ì „ì†¡
 				user.WriteOneObject(msg);
 				System.out.println(
 						"sendGameMessage WriteOneObject : " + msg.code + " " + msg.roomName + " " + msg.userName);
 			}
 		}
 
-		public void startGame(ChatMsg msg) { // °ÔÀÓ ½ÃÀÛ ¸Ş¼Òµå
+		public void startGame(ChatMsg msg) { // ê²Œì„ ì‹œì‘ ë©”ì†Œë“œ
 			Room room = getRoom(msg);
 
 			if (!room.isFull()) {
-				ChatMsg cm = new ChatMsg(userName, "201", "°ÔÀÓ ½ÃÀÛ ÀÎ¿øÀÌ ºÎÁ·ÇÕ´Ï´Ù.");
+				ChatMsg cm = new ChatMsg(userName, "201", "ê²Œì„ ì‹œì‘ ì¸ì›ì´ ë¶€ì¡±í•©ë‹ˆë‹¤.");
 				cm.roomName = room.roomName;
 				sendGameMessage(cm);
 				return;
 			}
 
 			if (!room.isReady()) {
-				ChatMsg cm = new ChatMsg(userName, "201", "¸ğµç ÀÎ¿øÀÌ ÁØºñÇØ¾ß ½ÃÀÛ ÇÒ ¼ö ÀÖ½À´Ï´Ù.");
+				ChatMsg cm = new ChatMsg(userName, "201", "ëª¨ë“  ì¸ì›ì´ ì¤€ë¹„í•´ì•¼ ì‹œì‘ í•  ìˆ˜ ìˆìŠµë‹ˆë‹¤.");
 				cm.roomName = room.roomName;
 				sendGameMessage(cm);
 				return;
 			}
 
 			room.isStarted = true;
-			ChatMsg startCm = new ChatMsg(userName, "201", "°ÔÀÓÀ» ½ÃÀÛÇÕ´Ï´Ù.");
+			ChatMsg startCm = new ChatMsg(userName, "201", "ê²Œì„ì„ ì‹œì‘í•©ë‹ˆë‹¤.");
 			startCm.roomName = room.roomName;
 			sendGameMessage(startCm);
 
 			ChatMsg cm = new ChatMsg(userName, "800", "");
 			cm.roomName = room.roomName;
-			for (UserService user : room.playerList) { // ¹æ¿¡ ÀÖ´Â ¸ğµç À¯Àú¿¡°Ô Àü¼Û
+			for (UserService user : room.playerList) { // ë°©ì— ìˆëŠ” ëª¨ë“  ìœ ì €ì—ê²Œ ì „ì†¡
 				user.WriteOneObject(cm);
 			}
 		}
 
 		public void readyMethod(ChatMsg cm) {
-			// ÁØºñ »óÅÂ ¹Ù²Ù°í msg Àü´Ş
-			String msg = ready ? "[" + userName + "]´Ô ÁØºñ Ãë¼Ò" : "[" + userName + "]´Ô ÁØºñ ¿Ï·á";
-
-			ready = !ready; // ready Åä±Û
+			// ì¤€ë¹„ ìƒíƒœ ë°”ê¾¸ê³  msg ì „ë‹¬
 
 			Room room = getRoom(cm);
-
-			ChatMsg readyCm = new ChatMsg(userName, "201", msg);
+			String msg = room.getReadyState(userName) ? "["+userName+"]ë‹˜ ì¤€ë¹„ ì·¨ì†Œ" : "["+userName+"]ë‹˜ ì¤€ë¹„ ì™„ë£Œ";
+			
+			room.toggleReadyState(userName);
+			
+			ChatMsg readyCm = new ChatMsg(userName, "201", msg); // ì¤€ë¹„ ìƒíƒœ ê²Œì„ ë‚´ ì±„íŒ…ìœ¼ë¡œ ì „ì†¡
 			readyCm.roomName = room.roomName;
-
-			String readyState = ready ? "true" : "false";
-
-			ChatMsg readyToggleCm = new ChatMsg(userName, "801", readyState); // ÁØºñ ¹öÆ° Åä±Û½ÃÅ°±â
+			
+			String readyState = room.getReadyState(userName) ? "true" : "false"; // ì¤€ë¹„ ë²„íŠ¼ í† ê¸€ì‹œí‚¤ê¸° ìœ„í•œ ë¬¸ìì—´
+			
+			ChatMsg readyToggleCm = new ChatMsg(userName, "801", readyState); // ì¤€ë¹„ ë²„íŠ¼ í† ê¸€ì‹œí‚¤ê¸°
 			readyToggleCm.roomName = room.roomName;
 
-			for (UserService user : room.playerList) { // ¹æ¿¡ ÀÖ´Â ¸ğµç À¯Àú¿¡°Ô Àü¼Û
+			for (UserService user : room.playerList) { // ë°©ì— ìˆëŠ” ëª¨ë“  ìœ ì €ì—ê²Œ ì „ì†¡
 				user.WriteOneObject(readyCm);
 			}
-			WriteOneObject(readyToggleCm); // ´ç»çÀÚ ¹öÆ°¸¸ º¯°æ
+			WriteOneObject(readyToggleCm); // ë‹¹ì‚¬ì ë²„íŠ¼ë§Œ ë³€ê²½
 
 		}
 
-		public void finishGame(ChatMsg msg) { // °ÔÀÓ Á¾·á¸¦ ¾Ë¸²
+		public void finishGame(ChatMsg msg) { // ê²Œì„ ì¢…ë£Œë¥¼ ì•Œë¦¼
 			Room room = getRoom(msg);
 			room.stoneList.clear();
 			room.isStarted = false;
 
-			for (UserService user : room.playerList) { // ¹æ¿¡ ÀÖ´Â ¸ğµç À¯Àú¿¡°Ô Àü¼Û
-				user.ready = false;
-				ChatMsg readyToggleCm = new ChatMsg(userName, "801", "false"); // ÁØºñ ¹öÆ° Åä±Û½ÃÅ°±â
-				readyToggleCm.roomName = room.roomName;
-				user.WriteOneObject(readyToggleCm); // À¯Àú ÁØºñ ¸ğµÎ Ãë¼Ò½ÃÅ´
-
-				ChatMsg finishCm = new ChatMsg(userName, "201", "[" + userName + "] ½Â¸®, °ÔÀÓ Á¾·á");
+			for (UserService user : room.playerList) { // ë°©ì— ìˆëŠ” ëª¨ë“  ìœ ì €ì—ê²Œ ì „ì†¡
+				room.updateReadyState(user.userName, false);
+				//ChatMsg readyToggleCm = new ChatMsg(userName, "801", "false"); // ì¤€ë¹„ ë²„íŠ¼ í† ê¸€ì‹œí‚¤ê¸°
+				//readyToggleCm.roomName = room.roomName;
+				//user.WriteOneObject(readyToggleCm); // ìœ ì € ì¤€ë¹„ ë²„íŠ¼ì„ ëª¨ë‘ ì·¨ì†Œì‹œí‚´
+				
+				ChatMsg finishCm = new ChatMsg(userName, "201", "["+userName+"] ìŠ¹ë¦¬, ê²Œì„ ì¢…ë£Œ");
 				finishCm.roomName = room.roomName;
 				user.WriteOneObject(finishCm);
 			}
+		}
+		
+		public void stopGame(ChatMsg msg) { // ëˆ„êµ°ê°€ ë„ì¤‘ì— ë‚˜ê°€ë©´ ê²Œì„ì„ ì¤‘ë‹¨ì‹œí‚¤ëŠ” ë©”ì†Œë“œ
+			Room room = getRoom(msg);
+			room.stoneList.clear();
+			room.isStarted = false;
+			
+			for (UserService user : room.playerList) { // ë°©ì— ìˆëŠ” ëª¨ë“  ìœ ì €ì—ê²Œ ì „ì†¡
+				room.updateReadyState(user.userName, false);
+				ChatMsg readyToggleCm = new ChatMsg(userName, "801", "false"); // ì¤€ë¹„ ë²„íŠ¼ í† ê¸€ì‹œí‚¤ê¸°
+				readyToggleCm.roomName = room.roomName;
+				user.WriteOneObject(readyToggleCm); // ìœ ì € ì¤€ë¹„ ëª¨ë‘ ì·¨ì†Œì‹œí‚´
+				
+				ChatMsg stopCm = new ChatMsg(userName, "803", ""); // ê²Œì„ ì¤‘ë‹¨
+				stopCm.roomName = room.roomName;
+				user.WriteOneObject(stopCm);
+			}
+		}
+
 
 		}
 
 		public void run() {
-			while (true) { // »ç¿ëÀÚ Á¢¼ÓÀ» °è¼ÓÇØ¼­ ¹Ş±â À§ÇØ while¹®
+			while (true) { // ì‚¬ìš©ì ì ‘ì†ì„ ê³„ì†í•´ì„œ ë°›ê¸° ìœ„í•´ whileë¬¸
 				try {
 
 					Object obcm = null;
@@ -651,14 +652,14 @@ public class OmokServer extends JFrame {
 						continue;
 					if (cm.code.matches("100")) {
 						userName = cm.userName;
-						userStatus = "O"; // Online »óÅÂ
+						userStatus = "O"; // Online ìƒíƒœ
 						Login();
 						updateRoomList();
 					} else if (cm.code.matches("200")) {
 						msg = String.format("[%s] %s", cm.userName, cm.data);
-						AppendText(msg); // server È­¸é¿¡ Ãâ·Â
-						String[] args = msg.split(" "); // ´Ü¾îµéÀ» ºĞ¸®ÇÑ´Ù.
-						if (args.length == 1) { // Enter key ¸¸ µé¾î¿Â °æ¿ì Wakeup Ã³¸®¸¸ ÇÑ´Ù.
+						AppendText(msg); // server í™”ë©´ì— ì¶œë ¥
+						String[] args = msg.split(" "); // ë‹¨ì–´ë“¤ì„ ë¶„ë¦¬í•œë‹¤.
+						if (args.length == 1) { // Enter key ë§Œ ë“¤ì–´ì˜¨ ê²½ìš° Wakeup ì²˜ë¦¬ë§Œ í•œë‹¤.
 							userStatus = "O";
 						} else if (args[1].matches("/exit")) {
 							Logout();
@@ -676,58 +677,61 @@ public class OmokServer extends JFrame {
 							userStatus = "S";
 						} else if (args[1].matches("/wakeup")) {
 							userStatus = "O";
-						} else if (args[1].matches("/to")) { // ±Ó¼Ó¸»
+						} else if (args[1].matches("/to")) { // ê·“ì†ë§
 							for (int i = 0; i < user_vc.size(); i++) {
 								UserService user = (UserService) user_vc.elementAt(i);
 								if (user.userName.matches(args[2]) && user.userStatus.matches("O")) {
 									String msg2 = "";
-									for (int j = 3; j < args.length; j++) {// ½ÇÁ¦ message ºÎºĞ
+									for (int j = 3; j < args.length; j++) {// ì‹¤ì œ message ë¶€ë¶„
 										msg2 += args[j];
 										if (j < args.length - 1)
 											msg2 += " ";
 									}
-									// /to »©°í.. [±Ó¼Ó¸»] [user1] Hello user2..
+									// /to ë¹¼ê³ .. [ê·“ì†ë§] [user1] Hello user2..
 									user.WritePrivate(args[0] + " " + msg2 + "\n");
-									// user.WriteOne("[±Ó¼Ó¸»] " + args[0] + " " + msg2 + "\n");
+									// user.WriteOne("[ê·“ì†ë§] " + args[0] + " " + msg2 + "\n");
 									break;
 								}
 							}
-						} else { // ÀÏ¹İ Ã¤ÆÃ ¸Ş½ÃÁö
+						} else { // ì¼ë°˜ ì±„íŒ… ë©”ì‹œì§€
 							userStatus = "O";
 							// WriteAll(msg + "\n"); // Write All
 							WriteAllObject(cm);
 						}
-					} else if (cm.code.matches("201")) {
+					} else if (cm.code.matches("201")) { // ê²Œì„ë°© ì±„íŒ…
 						sendGameMessage(cm);
-					} else if (cm.code.matches("400")) { // logout message Ã³¸®
+					} else if (cm.code.matches("400")) { // logout message ì²˜ë¦¬
 						Logout();
 						break;
-					} else if (cm.code.matches("600")) { // ¹æ »ı¼º Ã³¸®
+					} else if (cm.code.matches("600")) { // ë°© ìƒì„± ì²˜ë¦¬
 						createRoom(cm);
 						WriteAllObject(cm);
 						updateRoomList();
 					}
 
-					else if (cm.code.matches("700")) { // ¹æ ÀÔÀå Ã³¸®
+					else if (cm.code.matches("700")) { // ë°© ì…ì¥ ì²˜ë¦¬
 						insertRoom(cm);
 						updateRoomList();
-					} else if (cm.code.matches("701")) {
+					} else if (cm.code.matches("701")) { // ë°© í‡´ì¥ ì²˜ë¦¬
 						exitRoom(cm);
 						updateRoomList();
-					} else if (cm.code.matches("800")) {
+					}
+					else if (cm.code.matches("800")){ // ê²Œì„ ì‹œì‘
 						startGame(cm);
-					} else if (cm.code.matches("801")) {
+					}
+					else if (cm.code.matches("801")){ // ê²Œì„ ì¤€ë¹„ 
+
 						readyMethod(cm);
-					} else if (cm.code.matches("802")) { // °ÔÀÓ Á¾·á
+					} else if (cm.code.matches("802")) { // ê²Œì„ ì¢…ë£Œ
 						finishGame(cm);
 						System.out.println(cm.data);
-					} else if (cm.code.matches("900")) { // ¹ÙµÏµ¹ ÀÔ·Â Ã³¸®
+					} else if (cm.code.matches("900")) { // ë°”ë‘‘ëŒ ì…ë ¥ ì²˜ë¦¬
 						System.out.println("y: " + cm.y + "x: " + cm.x + "name: " + cm.roomName);
 						drawStone(cm);
-					} else if (cm.code.matches("901")) { // ¹ÙµÏµ¹ undo Ã³¸® (¹«¸£±â)
+					} else if (cm.code.matches("901")) { // ë°”ë‘‘ëŒ undo ì²˜ë¦¬ (ë¬´ë¥´ê¸°)
 						System.out.println("Stone Undo -> name: " + cm.roomName);
 						undoStone(cm);
-					} else { // 300, 500, ... ±âÅ¸ object´Â ¸ğµÎ ¹æ¼ÛÇÑ´Ù.
+					} else { // 300, 500, ... ê¸°íƒ€ objectëŠ” ëª¨ë‘ ë°©ì†¡í•œë‹¤.
 						WriteAllObject(cm);
 					}
 				} catch (IOException e) {
@@ -736,12 +740,12 @@ public class OmokServer extends JFrame {
 						ois.close();
 						oos.close();
 						client_socket.close();
-						Logout(); // ¿¡·¯°¡³­ ÇöÀç °´Ã¼¸¦ º¤ÅÍ¿¡¼­ Áö¿î´Ù
+						Logout(); // ì—ëŸ¬ê°€ë‚œ í˜„ì¬ ê°ì²´ë¥¼ ë²¡í„°ì—ì„œ ì§€ìš´ë‹¤
 						break;
 					} catch (Exception ee) {
 						break;
-					} // catch¹® ³¡
-				} // ¹Ù±ù catch¹®³¡
+					} // catchë¬¸ ë
+				} // ë°”ê¹¥ catchë¬¸ë
 			} // while
 		} // run
 	}
