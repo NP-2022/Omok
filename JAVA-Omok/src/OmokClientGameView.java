@@ -68,7 +68,10 @@ public class OmokClientGameView extends JFrame {
 	public JPanel panel;
 	public Button startReadyButton;
 	public boolean isOwner; // 방장인지?
-
+	public boolean time = false; //시간 흐름 적용 시 true 아니면 false
+	public int nowtime = 30;
+	public JLabel timeLabel;
+	
 	private JList userList;
 	private DefaultListModel userListModel; // 방 목록
 
@@ -214,7 +217,7 @@ public class OmokClientGameView extends JFrame {
 		exitButton.setBounds(470, 644, 107, 27);
 		contentPane.add(exitButton);
 
-		JLabel timeLabel = new JLabel("남은 시간 : 30");
+		timeLabel = new JLabel("남은 시간 : " + nowtime);
 		timeLabel.setBounds(90, 643, 107, 28);
 		contentPane.add(timeLabel);
 
@@ -318,7 +321,10 @@ public class OmokClientGameView extends JFrame {
 				AppendText("이곳은 33 룰에 의해 돌을 놓을 수 없습니다.");
 				return;
 			}
-
+			
+			if(msg.y == 0) {
+				return;
+			}
 			mainView.SendObject(msg);
 
 //			gamePanel.setMap(y, x, 1);
@@ -380,6 +386,33 @@ public class OmokClientGameView extends JFrame {
 		}
 	}
 
+	public void timeProcess() {
+		timeLabel.setText("남은 시간 : " + nowtime);
+		
+		
+		if(nowtime < 10)
+			timeLabel.setForeground(Color.RED);
+		else if(nowtime < 21)
+			timeLabel.setForeground(Color.BLUE);
+		else
+			timeLabel.setForeground(Color.BLACK);
+		
+		
+		if(nowtime == 0) {
+			AppendText("제한 시간이 지났습니다. 다음 차례로 넘어갔습니다.");
+			ChatMsg msg = new ChatMsg(userName, "900", "Stone");
+			msg.y = 0;
+			msg.x = 0;
+			msg.roomName = roomName;
+			mainView.SendObject(msg);
+			System.out.println("제한 시간이 지났습니다.");
+			nowtime = 30;
+		}
+		
+		
+		
+
+	}
 	public void drawStone(ChatMsg cm) {
 		if (roomName.equals(cm.roomName)) {
 			System.out.println("Client draw Stone : player" + cm.stone);
@@ -394,7 +427,10 @@ public class OmokClientGameView extends JFrame {
 				gamePanel.setMap(cm.y, cm.x, cm.stone);
 				gamePanel.repaint();
 				gameEnd(cm);
+				time = false;
+				nowtime = 30;
 				gamePanel.repaint();
+				timeLabel.setText("남은 시간 : " + nowtime);
 			} else {
 				gamePanel.repaint();
 				System.out.println(" 바둑알 입력됨.");
@@ -419,6 +455,7 @@ public class OmokClientGameView extends JFrame {
 	public void gameStart(ChatMsg cm) {
 		if(!cm.roomName.equals(roomName)) return;
 		
+		time = true;
 		gamePanel.init();
 		startReadyButton.setEnabled(false);
 	}
