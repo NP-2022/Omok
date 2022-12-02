@@ -163,8 +163,6 @@ public class OmokServer extends JFrame {
 		public String userStatus;
 
 		public int roomNumber;
-		public boolean ready = false;
-		// public boolean userTurn;
 
 		public UserService(Socket client_socket) {
 			// TODO Auto-generated constructor stub
@@ -315,16 +313,10 @@ public class OmokServer extends JFrame {
 		}
 
 		public void exitRoom(ChatMsg msg) {
-			int roomnum = -1;
-			for (int i = 0; i < roomVec.size(); i++) {
-				if (msg.roomName.equals(roomVec.get(i).roomName)) {
-					roomnum = i;
-					break;
-				}
-			}
+			Room room = getRoom(msg);
+			room.updateReadyState(msg.userName, false); // ready 배열 관리
 			System.out.println(msg.userName + "가 방에서 퇴장했습니다.");
 
-			Room room = roomVec.get(roomnum);
 			System.out.println("전, 방의 인원은 : " + room.playerList.size());
 			for (int i = 0; i < room.playerList.size(); i++) {
 				OmokServer.UserService user = room.playerList.get(i);
@@ -337,7 +329,7 @@ public class OmokServer extends JFrame {
 			if (room.playerList.size() != 0) {
 				room.isStarted = false;
 				for (UserService user : room.playerList) { // 준비상태 리셋
-					user.ready = false;
+					room.updateReadyState(user.userName, false);
 				}
 				room.owner = room.playerList.get(0); // 방장 바꾸기
 				room.ownerName = room.owner.userName;
@@ -349,6 +341,7 @@ public class OmokServer extends JFrame {
 				cm.roomNumber = room.roomNumber;
 				cm.data = "[" + userName + "] 님이 퇴장했습니다.";
 				sendGameMessage(cm);
+				if(room.isStarted) stopGame(cm); // 게임 도중 유저 이탈 시 게임을 중단함.
 			} else {
 				for (int i = 0; i < roomVec.size(); i++) {
 					Room emptyroom = roomVec.get(i);
@@ -363,6 +356,11 @@ public class OmokServer extends JFrame {
 
 		public void insertRoom(ChatMsg msg) {
 			Room room = roomVec.get(msg.roomNumber); // 방 번호로 입장 (방 목록 리스트는 서버의 방 배열과 인덱스를 공유함)
+			room.updateReadyState(msg.userName, false); // ready 배열 관리
+			if (room.isStarted) {
+				WriteOne("게임이 진행중인 방입니다!");
+				return;
+			}
 			if (room.isFull()) {
 				WriteOne("방이 꽉 찼습니다!");
 				return;
@@ -447,18 +445,11 @@ public class OmokServer extends JFrame {
 		}
 
 		public void drawStone(ChatMsg msg) { // 벡터에서
-			int roomnum = -1;
-			for (int i = 0; i < roomVec.size(); i++) {
-				if (msg.roomName.equals(roomVec.get(i).roomName)) {
-					roomnum = i;
-					break;
-				}
-			}
-			System.out.println(roomnum + "room DrawStone");
-			msg.roomNumber = roomnum;
-			Room room = roomVec.get(roomnum);
+			Room room = getRoom(msg);
+			System.out.println(msg.roomNumber + "room DrawStone");
+			
+			if(!room.isStarted) {
 
-			if (!room.isStarted) {
 				ChatMsg cm = new ChatMsg(msg.userName, "201", "");
 				cm.roomName = msg.roomName;
 				cm.data = "게임 시작 전입니다.";
@@ -523,20 +514,11 @@ public class OmokServer extends JFrame {
 		}
 
 		public void undoStone(ChatMsg msg) {
-			int roomnum = -1;
-			for (int i = 0; i < roomVec.size(); i++) {
-				if (msg.roomName.equals(roomVec.get(i).roomName)) {
-					roomnum = i;
-					break;
-				}
-			}
-
-			msg.roomNumber = roomnum;
-			Room room = roomVec.get(roomnum);
+			Room room = getRoom(msg);
 			room.undoCount++;
 			if (room.undoCount == room.roomMax) {
 				room.undoStone();
-				System.out.println(roomnum + " room undoStone");
+				System.out.println(msg.roomNumber + " room undoStone");
 				room.undoCount = 0;
 			}
 			System.out.println("stone Size : " + room.stoneList.size());
@@ -587,16 +569,15 @@ public class OmokServer extends JFrame {
 
 		public void readyMethod(ChatMsg cm) {
 			// 준비 상태 바꾸고 msg 전달
-			String msg = ready ? "[" + userName + "]님 준비 취소" : "[" + userName + "]님 준비 완료";
-
-			ready = !ready; // ready 토글
-
 			Room room = getRoom(cm);
-
-			ChatMsg readyCm = new ChatMsg(userName, "201", msg);
+			String msg = room.getReadyState(userName) ? "["+userName+"]님 준비 취소" : "["+userName+"]님 준비 완료";
+			
+			room.toggleReadyState(userName);
+			
+			ChatMsg readyCm = new ChatMsg(userName, "201", msg); // 준비 상태 게임 내 채팅으로 전송
 			readyCm.roomName = room.roomName;
-
-			String readyState = ready ? "true" : "false";
+			
+			String readyState = room.getReadyState(userName) ? "true" : "false"; // 준비 버튼 토글시키기 위한 문자열
 
 			ChatMsg readyToggleCm = new ChatMsg(userName, "801", readyState); // 준비 버튼 토글시키기
 			readyToggleCm.roomName = room.roomName;
@@ -614,16 +595,32 @@ public class OmokServer extends JFrame {
 			room.isStarted = false;
 
 			for (UserService user : room.playerList) { // 방에 있는 모든 유저에게 전송
-				user.ready = false;
-				ChatMsg readyToggleCm = new ChatMsg(userName, "801", "false"); // 준비 버튼 토글시키기
-				readyToggleCm.roomName = room.roomName;
-				user.WriteOneObject(readyToggleCm); // 유저 준비 모두 취소시킴
-
-				ChatMsg finishCm = new ChatMsg(userName, "201", "[" + userName + "] 승리, 게임 종료");
+				room.updateReadyState(user.userName, false);
+				//ChatMsg readyToggleCm = new ChatMsg(userName, "801", "false"); // 준비 버튼 토글시키기
+				//readyToggleCm.roomName = room.roomName;
+				//user.WriteOneObject(readyToggleCm); // 유저 준비 버튼을 모두 취소시킴
+				
+				ChatMsg finishCm = new ChatMsg(userName, "201", "["+userName+"] 승리, 게임 종료");
 				finishCm.roomName = room.roomName;
 				user.WriteOneObject(finishCm);
 			}
-
+		}
+		
+		public void stopGame(ChatMsg msg) { // 누군가 도중에 나가면 게임을 중단시키는 메소드
+			Room room = getRoom(msg);
+			room.stoneList.clear();
+			room.isStarted = false;
+			
+			for (UserService user : room.playerList) { // 방에 있는 모든 유저에게 전송
+				room.updateReadyState(user.userName, false);
+				ChatMsg readyToggleCm = new ChatMsg(userName, "801", "false"); // 준비 버튼 토글시키기
+				readyToggleCm.roomName = room.roomName;
+				user.WriteOneObject(readyToggleCm); // 유저 준비 모두 취소시킴
+				
+				ChatMsg stopCm = new ChatMsg(userName, "803", ""); // 게임 중단
+				stopCm.roomName = room.roomName;
+				user.WriteOneObject(stopCm);
+			}
 		}
 
 		public void run() {
@@ -697,7 +694,7 @@ public class OmokServer extends JFrame {
 							// WriteAll(msg + "\n"); // Write All
 							WriteAllObject(cm);
 						}
-					} else if (cm.code.matches("201")) {
+					} else if (cm.code.matches("201")) { // 게임방 채팅
 						sendGameMessage(cm);
 					} else if (cm.code.matches("400")) { // logout message 처리
 						Logout();
@@ -711,12 +708,14 @@ public class OmokServer extends JFrame {
 					else if (cm.code.matches("700")) { // 방 입장 처리
 						insertRoom(cm);
 						updateRoomList();
-					} else if (cm.code.matches("701")) {
+					} else if (cm.code.matches("701")) { // 방 퇴장 처리
 						exitRoom(cm);
 						updateRoomList();
-					} else if (cm.code.matches("800")) {
+					}
+					else if (cm.code.matches("800")){ // 게임 시작
 						startGame(cm);
-					} else if (cm.code.matches("801")) {
+					}
+					else if (cm.code.matches("801")){ // 게임 준비 
 						readyMethod(cm);
 					} else if (cm.code.matches("802")) { // 게임 종료
 						finishGame(cm);
