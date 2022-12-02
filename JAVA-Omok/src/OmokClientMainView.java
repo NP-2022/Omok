@@ -371,15 +371,19 @@ public class OmokClientMainView extends JFrame {
 							gameView.get(i).userListUpdate(cm);
 						}
 						break;
-					case "800": 
+					case "800": // 게임 시작
 						for(int i = 0; i < gameView.size(); i++) {
 							gameView.get(i).gameStart(cm);
 						}
-					case "801": 
+					case "801": // 게임 준비
 						for(int i = 0; i < gameView.size(); i++) {
 							gameView.get(i).gameReady(cm);
 						}
 						break;
+					case "803": // 유저 이탈로 게임 중단
+						for(int i = 0; i < gameView.size(); i++) {
+							gameView.get(i).gameStop(cm); 
+						}
 					case "900": // 바둑돌 입력 수신
 						for(int i = 0; i < gameView.size(); i++) {
 							gameView.get(i).drawStone(cm);

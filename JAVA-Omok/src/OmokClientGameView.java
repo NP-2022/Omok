@@ -220,6 +220,7 @@ public class OmokClientGameView extends JFrame {
 				mainView.SendObject(msg);
 			}
 		});
+		
 		exitButton.setBounds(470, 644, 107, 27);
 		contentPane.add(exitButton);
 
@@ -456,6 +457,14 @@ public class OmokClientGameView extends JFrame {
 		// 방장만 보내는 이유 : 한명만 보내게 하기 위해서
 		
 		startReadyButton.setEnabled(true);
+	}
+	
+	public void gameStop(ChatMsg cm) {
+		gamePanel.init();
+		AppendText("유저 이탈로 게임을 중단합니다.");
+		
+		startReadyButton.setEnabled(true);
+		startReadyButton.setLabel(isOwner? "시작":"준비");
 	}
 	
 	public void AppendText(String msg) {

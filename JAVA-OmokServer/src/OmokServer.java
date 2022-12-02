@@ -315,6 +315,7 @@ public class OmokServer extends JFrame {
 		}
 
 		public void exitRoom(ChatMsg msg) {
+			ready = false;
 			Room room = getRoom(msg);
 			System.out.println(msg.userName + "가 방에서 퇴장했습니다.");
 
@@ -338,6 +339,7 @@ public class OmokServer extends JFrame {
 				cm.roomNumber = room.roomNumber;
 				cm.data = "[" + userName + "] 님이 퇴장했습니다.";
 				sendGameMessage(cm);
+				if(room.isStarted) stopGame(cm); // 게임 도중 유저 이탈 시 게임을 중단함.
 			} else {
 				for (int i = 0; i < roomVec.size(); i++) {
 					Room emptyroom = roomVec.get(i);
@@ -352,6 +354,10 @@ public class OmokServer extends JFrame {
 
 		public void insertRoom(ChatMsg msg) {
 			Room room = roomVec.get(msg.roomNumber); // 방 번호로 입장 (방 목록 리스트는 서버의 방 배열과 인덱스를 공유함)
+			if (room.isStarted) {
+				WriteOne("게임이 진행중인 방입니다!");
+				return;
+			}
 			if (room.isFull()) {
 				WriteOne("방이 꽉 찼습니다!");
 				return;
@@ -579,8 +585,23 @@ public class OmokServer extends JFrame {
 				finishCm.roomName = room.roomName;
 				user.WriteOneObject(finishCm);
 			}
+		}
+		
+		public void stopGame(ChatMsg msg) { // 누군가 도중에 나가면 게임을 중단시키는 메소드
+			Room room = getRoom(msg);
+			room.stoneList.clear();
+			room.isStarted = false;
 			
-			
+			for (UserService user : room.playerList) { // 방에 있는 모든 유저에게 전송
+				user.ready = false;
+				ChatMsg readyToggleCm = new ChatMsg(userName, "801", "false"); // 준비 버튼 토글시키기
+				readyToggleCm.roomName = room.roomName;
+				user.WriteOneObject(readyToggleCm); // 유저 준비 모두 취소시킴
+				
+				ChatMsg stopCm = new ChatMsg(userName, "803", ""); // 게임 중단
+				stopCm.roomName = room.roomName;
+				user.WriteOneObject(stopCm);
+			}
 		}
 
 
@@ -655,7 +676,7 @@ public class OmokServer extends JFrame {
 							// WriteAll(msg + "\n"); // Write All
 							WriteAllObject(cm);
 						}
-					} else if (cm.code.matches("201")) {
+					} else if (cm.code.matches("201")) { // 게임방 채팅
 						sendGameMessage(cm);
 					} else if (cm.code.matches("400")) { // logout message 처리
 						Logout();
@@ -669,14 +690,14 @@ public class OmokServer extends JFrame {
 					else if (cm.code.matches("700")) { // 방 입장 처리
 						insertRoom(cm);
 						updateRoomList();
-					} else if (cm.code.matches("701")) {
+					} else if (cm.code.matches("701")) { // 방 퇴장 처리
 						exitRoom(cm);
 						updateRoomList();
 					}
-					else if (cm.code.matches("800")){
+					else if (cm.code.matches("800")){ // 게임 시작
 						startGame(cm);
 					}
-					else if (cm.code.matches("801")){
+					else if (cm.code.matches("801")){ // 게임 준비 
 						readyMethod(cm);
 					}
 					else if (cm.code.matches("802")) { // 게임 종료
