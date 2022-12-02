@@ -1,5 +1,6 @@
-	// JavaObjClientView.java ObjecStram ±â¹İ Client
-//½ÇÁúÀûÀÎ Ã¤ÆÃ Ã¢
+
+// JavaObjClientView.java ObjecStram ê¸°ë°˜ Client
+//ì‹¤ì§ˆì ì¸ ì±„íŒ… ì°½
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.FileDialog;
@@ -20,6 +21,9 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.Socket;
+import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.Vector;
 
 import javax.swing.JFrame;
@@ -63,7 +67,7 @@ public class OmokClientMainView extends JFrame {
 	/**
 	 * 
 	 */
-	
+
 	private String Ip_addr;
 	private String Port_no;
 	private static final long serialVersionUID = 1L;
@@ -71,8 +75,8 @@ public class OmokClientMainView extends JFrame {
 	private JTextField chatTextInput;
 	private String UserName;
 	private JButton chatSendButton;
-	private static final int BUF_LEN = 128; // Windows Ã³·³ BUF_LEN À» Á¤ÀÇ
-	private Socket socket; // ¿¬°á¼ÒÄÏ
+	private static final int BUF_LEN = 128; // Windows ì²˜ëŸ¼ BUF_LEN ì„ ì •ì˜
+	private Socket socket; // ì—°ê²°ì†Œì¼“
 	private InputStream is;
 	private OutputStream os;
 	private DataInputStream dis;
@@ -92,34 +96,34 @@ public class OmokClientMainView extends JFrame {
 	JPanel imagePanel;
 	private Graphics gc;
 	private int pen_size = 2; // minimum 2
-	// ±×·ÁÁø Image¸¦ º¸°üÇÏ´Â ¿ëµµ, paint() ÇÔ¼ö¿¡¼­ ÀÌ¿ëÇÑ´Ù.
-	private Image panelImage = null; 
+	// ê·¸ë ¤ì§„ Imageë¥¼ ë³´ê´€í•˜ëŠ” ìš©ë„, paint() í•¨ìˆ˜ì—ì„œ ì´ìš©í•œë‹¤.
+	private Image panelImage = null;
 	private Graphics gc2 = null;
-	
-	public OmokClientMainView mainView = null; // ÇöÀç È­¸é¿¡ ´ëÇÑ ·¹ÆÛ·±½º
-//	public JavaGameClientView2 gameClientView = null; // °ÔÀÓ È­¸é ·¹ÆÛ·±½º
+
+	public OmokClientMainView mainView = null; // í˜„ì¬ í™”ë©´ì— ëŒ€í•œ ë ˆí¼ëŸ°ìŠ¤
+//	public JavaGameClientView2 gameClientView = null; // ê²Œì„ í™”ë©´ ë ˆí¼ëŸ°ìŠ¤
 	public Vector<OmokClientGameView> gameView = new Vector();
 
-	private JScrollPane roomListScrollPane; 
+	private JScrollPane roomListScrollPane;
 	private JList roomList;
-	private DefaultListModel roomListModel; // ¹æ ¸ñ·Ï
+	private DefaultListModel roomListModel; // ë°© ëª©ë¡
 	private JButton roomInsertButton;
 
-	
 	/**
 	 * Create the frame.
-	 * @throws BadLocationException 
+	 * 
+	 * @throws BadLocationException
 	 */
-	public OmokClientMainView(String username, String ip_addr, String port_no)  {
-		
+	public OmokClientMainView(String username, String ip_addr, String port_no) {
+
 		mainView = this;
 
 		UserName = username;
 		Ip_addr = ip_addr;
 		Port_no = port_no;
-		
+
 		setResizable(false);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //Ã¢ ´İÈ÷¸é ÇÁ·Î¼¼½º Á¾·á
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // ì°½ ë‹«íˆë©´ í”„ë¡œì„¸ìŠ¤ ì¢…ë£Œ
 		setBounds(100, 100, 800, 634);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -132,7 +136,7 @@ public class OmokClientMainView extends JFrame {
 
 		textArea = new JTextPane();
 		textArea.setEditable(true);
-		textArea.setFont(new Font("±¼¸²Ã¼", Font.PLAIN, 14));
+		textArea.setFont(new Font("êµ´ë¦¼ì²´", Font.PLAIN, 14));
 		chatScrollPane.setViewportView(textArea);
 
 		chatTextInput = new JTextField();
@@ -140,15 +144,15 @@ public class OmokClientMainView extends JFrame {
 		contentPane.add(chatTextInput);
 		chatTextInput.setColumns(10);
 
-		chatSendButton = new JButton("Àü¼Û");
-		chatSendButton.setFont(new Font("±¼¸²", Font.PLAIN, 14));
+		chatSendButton = new JButton("ì „ì†¡");
+		chatSendButton.setFont(new Font("êµ´ë¦¼", Font.PLAIN, 14));
 		chatSendButton.setBounds(295, 539, 69, 40);
 		contentPane.add(chatSendButton);
 
 		userNameLabel = new JLabel("User");
 		userNameLabel.setBorder(new LineBorder(new Color(0, 0, 0)));
 		userNameLabel.setBackground(Color.WHITE);
-		userNameLabel.setFont(new Font("±¼¸²", Font.BOLD, 14));
+		userNameLabel.setFont(new Font("êµ´ë¦¼", Font.BOLD, 14));
 		userNameLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		userNameLabel.setBounds(376, 539, 149, 40);
 		contentPane.add(userNameLabel);
@@ -157,14 +161,14 @@ public class OmokClientMainView extends JFrame {
 		AppendText("User " + username + " connecting " + ip_addr + " " + port_no);
 		userNameLabel.setText(UserName);
 
-		imageChangeButton = new JButton("ÀÌ¹ÌÁö º¯°æ");
-		imageChangeButton.setFont(new Font("±¼¸²", Font.PLAIN, 16));
+		imageChangeButton = new JButton("ì´ë¯¸ì§€ ë³€ê²½");
+		imageChangeButton.setFont(new Font("êµ´ë¦¼", Font.PLAIN, 16));
 		imageChangeButton.setBounds(376, 324, 149, 40);
 		contentPane.add(imageChangeButton);
 
-		JButton exitButton = new JButton("Á¾ ·á");
-		exitButton.setFont(new Font("±¼¸²", Font.PLAIN, 14));
-		
+		JButton exitButton = new JButton("ì¢… ë£Œ");
+		exitButton.setFont(new Font("êµ´ë¦¼", Font.PLAIN, 14));
+
 		exitButton.setBounds(672, 539, 100, 40);
 		contentPane.add(exitButton);
 
@@ -174,32 +178,32 @@ public class OmokClientMainView extends JFrame {
 		imagePanel.setBounds(376, 374, 149, 154);
 		contentPane.add(imagePanel);
 		gc = imagePanel.getGraphics();
-		
-		// Image ¿µ¿ª º¸°ü¿ë. paint() ¿¡¼­ ÀÌ¿ëÇÑ´Ù.
-		Image defaultimg =new ImageIcon(OmokClientMainView.class.getResource("default.png")).getImage();
+
+		// Image ì˜ì—­ ë³´ê´€ìš©. paint() ì—ì„œ ì´ìš©í•œë‹¤.
+		Image defaultimg = new ImageIcon(OmokClientMainView.class.getResource("default.png")).getImage();
 		panelImage = createImage(imagePanel.getWidth(), imagePanel.getHeight());
 		gc2 = panelImage.getGraphics();
 		gc2.setColor(imagePanel.getBackground());
-		gc2.fillRect(0,0, imagePanel.getWidth(),  imagePanel.getHeight());
+		gc2.fillRect(0, 0, imagePanel.getWidth(), imagePanel.getHeight());
 		gc2.setColor(Color.BLACK);
-		gc2.drawRect(0,0, imagePanel.getWidth()-1,  imagePanel.getHeight()-1);
-		gc2.drawImage(defaultimg,  0,  0, imagePanel.getWidth(), imagePanel.getHeight(), imagePanel);
-		
+		gc2.drawRect(0, 0, imagePanel.getWidth() - 1, imagePanel.getHeight() - 1);
+		gc2.drawImage(defaultimg, 0, 0, imagePanel.getWidth(), imagePanel.getHeight(), imagePanel);
+
 		JLabel titleLabel = new JLabel("<Omok Game>");
 		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		titleLabel.setFont(new Font("±¼¸²", Font.BOLD, 14));
+		titleLabel.setFont(new Font("êµ´ë¦¼", Font.BOLD, 14));
 		titleLabel.setBorder(new LineBorder(new Color(0, 0, 0)));
 		titleLabel.setBackground(Color.WHITE);
 		titleLabel.setBounds(12, 11, 760, 40);
 		contentPane.add(titleLabel);
-		
+
 		roomListScrollPane = new JScrollPane();
 		roomListScrollPane.setBounds(376, 61, 396, 212);
 		contentPane.add(roomListScrollPane);
-		
-		JLabel roomListTitleLabel = new JLabel("¹æ ¸®½ºÆ®");
+
+		JLabel roomListTitleLabel = new JLabel("ë°© ë¦¬ìŠ¤íŠ¸");
 		roomListTitleLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		roomListTitleLabel.setFont(new Font("±¼¸²", Font.BOLD, 14));
+		roomListTitleLabel.setFont(new Font("êµ´ë¦¼", Font.BOLD, 14));
 		roomListTitleLabel.setBorder(new LineBorder(new Color(0, 0, 0)));
 		roomListTitleLabel.setBackground(Color.WHITE);
 		roomListScrollPane.setColumnHeaderView(roomListTitleLabel);
@@ -207,29 +211,29 @@ public class OmokClientMainView extends JFrame {
 		roomListModel = new DefaultListModel();
 		roomList = new JList(roomListModel);
 		roomList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		
-		roomInsertButton = new JButton("¹æ ÀÔÀå");
+
+		roomInsertButton = new JButton("ë°© ì…ì¥");
 		roomInsertButton.setBounds(566, 283, 97, 23);
-		
+
 		contentPane.add(roomInsertButton);
 
-		JButton roomCreateButton = new JButton("¹æ ¸¸µé±â");
+		JButton roomCreateButton = new JButton("ë°© ë§Œë“¤ê¸°");
 		roomListScrollPane.setViewportView(roomList);
 		roomCreateButton.setBounds(675, 283, 97, 23);
 		contentPane.add(roomCreateButton);
-		
+
 		gameLogScrollPane = new JScrollPane();
 		gameLogScrollPane.setBounds(537, 374, 235, 154);
 		contentPane.add(gameLogScrollPane);
-		
-		lblUserName_1_2 = new JLabel("ÀüÀû");
+
+		lblUserName_1_2 = new JLabel("ì „ì ");
 		gameLogScrollPane.setColumnHeaderView(lblUserName_1_2);
 		lblUserName_1_2.setHorizontalAlignment(SwingConstants.CENTER);
-		lblUserName_1_2.setFont(new Font("±¼¸²", Font.BOLD, 14));
+		lblUserName_1_2.setFont(new Font("êµ´ë¦¼", Font.BOLD, 14));
 		lblUserName_1_2.setBorder(new LineBorder(new Color(0, 0, 0)));
 		lblUserName_1_2.setBackground(Color.WHITE);
-		
-		// °ÔÀÓ Á¾·á set
+
+		// ê²Œì„ ì¢…ë£Œ set
 		exitButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ChatMsg msg = new ChatMsg(UserName, "400", "Bye");
@@ -237,31 +241,31 @@ public class OmokClientMainView extends JFrame {
 				System.exit(0);
 			}
 		});
-		
-		// ¹æ »ı¼º set
+
+		// ë°© ìƒì„± set
 		roomCreateButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				OmokClientRoomCreateView roomcreate = new OmokClientRoomCreateView(mainView, username, ip_addr, port_no); 
+				OmokClientRoomCreateView roomcreate = new OmokClientRoomCreateView(mainView, username, ip_addr,
+						port_no);
 				setVisible(true);
 			}
 		});
-		
-		// ¹æ ÀÔÀå set
+
+		// ë°© ì…ì¥ set
 		roomInsertButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				int index = roomList.getSelectedIndex();
-				if(index == -1) return;
+				if (index == -1)
+					return;
 				requestInsertRoom(index);
-				System.out.println("go to "+index+" requested.");
+				System.out.println("go to " + index + " requested.");
 			}
-			
+
 		});
-		
 
 		try {
 			socket = new Socket(ip_addr, Integer.parseInt(port_no));
-
 
 			oos = new ObjectOutputStream(socket.getOutputStream());
 			oos.flush();
@@ -285,7 +289,6 @@ public class OmokClientMainView extends JFrame {
 			MyMouseWheelEvent wheel = new MyMouseWheelEvent();
 			imagePanel.addMouseWheelListener(wheel);
 
-
 		} catch (NumberFormatException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -301,16 +304,15 @@ public class OmokClientMainView extends JFrame {
 
 	public void paint(Graphics g) {
 		super.paint(g);
-		// Image ¿µ¿ªÀÌ °¡·ÁÁ³´Ù ´Ù½Ã ³ªÅ¸³¯ ¶§ ±×·ÁÁØ´Ù.
+		// Image ì˜ì—­ì´ ê°€ë ¤ì¡Œë‹¤ ë‹¤ì‹œ ë‚˜íƒ€ë‚  ë•Œ ê·¸ë ¤ì¤€ë‹¤.
 		gc.drawImage(panelImage, 0, 0, this);
 	}
-	
-	// Server Message¸¦ ¼ö½ÅÇØ¼­ È­¸é¿¡ Ç¥½Ã
+
+	// Server Messageë¥¼ ìˆ˜ì‹ í•´ì„œ í™”ë©´ì— í‘œì‹œ
 	class ListenNetwork extends Thread {
 		public void run() {
 			while (true) {
 				try {
-
 					Object obcm = null;
 					String msg = null;
 					ChatMsg cm;
@@ -326,76 +328,115 @@ public class OmokClientMainView extends JFrame {
 					if (obcm instanceof ChatMsg || true) {
 						cm = (ChatMsg) obcm;
 						msg = String.format("[%s]\n%s", cm.userName, cm.data);
-						System.out.println(String.format("name:[%s] code:[%s] data:[%s]",cm.userName,cm.code,cm.data));
+						System.out
+								.println(String.format("name:[%s] code:[%s] data:[%s]", cm.userName, cm.code, cm.data));
 					} else
 						continue;
 					switch (cm.code) {
 					case "200": // chat message
 						if (cm.userName.equals(UserName))
-							AppendTextR(msg); // ³» ¸Ş¼¼Áö´Â ¿ìÃø¿¡
+							AppendTextR(msg); // ë‚´ ë©”ì„¸ì§€ëŠ” ìš°ì¸¡ì—
 						else
 							AppendText(msg);
 						break;
-					case "201": // °ÔÀÓ ³»ºÎ Ã¤ÆÃ ¸Ş¼¼Áö
-						for(int i = 0; i < gameView.size(); i++) {
-							gameView.get(i).receiveGameMessage(cm);
+					case "201": // ê²Œì„ ë‚´ë¶€ ì±„íŒ… ë©”ì„¸ì§€
+						for (int i = 0; i < gameView.size(); i++) {
+							if (cm.roomName.equals(gameView.get(i).roomName)) {
+								gameView.get(i).receiveGameMessage(cm);
+							}
 						}
 						break;
-					case "300": // Image Ã·ºÎ
+					case "300": // Image ì²¨ë¶€
 //						if (cm.UserName.equals(UserName))
 //							AppendTextR("[" + cm.UserName + "]");
 //						else
 //							AppendText("[" + cm.UserName + "]");
-						//AppendImage(cm.img);
+						// AppendImage(cm.img);
 						break;
-					case "500": // Mouse Event ¼ö½Å
+					case "500": // Mouse Event ìˆ˜ì‹ 
 						DoMouseEvent(cm);
 						break;
-					case "600": // »õ·Î¿î ¹æ »ı¼º µÊ
+					case "600": // ìƒˆë¡œìš´ ë°© ìƒì„± ë¨
 						break;
-					case "700": // ´©±º°¡°¡ ¹æ¿¡ ÀÔÀå
-						if(cm.userName.equals(UserName)) // ¹æ¿¡ ÀÔÀåÇÑ Å¬¶óÀÌ¾ğÆ® º»ÀÎÀÏ °æ¿ì
+					case "700": // ëˆ„êµ°ê°€ê°€ ë°©ì— ì…ì¥
+						if (cm.userName.equals(UserName)) // ë°©ì— ì…ì¥í•œ í´ë¼ì´ì–¸íŠ¸ ë³¸ì¸ì¼ ê²½ìš°
 							insertRoom(cm);
-						for(int i = 0; i < gameView.size(); i++) {
-							if(gameView.get(i).roomName.equals(cm.roomName)) {
+						for (int i = 0; i < gameView.size(); i++) {
+							if (gameView.get(i).roomName.equals(cm.roomName)) {
 								gameView.get(i).gamePanel.init();
 								gameView.get(i).gamePanel.repaint();
 							}
 						}
 						break;
-					case "702": // ¹æ ¸®½ºÆ® °»½Å
+					case "702": // ë°© ë¦¬ìŠ¤íŠ¸ ê°±ì‹ 
 						roomListUpdate(cm);
 						break;
-					case "703": // À¯Àú ¸®½ºÆ® °»½Å
-						for(int i = 0; i < gameView.size(); i++) {
-							gameView.get(i).userListUpdate(cm);
+					case "703": // ìœ ì € ë¦¬ìŠ¤íŠ¸ ê°±ì‹ 
+						for (int i = 0; i < gameView.size(); i++) {
+							if (cm.roomName.equals(gameView.get(i).roomName)) {
+								gameView.get(i).userListUpdate(cm);
+								gameView.get(i).nowtime = 30;
+							}
 						}
 						break;
-					case "800": // °ÔÀÓ ½ÃÀÛ
-						for(int i = 0; i < gameView.size(); i++) {
-							gameView.get(i).gameStart(cm);
+					case "800": // ê²Œì„ ì‹œì‘
+
+						for (int i = 0; i < gameView.size(); i++) {
+							if (cm.roomName.equals(gameView.get(i).roomName)) {
+								gameView.get(i).gameStart(cm);
+								OmokClientGameView gv = gameView.get(i);
+								if (gv.time == true) {
+									TimerTask task = new TimerTask() {
+										@Override
+										public void run() {
+											if (gv.time == false) {
+												cancel();
+												gv.nowtime = 30;
+											} else {
+												System.out.println("------------- " + gv.nowtime + " -------");
+												if (gv.nowtime == 0) {
+												} else {
+													gv.nowtime -= 1;
+													gv.timeProcess();
+												}
+											}
+										}
+									};
+									new Timer().scheduleAtFixedRate(task, 0l, 1000);
+								}
+							}
 						}
-					case "801": // °ÔÀÓ ÁØºñ
-						for(int i = 0; i < gameView.size(); i++) {
-							gameView.get(i).gameReady(cm);
+					case "801":
+						for (int i = 0; i < gameView.size(); i++) {
+							if (cm.roomName.equals(gameView.get(i).roomName)) {
+								gameView.get(i).gameReady(cm);
+							}
+
 						}
 						break;
-					case "803": // À¯Àú ÀÌÅ»·Î °ÔÀÓ Áß´Ü
+					case "803": // ìœ ì € ì´íƒˆë¡œ ê²Œì„ ì¤‘ë‹¨
 						for(int i = 0; i < gameView.size(); i++) {
 							gameView.get(i).gameStop(cm); 
 						}
-					case "900": // ¹ÙµÏµ¹ ÀÔ·Â ¼ö½Å
-						for(int i = 0; i < gameView.size(); i++) {
-							gameView.get(i).drawStone(cm);
+					case "900": // ë°”ë‘‘ëŒ ì…ë ¥ ìˆ˜ì‹ 
+						for (int i = 0; i < gameView.size(); i++) {
+							if (cm.roomName.equals(gameView.get(i).roomName)) {
+								gameView.get(i).drawStone(cm);
+								gameView.get(i).nowtime = 31;
+							}
 						}
 						break;
-					case "901": // ¹ÙµÏµ¹ undo ¼ö½Å
-						for(int i = 0; i < gameView.size(); i++) {
-							gameView.get(i).undoStone(cm);
+					case "901": // ë°”ë‘‘ëŒ undo ìˆ˜ì‹ 
+						for (int i = 0; i < gameView.size(); i++) {
+							if (cm.roomName.equals(gameView.get(i).roomName)) {
+								gameView.get(i).undoStone(cm);
+								gameView.get(i).nowtime = 31;
+							}
 						}
 						break;
-						
+
 					}
+
 				} catch (IOException e) {
 					AppendText("ois.readObject() error");
 					try {
@@ -408,45 +449,43 @@ public class OmokClientMainView extends JFrame {
 						break;
 					} catch (Exception ee) {
 						break;
-					} // catch¹® ³¡
-				} // ¹Ù±ù catch¹®³¡
-
+					} // catchë¬¸ ë
+				} // ë°”ê¹¥ catchë¬¸ë
 			}
 		}
 	}
 
-
-	
-	private void requestInsertRoom(int index) { // ¹æ ÀÔÀå ¿äÃ»ÇÔ
+	private void requestInsertRoom(int index) { // ë°© ì…ì¥ ìš”ì²­í•¨
 		ChatMsg msg = new ChatMsg(UserName, "700", "");
 		msg.roomNumber = index;
 		SendObject(msg);
 	}
-	
-	private void insertRoom(ChatMsg msg) { // ¹æ ÀÔÀåÇÏ±â
-		System.out.println("¹æ ÀÔÀå Áß111111");
-		OmokClientGameView view = new OmokClientGameView(mainView, UserName, Ip_addr, Port_no, msg.gameMode, msg.roomName, msg.roomMax, false);
+
+	private void insertRoom(ChatMsg msg) { // ë°© ì…ì¥í•˜ê¸°
+		System.out.println("ë°© ì…ì¥ ì¤‘111111");
+		OmokClientGameView view = new OmokClientGameView(mainView, UserName, Ip_addr, Port_no, msg.gameMode,
+				msg.roomName, msg.roomMax, false);
 		mainView.gameView.add(view);
 		System.out.println(mainView.gameView.size());
 	}
-	
-	public void roomListUpdate(ChatMsg cm) { // ¹æ ¸ñ·Ï °»½Å
-		roomListModel.removeAllElements(); // ¹æ ¸®½ºÆ®¸¦ ¸ğµÎ Áö¿ì°í, ´Ù½Ã ¾÷µ¥ÀÌÆ® ÇÑ´Ù.
+
+	public void roomListUpdate(ChatMsg cm) { // ë°© ëª©ë¡ ê°±ì‹ 
+		roomListModel.removeAllElements(); // ë°© ë¦¬ìŠ¤íŠ¸ë¥¼ ëª¨ë‘ ì§€ìš°ê³ , ë‹¤ì‹œ ì—…ë°ì´íŠ¸ í•œë‹¤.
 		String list[] = cm.data.split("\n");
-		for(String item: list) {
+		for (String item : list) {
 			roomListModel.addElement(item);
 		}
 		System.out.println("roomList updated");
 	}
 
-	// Mouse Event ¼ö½Å Ã³¸®
+	// Mouse Event ìˆ˜ì‹  ì²˜ë¦¬
 	public void DoMouseEvent(ChatMsg cm) {
 		Color c;
-		if (cm.userName.matches(UserName)) // º»ÀÎ °ÍÀº ÀÌ¹Ì Local ·Î ±×·È´Ù.
+		if (cm.userName.matches(UserName)) // ë³¸ì¸ ê²ƒì€ ì´ë¯¸ Local ë¡œ ê·¸ë ¸ë‹¤.
 			return;
-		c = new Color(255, 0, 0); // ´Ù¸¥ »ç¶÷ °ÍÀº Red
+		c = new Color(255, 0, 0); // ë‹¤ë¥¸ ì‚¬ëŒ ê²ƒì€ Red
 		gc2.setColor(c);
-		gc2.fillOval(cm.mouse_e.getX() - pen_size/2, cm.mouse_e.getY() - cm.pen_size/2, cm.pen_size, cm.pen_size);
+		gc2.fillOval(cm.mouse_e.getX() - pen_size / 2, cm.mouse_e.getY() - cm.pen_size / 2, cm.pen_size, cm.pen_size);
 		gc.drawImage(panelImage, 0, 0, imagePanel);
 	}
 
@@ -456,14 +495,12 @@ public class OmokClientMainView extends JFrame {
 		cm.pen_size = pen_size;
 		SendObject(cm);
 	}
-	
-	
 
 	class MyMouseWheelEvent implements MouseWheelListener {
 		@Override
 		public void mouseWheelMoved(MouseWheelEvent e) {
 			// TODO Auto-generated method stub
-			if (e.getWheelRotation() < 0) { // À§·Î ¿Ã¸®´Â °æ¿ì pen_size Áõ°¡
+			if (e.getWheelRotation() < 0) { // ìœ„ë¡œ ì˜¬ë¦¬ëŠ” ê²½ìš° pen_size ì¦ê°€
 				if (pen_size < 20)
 					pen_size++;
 			} else {
@@ -472,88 +509,96 @@ public class OmokClientMainView extends JFrame {
 			}
 
 		}
-		
+
 	}
+
 	// Mouse Event Handler
 	class MyMouseEvent implements MouseListener, MouseMotionListener {
 		@Override
 		public void mouseDragged(MouseEvent e) {
-			//lblMouseEvent.setText(e.getButton() + " mouseDragged " + e.getX() + "," + e.getY());// ÁÂÇ¥Ãâ·Â°¡´É
-			Color c = new Color(0,0,255);
+			// lblMouseEvent.setText(e.getButton() + " mouseDragged " + e.getX() + "," +
+			// e.getY());// ì¢Œí‘œì¶œë ¥ê°€ëŠ¥
+			Color c = new Color(0, 0, 255);
 			gc2.setColor(c);
-			gc2.fillOval(e.getX()-pen_size/2, e.getY()-pen_size/2, pen_size, pen_size);
-			// panelImnage´Â paint()¿¡¼­ ÀÌ¿ëÇÑ´Ù.
+			gc2.fillOval(e.getX() - pen_size / 2, e.getY() - pen_size / 2, pen_size, pen_size);
+			// panelImnageëŠ” paint()ì—ì„œ ì´ìš©í•œë‹¤.
 			gc.drawImage(panelImage, 0, 0, imagePanel);
 			SendMouseEvent(e);
 		}
 
 		@Override
 		public void mouseMoved(MouseEvent e) {
-			//lblMouseEvent.setText(e.getButton() + " mouseMoved " + e.getX() + "," + e.getY());
+			// lblMouseEvent.setText(e.getButton() + " mouseMoved " + e.getX() + "," +
+			// e.getY());
 		}
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			//lblMouseEvent.setText(e.getButton() + " mouseClicked " + e.getX() + "," + e.getY());
-			Color c = new Color(0,0,255);
+			// lblMouseEvent.setText(e.getButton() + " mouseClicked " + e.getX() + "," +
+			// e.getY());
+			Color c = new Color(0, 0, 255);
 			gc2.setColor(c);
-			gc2.fillOval(e.getX()-pen_size/2, e.getY()-pen_size/2, pen_size, pen_size);
+			gc2.fillOval(e.getX() - pen_size / 2, e.getY() - pen_size / 2, pen_size, pen_size);
 			gc.drawImage(panelImage, 0, 0, imagePanel);
 			SendMouseEvent(e);
 		}
 
 		@Override
 		public void mouseEntered(MouseEvent e) {
-			//lblMouseEvent.setText(e.getButton() + " mouseEntered " + e.getX() + "," + e.getY());
+			// lblMouseEvent.setText(e.getButton() + " mouseEntered " + e.getX() + "," +
+			// e.getY());
 			// panel.setBackground(Color.YELLOW);
 
 		}
 
 		@Override
 		public void mouseExited(MouseEvent e) {
-			//lblMouseEvent.setText(e.getButton() + " mouseExited " + e.getX() + "," + e.getY());
-			// panel.setBackground(Color.CYAN); 
+			// lblMouseEvent.setText(e.getButton() + " mouseExited " + e.getX() + "," +
+			// e.getY());
+			// panel.setBackground(Color.CYAN);
 
 		}
 
 		@Override
 		public void mousePressed(MouseEvent e) {
-			//lblMouseEvent.setText(e.getButton() + " mousePressed " + e.getX() + "," + e.getY());
+			// lblMouseEvent.setText(e.getButton() + " mousePressed " + e.getX() + "," +
+			// e.getY());
 
 		}
 
 		@Override
 		public void mouseReleased(MouseEvent e) {
-			//lblMouseEvent.setText(e.getButton() + " mouseReleased " + e.getX() + "," + e.getY());
-			// µå·¡±×Áß ¸ØÃâ½Ã º¸ÀÓ
+			// lblMouseEvent.setText(e.getButton() + " mouseReleased " + e.getX() + "," +
+			// e.getY());
+			// ë“œë˜ê·¸ì¤‘ ë©ˆì¶œì‹œ ë³´ì„
 
 		}
 	}
 
-	// keyboard enter key Ä¡¸é ¼­¹ö·Î Àü¼Û
+	// keyboard enter key ì¹˜ë©´ ì„œë²„ë¡œ ì „ì†¡
 	class TextSendAction implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// Send buttonÀ» ´©¸£°Å³ª ¸Ş½ÃÁö ÀÔ·ÂÇÏ°í Enter key Ä¡¸é
+			// Send buttonì„ ëˆ„ë¥´ê±°ë‚˜ ë©”ì‹œì§€ ì…ë ¥í•˜ê³  Enter key ì¹˜ë©´
 			if (e.getSource() == chatSendButton || e.getSource() == chatTextInput) {
 				String msg = null;
-			
+
 				msg = chatTextInput.getText();
 				SendMessage(msg);
-				chatTextInput.setText(""); // ¸Ş¼¼Áö¸¦ º¸³»°í ³ª¸é ¸Ş¼¼Áö ¾²´ÂÃ¢À» ºñ¿î´Ù.
-				chatTextInput.requestFocus(); // ¸Ş¼¼Áö¸¦ º¸³»°í Ä¿¼­¸¦ ´Ù½Ã ÅØ½ºÆ® ÇÊµå·Î À§Ä¡½ÃÅ²´Ù
-				if (msg.contains("/exit")) // Á¾·á Ã³¸®
+				chatTextInput.setText(""); // ë©”ì„¸ì§€ë¥¼ ë³´ë‚´ê³  ë‚˜ë©´ ë©”ì„¸ì§€ ì“°ëŠ”ì°½ì„ ë¹„ìš´ë‹¤.
+				chatTextInput.requestFocus(); // ë©”ì„¸ì§€ë¥¼ ë³´ë‚´ê³  ì»¤ì„œë¥¼ ë‹¤ì‹œ í…ìŠ¤íŠ¸ í•„ë“œë¡œ ìœ„ì¹˜ì‹œí‚¨ë‹¤
+				if (msg.contains("/exit")) // ì¢…ë£Œ ì²˜ë¦¬
 					System.exit(0);
 			}
 		}
 	}
 
-	class ImageSendAction implements ActionListener { //ÀÌ¹ÌÁö Àü¼Û
+	class ImageSendAction implements ActionListener { // ì´ë¯¸ì§€ ì „ì†¡
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() == imageChangeButton) {
-				frame = new Frame("ÀÌ¹ÌÁöÃ·ºÎ");
-				fd = new FileDialog(frame, "ÀÌ¹ÌÁö ¼±ÅÃ", FileDialog.LOAD);
+				frame = new Frame("ì´ë¯¸ì§€ì²¨ë¶€");
+				fd = new FileDialog(frame, "ì´ë¯¸ì§€ ì„ íƒ", FileDialog.LOAD);
 				fd.setVisible(true);
 
 				if (fd.getDirectory().length() > 0 && fd.getFile().length() > 0) {
@@ -572,72 +617,67 @@ public class OmokClientMainView extends JFrame {
 
 	public void AppendIcon(ImageIcon icon) {
 		int len = textArea.getDocument().getLength();
-		// ³¡À¸·Î ÀÌµ¿
+		// ëìœ¼ë¡œ ì´ë™
 		textArea.setCaretPosition(len);
 		textArea.insertIcon(icon);
 	}
 
-	// È­¸é¿¡ Ãâ·Â
+	// í™”ë©´ì— ì¶œë ¥
 	public void AppendText(String msg) {
 
-		msg = msg.trim(); // ¾ÕµÚ blank¿Í \nÀ» Á¦°ÅÇÑ´Ù.
+		msg = msg.trim(); // ì•ë’¤ blankì™€ \nì„ ì œê±°í•œë‹¤.
 
 		StyledDocument doc = textArea.getStyledDocument();
 		SimpleAttributeSet left = new SimpleAttributeSet();
 		StyleConstants.setAlignment(left, StyleConstants.ALIGN_LEFT);
 		StyleConstants.setForeground(left, Color.BLACK);
-	    doc.setParagraphAttributes(doc.getLength(), 1, left, false);
+		doc.setParagraphAttributes(doc.getLength(), 1, left, false);
 		try {
-			doc.insertString(doc.getLength(), msg+"\n", left );
+			doc.insertString(doc.getLength(), msg + "\n", left);
 		} catch (BadLocationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		int len = textArea.getDocument().getLength();
 		textArea.setCaretPosition(len);
-		//textArea.replaceSelection("\n");
-
+		// textArea.replaceSelection("\n");
 
 	}
-	// È­¸é ¿ìÃø¿¡ Ãâ·Â
+
+	// í™”ë©´ ìš°ì¸¡ì— ì¶œë ¥
 	public void AppendTextR(String msg) {
-		msg = msg.trim(); // ¾ÕµÚ blank¿Í \nÀ» Á¦°ÅÇÑ´Ù.	
+		msg = msg.trim(); // ì•ë’¤ blankì™€ \nì„ ì œê±°í•œë‹¤.
 		StyledDocument doc = textArea.getStyledDocument();
 		SimpleAttributeSet right = new SimpleAttributeSet();
 		StyleConstants.setAlignment(right, StyleConstants.ALIGN_RIGHT);
-		StyleConstants.setForeground(right, Color.BLUE);	
-	    doc.setParagraphAttributes(doc.getLength(), 1, right, false);
+		StyleConstants.setForeground(right, Color.BLUE);
+		doc.setParagraphAttributes(doc.getLength(), 1, right, false);
 		try {
-			doc.insertString(doc.getLength(),msg+"\n", right );
+			doc.insertString(doc.getLength(), msg + "\n", right);
 		} catch (BadLocationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		int len = textArea.getDocument().getLength();
 		textArea.setCaretPosition(len);
-		//textArea.replaceSelection("\n");
+		// textArea.replaceSelection("\n");
 
 	}
-	
+
 	/*
-	public void AppendImage(ImageIcon ori_icon) {
-		int len = textArea.getDocument().getLength();
-		textArea.setCaretPosition(len); // place caret at the end (with no selection)
-		Image ori_img = ori_icon.getImage();
-		Image new_img;
-		ImageIcon new_icon;
-		int width, height;
-		double ratio;
-		width = ori_icon.getIconWidth();
-		height = ori_icon.getIconHeight();
+	 * public void AppendImage(ImageIcon ori_icon) { int len =
+	 * textArea.getDocument().getLength(); textArea.setCaretPosition(len); // place
+	 * caret at the end (with no selection) Image ori_img = ori_icon.getImage();
+	 * Image new_img; ImageIcon new_icon; int width, height; double ratio; width =
+	 * ori_icon.getIconWidth(); height = ori_icon.getIconHeight();
+	 * 
+	 * 
+	 * gc2.drawImage(ori_img, 0, 0, imagePanel.getWidth(), imagePanel.getHeight(),
+	 * imagePanel); gc.drawImage(panelImage, 0, 0, imagePanel.getWidth(),
+	 * imagePanel.getHeight(), imagePanel); }
+	 */
 
-
-		gc2.drawImage(ori_img,  0,  0, imagePanel.getWidth(), imagePanel.getHeight(), imagePanel);
-		gc.drawImage(panelImage, 0, 0, imagePanel.getWidth(), imagePanel.getHeight(), imagePanel);
-	}
-	*/
-
-	// Windows Ã³·³ message Á¦¿ÜÇÑ ³ª¸ÓÁö ºÎºĞÀº NULL ·Î ¸¸µé±â À§ÇÑ ÇÔ¼ö
+	// Windows ì²˜ëŸ¼ message ì œì™¸í•œ ë‚˜ë¨¸ì§€ ë¶€ë¶„ì€ NULL ë¡œ ë§Œë“¤ê¸° ìœ„í•œ í•¨ìˆ˜
 	public byte[] MakePacket(String msg) {
 		byte[] packet = new byte[BUF_LEN];
 		byte[] bb = null;
@@ -655,7 +695,7 @@ public class OmokClientMainView extends JFrame {
 		return packet;
 	}
 
-	// Server¿¡°Ô networkÀ¸·Î Àü¼Û
+	// Serverì—ê²Œ networkìœ¼ë¡œ ì „ì†¡
 	public void SendMessage(String msg) {
 		try {
 			ChatMsg obcm = new ChatMsg(UserName, "200", msg);
@@ -673,7 +713,7 @@ public class OmokClientMainView extends JFrame {
 		}
 	}
 
-	public void SendObject(Object ob) { // ¼­¹ö·Î ¸Ş¼¼Áö¸¦ º¸³»´Â ¸Ş¼Òµå
+	public void SendObject(Object ob) { // ì„œë²„ë¡œ ë©”ì„¸ì§€ë¥¼ ë³´ë‚´ëŠ” ë©”ì†Œë“œ
 		try {
 			oos.writeObject(ob);
 		} catch (IOException e) {
