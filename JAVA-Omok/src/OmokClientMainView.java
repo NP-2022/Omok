@@ -400,6 +400,7 @@ public class OmokClientMainView extends JFrame {
 									gameView.get(i).kicked();
 								}
 							}
+						break;
 					case "800": // 게임 시작
 						for (int i = 0; i < gameView.size(); i++) {
 							if (cm.roomName.equals(gameView.get(i).roomName)) {
@@ -423,6 +424,7 @@ public class OmokClientMainView extends JFrame {
 								gameView.get(i).nowtime = 31;
 							}
 						}
+						break;
 					case "900": // 바둑돌 입력 수신
 						for (int i = 0; i < gameView.size(); i++) {
 							if (cm.roomName.equals(gameView.get(i).roomName)) {
@@ -436,7 +438,7 @@ public class OmokClientMainView extends JFrame {
 							}
 						}
 						break;
-					case "901": // 바둑돌 undo 수신
+					case "901": // 복기
 						for (int i = 0; i < gameView.size(); i++) {
 							if (cm.roomName.equals(gameView.get(i).roomName)) {
 								gameView.get(i).stonenum = cm.stoneNum;
@@ -451,6 +453,21 @@ public class OmokClientMainView extends JFrame {
 								gameView.get(i).stonenum = cm.stoneNum;
 								gameView.get(i).next(cm.y, cm.x, cm.stone);
 								//System.out.println("다음 완료");
+							}
+						}
+						break;
+						
+					case "903":
+						for (int i = 0; i < gameView.size(); i++) {
+							if (cm.roomName.equals(gameView.get(i).roomName)) {
+								gameView.get(i).undoStoneVote(cm);
+							}
+						}
+						break;
+					case "904":
+						for (int i = 0; i < gameView.size(); i++) {
+							if (cm.roomName.equals(gameView.get(i).roomName)) {
+								gameView.get(i).undoStone(cm);
 							}
 						}
 						break;

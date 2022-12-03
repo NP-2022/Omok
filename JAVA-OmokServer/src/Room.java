@@ -18,6 +18,8 @@ public class Room {
 	public String gameMode;
 	public String ownerName;
 	public int undoCount = 0;
+	public int undoDisagreeCount = 0;
+	
 	public boolean isStarted = false;
 	public HashMap<String, Boolean> readyMap = new HashMap<>();
 	
@@ -65,8 +67,8 @@ public class Room {
 		this.stoneList.add(stone);
 	}
 	
-	public void undoStone() {
-		this.stoneList.remove(stoneList.size()-1);
+	public Stone undoStone() {
+		return this.stoneList.remove(stoneList.size()-1);
 	}
 
 
@@ -76,7 +78,7 @@ public class Room {
 				return true;
 			}
 		}
-		return false;
+		return false; 
 	}
 
 

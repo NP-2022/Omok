@@ -656,19 +656,57 @@ public class OmokServer extends JFrame {
 			}
 		}
 
-		public void undoStone(ChatMsg msg) {
+		public void undoRequest(ChatMsg msg) {
+			Room room = getRoom(msg);
+			
+			ChatMsg cm = new ChatMsg(userName, "903", "");
+			cm.roomName = room.roomName;
+			
+			for (UserService user : room.playerList) // 방에 있는 모든 유저에게 undo요청을 전송
+				user.WriteOneObject(cm);
+		}
+		
+		public void undoStone(ChatMsg msg) { // 무르기
 			Room room = getRoom(msg);
 			room.undoCount++;
+			if(msg.data.equals("disagree"))
+				room.undoDisagreeCount++;
+			ChatMsg cm = new ChatMsg(userName, "201", "");
+			cm.roomName = msg.roomName;
+			cm.data = "현재 무르기 투표가 진행중입니다. 진행도 : "+room.undoCount+"/"+room.roomMax;
+			sendGameMessage(cm);
+			
 			if (room.undoCount == room.roomMax) {
-				room.undoStone();
-				System.out.println(msg.roomNumber + " room undoStone");
+				if(room.undoDisagreeCount > 0) {
+					ChatMsg resultCm = new ChatMsg(userName, "201", "");
+					resultCm.roomName = msg.roomName;
+					resultCm.data = "투표 결과 무르기 요청이 거부되었습니다.";
+					sendGameMessage(resultCm);
+				}
+				else {
+					ChatMsg resultCm = new ChatMsg(userName, "201", "");
+					resultCm.roomName = msg.roomName;
+					resultCm.data = "투표 결과 무르기 요청이 승인되었습니다.\n무르기를 실행합니다.";
+					sendGameMessage(resultCm);
+					Stone stone = room.undoStone();
+					System.out.println(msg.roomNumber + " room undoStone");
+					System.out.println("stone Size : " + room.stoneList.size());
+					
+					ChatMsg undoCm = new ChatMsg(userName, "904", "");
+					undoCm.y = stone.y;
+					undoCm.x = stone.x;
+					undoCm.roomName = room.roomName;
+					
+					for (UserService user : room.playerList) // 방에 있는 모든 유저에게 undo 전송
+						user.WriteOneObject(undoCm);
+					for (UserService user : room.watcherList) // 방에 있는 모든 유저에게 undo 전송
+						user.WriteOneObject(undoCm);
+				}
+				
+				// 무르기 투표 초기화
 				room.undoCount = 0;
+				room.undoDisagreeCount = 0;
 			}
-			System.out.println("stone Size : " + room.stoneList.size());
-			for (UserService user : room.playerList) // 방에 있는 모든 유저에게 undo 전송
-				user.WriteOneObject(msg);
-			for (UserService user : room.watcherList) // 방에 있는 모든 유저에게 undo 전송
-				user.WriteOneObject(msg);
 		}
 
 		public void sendGameMessage(ChatMsg msg) {
@@ -907,7 +945,7 @@ public class OmokServer extends JFrame {
 							}
 						} else
 							drawStone(cm);
-					} else if (cm.code.matches("901")) { // 바둑돌 undo 처리 (무르기)
+					} else if (cm.code.matches("901")) { // 복기
 						System.out.println("이전 버튼 받음");
 						System.out.println("이전 바둑알");
 						Room room = null;
@@ -968,7 +1006,13 @@ public class OmokServer extends JFrame {
 								cm.stoneNum -= 1;
 						}
 						WriteOneObject(cm);
-					} else { // 300, 500, ... 기타 object는 모두 방송한다.
+					} else if (cm.code.matches("903")) {
+						undoRequest(cm);
+					} else if (cm.code.matches("904")) {
+						undoStone(cm);
+					}
+					
+					else { // 300, 500, ... 기타 object는 모두 방송한다.
 						WriteAllObject(cm);
 					}
 

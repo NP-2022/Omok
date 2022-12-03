@@ -216,11 +216,12 @@ public class OmokClientGameView extends JFrame {
 					next.roomName = roomName;
 					next.stoneNum = stonenum;
 					mainView.SendObject(next);
-				} else {// 플레이어 버튼
-
+				} 
+				else if (undoButton.getLabel().equals("무르기")) { // 무르기
+					ChatMsg undoReq = new ChatMsg(userName, "903", "무르기 요청");
+					undoReq.roomName = roomName;
+					mainView.SendObject(undoReq);
 				}
-//				ChatMsg msg = new ChatMsg(userName, "901", "무르기 요청");
-//				mainView.SendObject(msg);
 			}
 		});
 		undoButton.setBounds(343, 644, 107, 27);
@@ -337,7 +338,7 @@ public class OmokClientGameView extends JFrame {
 				if (index == -1 || index == 0)
 					return;
 				String selectedName = userList.getSelectedValue().toString().split("이름:")[1].split("]")[0]; // 이름에 ]가 없다고 가정
-				int result = JOptionPane.showConfirmDialog(null, selectedName + "를 강제퇴장 시킬까요?", "강제퇴장", JOptionPane.YES_NO_OPTION);
+				int result = JOptionPane.showConfirmDialog(gamePanel, selectedName + "를 강제퇴장 시킬까요?", "강제퇴장", JOptionPane.YES_NO_OPTION);
 				if(result == JOptionPane.YES_OPTION) {
 					ChatMsg cm = new ChatMsg(userName, "705", selectedName);
 					cm.roomName = roomName;
@@ -524,7 +525,7 @@ public class OmokClientGameView extends JFrame {
 			}
 		}
 	}
-
+	
 	public void previous(int y, int x) {
 		gamePanel.setZero(y, x);
 		gamePanel.repaint();
@@ -543,11 +544,26 @@ public class OmokClientGameView extends JFrame {
 		System.out.println(" 다음 바둑알 ");
 	}
 
+	public void undoStoneVote(ChatMsg cm) {
+		
+		int result = JOptionPane.showConfirmDialog(gamePanel, "한 수 무를까요?", "무르기 투표", JOptionPane.YES_NO_OPTION);
+		if(result == JOptionPane.YES_OPTION) {
+			ChatMsg msg = new ChatMsg(userName, "904", "agree");
+			msg.roomName = roomName;
+			mainView.SendObject(msg);
+		}
+		else {
+			ChatMsg msg = new ChatMsg(userName, "904", "disagree");
+			msg.roomName = roomName;
+			mainView.SendObject(msg);
+		}
+	}
+	
 	public void undoStone(ChatMsg cm) {
 		gamePanel.setZero(cm.y, cm.x);
 		gamePanel.repaint();
 
-		System.out.println(" 바둑알 제거됨.");
+		System.out.println(" 무르기 : 바둑알 제거됨.");
 	}
 
 	public void receiveGameMessage(ChatMsg cm) {
@@ -610,6 +626,7 @@ public class OmokClientGameView extends JFrame {
 		time = false;
 		nowtime = 30;
 		gamePanel.init();
+		repaint();
 		AppendText("유저 이탈로 게임을 중단합니다.");
 
 		startReadyButton.setEnabled(true);
@@ -620,12 +637,12 @@ public class OmokClientGameView extends JFrame {
 	public void kicked() {
 		setVisible(false);
 		time = false;
+		JOptionPane.showMessageDialog(mainView, "방장에 의해 강제퇴장 되었습니다.", "강제퇴장", JOptionPane.ERROR_MESSAGE);
 		for (int i = 0; i < mainView.gameView.size(); i++) {
 			if (mainView.gameView.get(i).roomName.equals(roomName)) {
 				mainView.gameView.remove(i);
 			}
 		}
-		JOptionPane.showMessageDialog(null, "방장에 의해 강제퇴장 되었습니다.", "강제퇴장", JOptionPane.ERROR_MESSAGE);
 	}
 
 	public void AppendText(String msg) {
