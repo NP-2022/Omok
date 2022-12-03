@@ -729,7 +729,7 @@ public class OmokServer extends JFrame {
 						finishGame(cm);
 						System.out.println(cm.data);
 					} else if (cm.code.matches("900")) { // 바둑돌 입력 처리
-						System.out.println("y: " + cm.y + "x: " + cm.x + "name: " + cm.roomName);
+						System.out.println("y: " + cm.y + " x: " + cm.x + " name: " + cm.roomName);
 						if (cm.y == 0 && cm.x == 0) {
 							for (int i = 0; i < roomVec.size(); i++) {
 								if (cm.roomName.equals(roomVec.get(i).roomName)) {
