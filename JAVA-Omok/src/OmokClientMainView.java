@@ -424,18 +424,30 @@ public class OmokClientMainView extends JFrame {
 								if(cm.stone != 999) {
 									gameView.get(i).nowtime = 31;
 								}
+								if(cm.stoneNum == 999) {
+									gameView.get(i).stonenum = 999;
+								}
 							}
 						}
 						break;
 					case "901": // 바둑돌 undo 수신
 						for (int i = 0; i < gameView.size(); i++) {
 							if (cm.roomName.equals(gameView.get(i).roomName)) {
-								gameView.get(i).undoStone(cm);
-								gameView.get(i).nowtime = 31;
+								gameView.get(i).stonenum = cm.stoneNum;
+								gameView.get(i).previous(cm.y, cm.x);
+								System.out.println("이전 완료");
 							}
 						}
 						break;
-
+					case "902":
+						for (int i = 0; i < gameView.size(); i++) {
+							if (cm.roomName.equals(gameView.get(i).roomName)) {
+								gameView.get(i).stonenum = cm.stoneNum;
+								gameView.get(i).next(cm.y, cm.x, cm.stone);
+								System.out.println("다음 완료");
+							}
+						}
+						break;
 					}
 
 				} catch (IOException e) {
@@ -474,9 +486,12 @@ public class OmokClientMainView extends JFrame {
 		System.out.println("방 입장 중222222");
 		OmokClientGameView view = new OmokClientGameView(mainView, UserName, Ip_addr, Port_no, msg.gameMode,
 				msg.roomName, msg.roomMax, false);
-		view.startReadyButton.setEnabled(false);
-		view.undoButton.setEnabled(false);
+		view.startReadyButton.setEnabled(true);
+		view.undoButton.setEnabled(true);
 		view.watcher = true;
+		view.nowtime = 999;
+		view.startReadyButton.setLabel("이전");
+		view.undoButton.setLabel("다음");
 		mainView.gameView.add(view);
 		System.out.println(mainView.gameView.size());
 	}

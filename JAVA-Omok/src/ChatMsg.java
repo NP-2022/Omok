@@ -23,6 +23,7 @@ class ChatMsg implements Serializable {
 	public int y;
 	public int x;
 	public int stone;
+	public int stoneNum = 999; //관전자 이전, 다음 동작 위치
 	
 	public ChatMsg(String userName, String code, String msg) {
 		this.code = code;

@@ -330,12 +330,13 @@ public class OmokServer extends JFrame {
 				}
 			}
 			for (int i = 0; i < room.watcherList.size(); i++) {
-				if(msg.userName.equals(room.watcherList.get(i).userName)) {
+				if (msg.userName.equals(room.watcherList.get(i).userName)) {
 					room.watcherList.remove(i);
 					ChatMsg cm = new ChatMsg(userName, "201", "");
 					cm.roomName = room.roomName;
 					cm.roomNumber = room.roomNumber;
 					cm.data = "[관전자][" + userName + "] 님이 퇴장했습니다.";
+					sendGameMessage(cm);
 					return;
 				}
 			}
@@ -378,6 +379,37 @@ public class OmokServer extends JFrame {
 			room.updateReadyState(msg.userName, false); // ready 배열 관리
 			if (room.isStarted) {
 				WriteOne("게임이 진행중인 방입니다!");
+				AppendText("관전자" + userName + " " + room.roomNumber + "번 방 입장.");
+				msg = new ChatMsg(userName, "704", "");
+				msg.roomMax = room.roomMax;
+				msg.roomName = room.roomName;
+				msg.gameMode = room.gameMode;
+				msg.roomNumber = room.roomNumber;
+				room.addWatcher(this); // // 방 벡터에 유저를 추가
+				WriteAllObject(msg);
+//				for (UserService user : room.playerList) { // 방에 있는 모든 유저에게 유저 목록 리스트를 갱신
+//					user.updateUserList(msg);
+//				}
+				for (UserService user : room.watcherList) { // 방에 있는 모든 유저에게 유저 목록 리스트를 갱신
+					user.updateUserList(msg);
+				}
+				ChatMsg cm = new ChatMsg(userName, "201", "");
+				cm.roomName = room.roomName;
+				cm.roomNumber = room.roomNumber;
+				cm.data = "[" + userName + "] 님이 관전모드로 입장했습니다.";
+				sendGameMessage(cm);
+
+				for (int i = 0; i < room.stoneList.size(); i++) {
+					ChatMsg stone = new ChatMsg(msg.userName, "900", "진행 기록");
+					stone.roomName = msg.roomName;
+					stone.x = room.stoneList.get(i).x;
+					stone.y = room.stoneList.get(i).y;
+					stone.stone = (i % room.roomMax) + 1;
+					if (stone.x == 0 && stone.y == 0) {
+						stone.stone = 0;
+					}
+					WriteOneObject(stone);
+				}
 				return;
 			}
 			if (room.isFull()) {
@@ -547,8 +579,22 @@ public class OmokServer extends JFrame {
 							System.out.println("3stone Size : " + room.stoneList.size());
 							for (UserService user : room.playerList) // 방에 있는 모든 유저에게 바둑돌 전송
 								user.WriteOneObject(msg);
-							for (UserService user : room.watcherList) // 방에 있는 모든 유저에게 바둑돌 전송
+							for (UserService user : room.watcherList) {// 방에 있는 모든 유저에게 바둑돌 전송
+								for (int i = 0; i < room.stoneList.size(); i++) {
+									ChatMsg stonemsg = new ChatMsg(user.userName, "900", "진행 기록");
+									stonemsg.roomName = msg.roomName;
+									stonemsg.x = room.stoneList.get(i).x;
+									stonemsg.y = room.stoneList.get(i).y;
+									stonemsg.stone = (i % room.roomMax) + 1;
+									if (stonemsg.x == 0 && stonemsg.y == 0) {
+										stonemsg.stone = 0;
+									}
+									user.WriteOneObject(stonemsg);
+								}
+								msg.stoneNum = 999;
 								user.WriteOneObject(msg);
+							}
+								
 							ChatMsg cm = new ChatMsg(msg.userName, "201", "");
 							cm.roomName = msg.roomName;
 							cm.data = "[" + msg.userName + "]님이 돌을 놓았습니다.";
@@ -810,8 +856,66 @@ public class OmokServer extends JFrame {
 						} else
 							drawStone(cm);
 					} else if (cm.code.matches("901")) { // 바둑돌 undo 처리 (무르기)
-						System.out.println("Stone Undo -> name: " + cm.roomName);
-						undoStone(cm);
+						System.out.println("이전 버튼 받음");
+						System.out.println("이전 바둑알");
+						Room room = null;
+						if (cm.stoneNum == 999) {
+							for (int i = 0; i < roomVec.size(); i++) {
+								if (cm.roomName.equals(roomVec.get(i).roomName)) {
+									room = roomVec.get(i);
+									break;
+								}
+							}
+							cm.stoneNum = room.stoneList.size() - 1;
+							cm.x = room.stoneList.get(cm.stoneNum).x;
+							cm.y = room.stoneList.get(cm.stoneNum).y;
+						} else {
+							for (int i = 0; i < roomVec.size(); i++) {
+								if (cm.roomName.equals(roomVec.get(i).roomName)) {
+									room = roomVec.get(i);
+									break;
+								}
+							}
+							cm.stoneNum -= 1;
+							if (cm.stoneNum == -1)
+								cm.stoneNum = 0;
+
+							cm.x = room.stoneList.get(cm.stoneNum).x;
+							cm.y = room.stoneList.get(cm.stoneNum).y;
+
+						}
+						WriteOneObject(cm);
+					} else if (cm.code.matches("902")) {
+						System.out.println("다음 버튼 받음");
+						System.out.println("다음 바둑알 놓기");
+						Room room = null;
+						if (cm.stoneNum == 999) {
+							for (int i = 0; i < roomVec.size(); i++) {
+								if (cm.roomName.equals(roomVec.get(i).roomName)) {
+									room = roomVec.get(i);
+									break;
+								}
+							}
+							cm.stoneNum = room.stoneList.size() - 1;
+							cm.x = room.stoneList.get(cm.stoneNum).x;
+							cm.y = room.stoneList.get(cm.stoneNum).y;
+						} else {
+							for (int i = 0; i < roomVec.size(); i++) {
+								if (cm.roomName.equals(roomVec.get(i).roomName)) {
+									room = roomVec.get(i);
+									break;
+								}
+							}
+							
+							cm.x = room.stoneList.get(cm.stoneNum).x;
+							cm.y = room.stoneList.get(cm.stoneNum).y;
+							cm.stone = (cm.stoneNum % room.roomMax) + 1;
+							
+							cm.stoneNum += 1;
+							if(cm.stoneNum == room.stoneList.size())
+								cm.stoneNum -= 1;
+						}
+						WriteOneObject(cm);
 					} else { // 300, 500, ... 기타 object는 모두 방송한다.
 						WriteAllObject(cm);
 					}
