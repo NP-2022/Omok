@@ -458,6 +458,8 @@ public class OmokClientGameView extends JFrame {
 			if (userName.equals(owner[1].substring(4, owner[1].length() - 1))) {
 				startReadyButton.setLabel("Ω√¿€");
 				startReadyButton.setEnabled(true);
+				kickButton.setVisible(true);
+				chatLimitButton.setVisible(true);
 				this.isOwner = true;
 			}
 		}
