@@ -329,6 +329,16 @@ public class OmokServer extends JFrame {
 					break;
 				}
 			}
+			for (int i = 0; i < room.watcherList.size(); i++) {
+				if(msg.userName.equals(room.watcherList.get(i).userName)) {
+					room.watcherList.remove(i);
+					ChatMsg cm = new ChatMsg(userName, "201", "");
+					cm.roomName = room.roomName;
+					cm.roomNumber = room.roomNumber;
+					cm.data = "[관전자][" + userName + "] 님이 퇴장했습니다.";
+					return;
+				}
+			}
 			System.out.println("후, 방의 인원은 : " + room.playerList.size());
 			if (room.playerList.size() != 0) {
 				for (UserService user : room.playerList) { // 준비상태 리셋
@@ -337,6 +347,9 @@ public class OmokServer extends JFrame {
 				room.owner = room.playerList.get(0); // 방장 바꾸기
 				room.ownerName = room.owner.userName;
 				for (UserService user : room.playerList) { // 방에 있는 모든 유저에게 유저 목록 리스트를 갱신
+					user.updateUserList(msg);
+				}
+				for (UserService user : room.watcherList) { // 방에 있는 모든 유저에게 유저 목록 리스트를 갱신
 					user.updateUserList(msg);
 				}
 				ChatMsg cm = new ChatMsg(userName, "201", "");
@@ -368,7 +381,26 @@ public class OmokServer extends JFrame {
 				return;
 			}
 			if (room.isFull()) {
-				WriteOne("방이 꽉 찼습니다!");
+				WriteOne("방이 꽉 찼습니다! 관전모드로 입장하겠습니다.");
+				AppendText("관전자" + userName + " " + room.roomNumber + "번 방 입장.");
+				msg = new ChatMsg(userName, "704", "");
+				msg.roomMax = room.roomMax;
+				msg.roomName = room.roomName;
+				msg.gameMode = room.gameMode;
+				msg.roomNumber = room.roomNumber;
+				room.addWatcher(this); // // 방 벡터에 유저를 추가
+				WriteAllObject(msg);
+				for (UserService user : room.playerList) { // 방에 있는 모든 유저에게 유저 목록 리스트를 갱신
+					user.updateUserList(msg);
+				}
+				for (UserService user : room.watcherList) { // 방에 있는 모든 유저에게 유저 목록 리스트를 갱신
+					user.updateUserList(msg);
+				}
+				ChatMsg cm = new ChatMsg(userName, "201", "");
+				cm.roomName = room.roomName;
+				cm.roomNumber = room.roomNumber;
+				cm.data = "[" + userName + "] 님이 관전모드로 입장했습니다.";
+				sendGameMessage(cm);
 				return;
 			} else if (room.hasName(msg.userName)) { // 방에 유저의 이름이 이미 있는 경우
 				WriteOne("이미 들어가 있는 방입니다!");
@@ -383,6 +415,9 @@ public class OmokServer extends JFrame {
 				room.addUser(this); // // 방 벡터에 유저를 추가
 				WriteAllObject(msg);
 				for (UserService user : room.playerList) { // 방에 있는 모든 유저에게 유저 목록 리스트를 갱신
+					user.updateUserList(msg);
+				}
+				for (UserService user : room.watcherList) { // 방에 있는 모든 유저에게 유저 목록 리스트를 갱신
 					user.updateUserList(msg);
 				}
 				ChatMsg cm = new ChatMsg(userName, "201", "");
@@ -453,16 +488,13 @@ public class OmokServer extends JFrame {
 		public void drawStone(ChatMsg msg) { // 벡터에서
 			Room room = getRoom(msg);
 			System.out.println(msg.roomNumber + "room DrawStone");
-
 			if (!room.isStarted) {
-
 				ChatMsg cm = new ChatMsg(msg.userName, "201", "");
 				cm.roomName = msg.roomName;
 				cm.data = "게임 시작 전입니다.";
 				WriteOneObject(cm);
 				return;
 			}
-
 			Stone stone = new Stone();
 			stone.y = msg.y;
 			stone.x = msg.x;
@@ -481,32 +513,49 @@ public class OmokServer extends JFrame {
 					break;
 				}
 			}
-//			if (room.roomMax == 4) {
-//				color = color % 2;
-//			}
+
+			for (int i = 0; i < room.watcherList.size(); i++) {
+				if (msg.userName.equals(room.watcherList.get(i).userName)) {
+					usernum = 999;
+					break;
+				}
+			}
+
 			if (stone.y == 0 && stone.x == 0) { // 제한 시간 종료시 넘어논 바둑알처리
 				msg.stone = 0;
 				if (room.roomMax == room.playerList.size()) {
-
 					room.addStone(stone);
 					System.out.println("2stone Size : " + room.stoneList.size());
-
 				}
 			} else {
-				msg.stone = color;
-//			WriteAllObject(msg);
-				if (room.roomMax == room.playerList.size()) {
-					if ((room.stoneList.size() % room.roomMax) == usernum) {
-						room.addStone(stone);
-						System.out.println("3stone Size : " + room.stoneList.size());
-						for (UserService user : room.playerList) // 방에 있는 모든 유저에게 바둑돌 전송
-							user.WriteOneObject(msg);
-						ChatMsg cm = new ChatMsg(msg.userName, "201", "");
-						cm.roomName = msg.roomName;
-						cm.data = "[" + msg.userName + "]님이 돌을 놓았습니다.";
-						sendGameMessage(cm);
-					} else {
-						System.out.println("차례가 아님");
+				if (usernum == 999) {
+					msg.stone = 999;
+					System.out.println("훈수를 뒀습니다.");
+					for (UserService user : room.playerList) // 방에 있는 모든 유저에게 바둑돌 전송
+						user.WriteOneObject(msg);
+					for (UserService user : room.watcherList) // 방에 있는 모든 유저에게 바둑돌 전송
+						user.WriteOneObject(msg);
+					ChatMsg cm = new ChatMsg(msg.userName, "201", "");
+					cm.roomName = msg.roomName;
+					cm.data = "[" + msg.userName + "]님이 조언을 해줍니다.";
+					sendGameMessage(cm);
+				} else {
+					msg.stone = color;
+					if (room.roomMax == room.playerList.size()) {
+						if ((room.stoneList.size() % room.roomMax) == usernum) {
+							room.addStone(stone);
+							System.out.println("3stone Size : " + room.stoneList.size());
+							for (UserService user : room.playerList) // 방에 있는 모든 유저에게 바둑돌 전송
+								user.WriteOneObject(msg);
+							for (UserService user : room.watcherList) // 방에 있는 모든 유저에게 바둑돌 전송
+								user.WriteOneObject(msg);
+							ChatMsg cm = new ChatMsg(msg.userName, "201", "");
+							cm.roomName = msg.roomName;
+							cm.data = "[" + msg.userName + "]님이 돌을 놓았습니다.";
+							sendGameMessage(cm);
+						} else {
+							System.out.println("차례가 아님");
+						}
 					}
 				}
 			}
@@ -523,6 +572,8 @@ public class OmokServer extends JFrame {
 			System.out.println("stone Size : " + room.stoneList.size());
 			for (UserService user : room.playerList) // 방에 있는 모든 유저에게 undo 전송
 				user.WriteOneObject(msg);
+			for (UserService user : room.watcherList) // 방에 있는 모든 유저에게 undo 전송
+				user.WriteOneObject(msg);
 		}
 
 		public void sendGameMessage(ChatMsg msg) {
@@ -531,6 +582,11 @@ public class OmokServer extends JFrame {
 			Room room = getRoom(msg);
 
 			for (UserService user : room.playerList) { // 방에 있는 모든 유저에게 message 전송
+				user.WriteOneObject(msg);
+				System.out.println(
+						"sendGameMessage WriteOneObject : " + msg.code + " " + msg.roomName + " " + msg.userName);
+			}
+			for (UserService user : room.watcherList) { // 방에 있는 모든 유저에게 message 전송
 				user.WriteOneObject(msg);
 				System.out.println(
 						"sendGameMessage WriteOneObject : " + msg.code + " " + msg.roomName + " " + msg.userName);
@@ -562,6 +618,9 @@ public class OmokServer extends JFrame {
 			ChatMsg cm = new ChatMsg(userName, "800", "");
 			cm.roomName = room.roomName;
 			for (UserService user : room.playerList) { // 방에 있는 모든 유저에게 전송
+				user.WriteOneObject(cm);
+			}
+			for (UserService user : room.watcherList) { // 방에 있는 모든 유저에게 전송
 				user.WriteOneObject(cm);
 			}
 		}
@@ -603,6 +662,11 @@ public class OmokServer extends JFrame {
 				finishCm.roomName = room.roomName;
 				user.WriteOneObject(finishCm);
 			}
+			for (UserService user : room.watcherList) { // 방에 있는 모든 유저에게 전송
+				ChatMsg finishCm = new ChatMsg(userName, "201", "[" + userName + "] 승리, 게임 종료");
+				finishCm.roomName = room.roomName;
+				user.WriteOneObject(finishCm);
+			}
 		}
 
 		public void stopGame(ChatMsg msg) { // 누군가 도중에 나가면 게임을 중단시키는 메소드
@@ -616,6 +680,11 @@ public class OmokServer extends JFrame {
 				readyToggleCm.roomName = room.roomName;
 				user.WriteOneObject(readyToggleCm); // 유저 준비 모두 취소시킴
 
+				ChatMsg stopCm = new ChatMsg(userName, "803", ""); // 게임 중단
+				stopCm.roomName = room.roomName;
+				user.WriteOneObject(stopCm);
+			}
+			for (UserService user : room.watcherList) { // 방에 있는 모든 유저에게 전송
 				ChatMsg stopCm = new ChatMsg(userName, "803", ""); // 게임 중단
 				stopCm.roomName = room.roomName;
 				user.WriteOneObject(stopCm);
@@ -738,7 +807,6 @@ public class OmokServer extends JFrame {
 									}
 								}
 							}
-
 						} else
 							drawStone(cm);
 					} else if (cm.code.matches("901")) { // 바둑돌 undo 처리 (무르기)

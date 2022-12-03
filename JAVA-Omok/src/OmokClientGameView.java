@@ -69,11 +69,13 @@ public class OmokClientGameView extends JFrame {
 	public JButton chatSendButton;
 	public JPanel panel;
 	public Button startReadyButton;
+	public Button undoButton;
 	public boolean isOwner; // 방장인지?
-	public boolean time = false; //시간 흐름 적용 시 true 아니면 false
+	public boolean time = false; // 시간 흐름 적용 시 true 아니면 false
 	public int nowtime = 30;
 	public JLabel timeLabel;
-	
+	public boolean watcher = false;
+
 	private JList userList;
 	private DefaultListModel userListModel; // 방 목록
 
@@ -192,11 +194,12 @@ public class OmokClientGameView extends JFrame {
 		gc = gamePanel.getGraphics();
 
 		startReadyButton = new Button("시작");
-		if(!isOwner) startReadyButton.setLabel("준비");
+		if (!isOwner)
+			startReadyButton.setLabel("준비");
 		startReadyButton.setBounds(220, 644, 107, 27);
 		contentPane.add(startReadyButton);
 
-		Button undoButton = new Button("무르기");
+		undoButton = new Button("무르기");
 		undoButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 //				ChatMsg msg = new ChatMsg(userName, "901", "무르기 요청");
@@ -207,7 +210,7 @@ public class OmokClientGameView extends JFrame {
 		contentPane.add(undoButton);
 
 		Button exitButton = new Button("나가기");
-		
+
 		addWindowListener(new WindowAdapter() { // 이 창 X키로 끌 시에도 보내기
 			public void windowClosing(WindowEvent e) {
 				ChatMsg msg = new ChatMsg(userName, "701", "나가기");
@@ -221,16 +224,16 @@ public class OmokClientGameView extends JFrame {
 				time = false;
 				ChatMsg msg = new ChatMsg(userName, "701", "나가기");
 				msg.roomName = roomName;
-				for(int i = 0; i < mainView.gameView.size(); i++) {
-					if(mainView.gameView.get(i).roomName.equals(roomName)) {
+				for (int i = 0; i < mainView.gameView.size(); i++) {
+					if (mainView.gameView.get(i).roomName.equals(roomName)) {
 						mainView.gameView.remove(i);
 					}
-						
+
 				}
 				mainView.SendObject(msg);
 			}
 		});
-		
+
 		exitButton.setBounds(470, 644, 107, 27);
 		contentPane.add(exitButton);
 
@@ -241,20 +244,19 @@ public class OmokClientGameView extends JFrame {
 		MyMouseEvent mouse = new MyMouseEvent();
 
 		gamePanel.addMouseListener(mouse);
-		
+
 		TextSendAction action = new TextSendAction();
 		chatSendButton.addActionListener(action);
 		chatTextField.addActionListener(action);
 		chatTextField.requestFocus();
-		
+
 		MyAction myAction = new MyAction();
 		startReadyButton.addActionListener(myAction);
-		
+
 		setVisible(true);
-		
 
 	}
-	
+
 	class TextSendAction implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -272,17 +274,16 @@ public class OmokClientGameView extends JFrame {
 			}
 		}
 	}
-	
+
 	class MyAction implements ActionListener { // 시작, 준비 버튼 Action 정의
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			String label = ((Button)e.getSource()).getLabel(); 
-			if(label.equals("시작")) {
+			String label = ((Button) e.getSource()).getLabel();
+			if (label.equals("시작")) {
 				ChatMsg cm = new ChatMsg(userName, "800", "");
 				cm.roomName = roomName;
 				mainView.SendObject(cm);
-			}
-			else if (label.equals("준비") || label.equals("준비 취소")) {
+			} else if (label.equals("준비") || label.equals("준비 취소")) {
 				ChatMsg cm = new ChatMsg(userName, "801", "");
 				cm.roomName = roomName;
 				mainView.SendObject(cm);
@@ -329,32 +330,30 @@ public class OmokClientGameView extends JFrame {
 			msg.x = x;
 			msg.roomName = roomName;
 
-			if (gamePanel.isFilled(y, x)) { // 돌이 이미 있으면 return
-				AppendText("돌이 이미 있는 타일입니다.");
-				return;
-			}
+			if (watcher == false) {
+				if (gamePanel.isFilled(y, x)) { // 돌이 이미 있으면 return
+					AppendText("돌이 이미 있는 타일입니다.");
+					return;
+				}
 
-			if (gamePanel.Three(y, x)) {
-				AppendText("이곳은 33 룰에 의해 돌을 놓을 수 없습니다.");
-				return;
-			}
-			
-			if(msg.y == 0) {
-				return;
+				if (gamePanel.Three(y, x)) {
+					AppendText("이곳은 33 룰에 의해 돌을 놓을 수 없습니다.");
+					return;
+				}
+
+				if (msg.y == 0) {
+					return;
+				}
+			} else {
+				if (gamePanel.isFilled(y, x)) { // 돌이 이미 있으면 return
+					return;
+				}
+				if (msg.y == 0) {
+					return;
+				}
 			}
 			mainView.SendObject(msg);
 
-//			gamePanel.setMap(y, x, 1);
-//			if (gamePanel.Three(y, x)) {
-//				gamePanel.setZero(y, x);
-//			}
-//
-//			if (gamePanel.Rule(y, x)) {
-//				gamePanel.init();
-//				gamePanel.repaint();
-//			} else
-//				gamePanel.repaint();
-			// SendMouseEvent(e);
 		}
 
 		@Override
@@ -395,8 +394,8 @@ public class OmokClientGameView extends JFrame {
 			}
 			System.out.println("userList updated");
 			String owner[] = list[0].split(" ");
-			System.out.println(owner[1].substring(4, owner[1].length() -1) + "   방장이름<<<<<<<<<");
-			if(userName.equals(owner[1].substring(4, owner[1].length() -1))) {
+			System.out.println(owner[1].substring(4, owner[1].length() - 1) + "   방장이름<<<<<<<<<");
+			if (userName.equals(owner[1].substring(4, owner[1].length() - 1))) {
 				startReadyButton.setLabel("시작");
 				startReadyButton.setEnabled(true);
 				this.isOwner = true;
@@ -406,17 +405,15 @@ public class OmokClientGameView extends JFrame {
 
 	public void timeProcess() {
 		timeLabel.setText("남은 시간 : " + nowtime);
-		
-		
-		if(nowtime < 10)
+
+		if (nowtime < 10)
 			timeLabel.setForeground(Color.RED);
-		else if(nowtime < 21)
+		else if (nowtime < 21)
 			timeLabel.setForeground(Color.BLUE);
 		else
 			timeLabel.setForeground(Color.BLACK);
-		
-		
-		if(nowtime == 0) {
+
+		if (nowtime == 0) {
 			AppendText("제한 시간이 지났습니다. 다음 차례로 넘어갔습니다.");
 			ChatMsg msg = new ChatMsg(userName, "900", "Stone");
 			msg.y = 0;
@@ -426,35 +423,48 @@ public class OmokClientGameView extends JFrame {
 			System.out.println("제한 시간이 지났습니다.");
 			nowtime = 31;
 		}
-		
-		
-		
 
 	}
-	public void drawStone(ChatMsg cm) {
-		if (roomName.equals(cm.roomName)) {
-			System.out.println("Client draw Stone : player" + cm.stone);
-			gamePanel.setMap(cm.y, cm.x, cm.stone);
-			currentPlayer = (currentPlayer + 1) % maxPlayer; // 플레이어는 1~max ( 실 사용시 +1 )
 
-			/*
-			 * if (gamePanel.Three(cm.y, cm.x)) { cm.code = "901"; // 33이면 입력한 바둑돌 되돌리기
-			 * mainView.SendObject(cm); return; }
-			 */
-			if (gamePanel.Rule(cm.y, cm.x)) {
+	public void drawStone(ChatMsg cm) {
+		if (cm.stone == 999) {
+			if (roomName.equals(cm.roomName)) {
+				System.out.println("훈수를 둡니다.");
+				gamePanel.removeBackMap();
 				gamePanel.setMap(cm.y, cm.x, cm.stone);
-				gamePanel.repaint();
-				gameEnd(cm);
-				time = false;
-				nowtime = 30;
-				gamePanel.repaint();
-				timeLabel.setText("남은 시간 : " + nowtime);
-			} else {
 				gamePanel.repaint();
 				System.out.println(" 바둑알 입력됨.");
 			}
-		}
+		} else {
+			if (roomName.equals(cm.roomName)) {
+				System.out.println("Client draw Stone : player" + cm.stone);
+				gamePanel.setMap(cm.y, cm.x, cm.stone);
+				currentPlayer = (currentPlayer + 1) % maxPlayer; // 플레이어는 1~max ( 실 사용시 +1 )
 
+				/*
+				 * if (gamePanel.Three(cm.y, cm.x)) { cm.code = "901"; // 33이면 입력한 바둑돌 되돌리기
+				 * mainView.SendObject(cm); return; }
+				 */
+				if (gamePanel.Rule(cm.y, cm.x)) {
+					gamePanel.setMap(cm.y, cm.x, cm.stone);
+					gamePanel.repaint();
+					gameEnd(cm);
+					time = false;
+					nowtime = 30;
+					gamePanel.repaint();
+					timeLabel.setText("남은 시간 : " + nowtime);
+					if(watcher == true) {
+						startReadyButton.setEnabled(false);
+					}
+					if(startReadyButton.getLabel().equals("준비 취소")) {
+						startReadyButton.setLabel("준비");
+					}
+				} else {
+					gamePanel.repaint();
+					System.out.println(" 바둑알 입력됨.");
+				}
+			}
+		}
 	}
 
 	public void undoStone(ChatMsg cm) {
@@ -463,29 +473,32 @@ public class OmokClientGameView extends JFrame {
 
 		System.out.println(" 바둑알 제거됨.");
 	}
-	
+
 	public void receiveGameMessage(ChatMsg cm) {
-		if(!cm.roomName.equals(roomName)) return;
+		if (!cm.roomName.equals(roomName))
+			return;
 		AppendText(cm.data);
-		
+
 	}
-	
+
 	public void gameStart(ChatMsg cm) {
-		if(!cm.roomName.equals(roomName)) return;
-		
+		if (!cm.roomName.equals(roomName))
+			return;
+
 		time = true;
 		gamePanel.init();
 		startReadyButton.setEnabled(false);
 	}
-	
+
 	public void gameReady(ChatMsg cm) {
-		if(isOwner) return;
-		
+		if (isOwner)
+			return;
+
 		String label = cm.data.equals("true") ? "준비 취소" : "준비";
-			
+
 		startReadyButton.setLabel(label);
 	}
-	
+
 	public void gameEnd(ChatMsg cm) {
 		time = false;
 		try {
@@ -505,24 +518,28 @@ public class OmokClientGameView extends JFrame {
 		gamePanel.init();
 		ChatMsg msg = new ChatMsg(userName, "802", cm.userName + "이 승리");
 		msg.roomName = roomName;
-		
-		if(isOwner) mainView.SendObject(msg); // 게임 종료를 서버에 알림
+
+		if (isOwner)
+			mainView.SendObject(msg); // 게임 종료를 서버에 알림
 		// 방장만 보내는 이유 : 한명만 보내게 하기 위해서
-		
+
 		nowtime = 30;
 		startReadyButton.setEnabled(true);
 	}
-	
+
 	public void gameStop(ChatMsg cm) {
 		time = false;
 		nowtime = 30;
 		gamePanel.init();
 		AppendText("유저 이탈로 게임을 중단합니다.");
-		
+
 		startReadyButton.setEnabled(true);
-		startReadyButton.setLabel(isOwner? "시작":"준비");
+		startReadyButton.setLabel(isOwner ? "시작" : "준비");
+		if(watcher == true) {
+			startReadyButton.setEnabled(false);
+		}
 	}
-	
+
 	public void AppendText(String msg) {
 
 		msg = msg.trim(); // 앞뒤 blank와 \n을 제거한다.
@@ -531,57 +548,52 @@ public class OmokClientGameView extends JFrame {
 		SimpleAttributeSet left = new SimpleAttributeSet();
 		StyleConstants.setAlignment(left, StyleConstants.ALIGN_LEFT);
 		StyleConstants.setForeground(left, Color.BLACK);
-	    doc.setParagraphAttributes(doc.getLength(), 1, left, false);
+		doc.setParagraphAttributes(doc.getLength(), 1, left, false);
 		try {
-			doc.insertString(doc.getLength(), msg+"\n", left );
+			doc.insertString(doc.getLength(), msg + "\n", left);
 		} catch (BadLocationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		int len = textArea.getDocument().getLength();
 		textArea.setCaretPosition(len);
-		//textArea.replaceSelection("\n");
-
+		// textArea.replaceSelection("\n");
 
 	}
+
 	// 화면 우측에 출력
 	public void AppendTextR(String msg) {
-		msg = msg.trim(); // 앞뒤 blank와 \n을 제거한다.	
+		msg = msg.trim(); // 앞뒤 blank와 \n을 제거한다.
 		StyledDocument doc = textArea.getStyledDocument();
 		SimpleAttributeSet right = new SimpleAttributeSet();
 		StyleConstants.setAlignment(right, StyleConstants.ALIGN_RIGHT);
-		StyleConstants.setForeground(right, Color.BLUE);	
-	    doc.setParagraphAttributes(doc.getLength(), 1, right, false);
+		StyleConstants.setForeground(right, Color.BLUE);
+		doc.setParagraphAttributes(doc.getLength(), 1, right, false);
 		try {
-			doc.insertString(doc.getLength(),msg+"\n", right );
+			doc.insertString(doc.getLength(), msg + "\n", right);
 		} catch (BadLocationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		int len = textArea.getDocument().getLength();
 		textArea.setCaretPosition(len);
-		//textArea.replaceSelection("\n");
+		// textArea.replaceSelection("\n");
 
 	}
-	
-	/* 이모티콘 넣으면 사용할 부분
-	public void AppendImage(ImageIcon ori_icon) {
-		int len = textArea.getDocument().getLength();
-		textArea.setCaretPosition(len); // place caret at the end (with no selection)
-		Image ori_img = ori_icon.getImage();
-		Image new_img;
-		ImageIcon new_icon;
-		int width, height;
-		double ratio;
-		width = ori_icon.getIconWidth();
-		height = ori_icon.getIconHeight();
 
+	/*
+	 * 이모티콘 넣으면 사용할 부분 public void AppendImage(ImageIcon ori_icon) { int len =
+	 * textArea.getDocument().getLength(); textArea.setCaretPosition(len); // place
+	 * caret at the end (with no selection) Image ori_img = ori_icon.getImage();
+	 * Image new_img; ImageIcon new_icon; int width, height; double ratio; width =
+	 * ori_icon.getIconWidth(); height = ori_icon.getIconHeight();
+	 * 
+	 * 
+	 * gc2.drawImage(ori_img, 0, 0, imagePanel.getWidth(), imagePanel.getHeight(),
+	 * imagePanel); gc.drawImage(panelImage, 0, 0, imagePanel.getWidth(),
+	 * imagePanel.getHeight(), imagePanel); }
+	 */
 
-		gc2.drawImage(ori_img,  0,  0, imagePanel.getWidth(), imagePanel.getHeight(), imagePanel);
-		gc.drawImage(panelImage, 0, 0, imagePanel.getWidth(), imagePanel.getHeight(), imagePanel);
-	}
-	*/
-	
 	///////////////// 오목 패널 부분 ////////////////////
 
 	class TablePanel1 extends JPanel {
@@ -626,9 +638,16 @@ public class OmokClientGameView extends JFrame {
 			}
 			currentPlayer = 0;
 		}
-
+		public void removeBackMap() {
+			for (int i = 0; i < MaxSize + 1; i++) {
+				for (int j = 0; j < MaxSize; j++) {
+					if(Map[i][j] == 999)
+						Map[i][j] = 0;
+				}
+			}
+		}
 		public void setMap(int y, int x, int color) {
-			if (Map[y][x] == 0)
+			if (Map[y][x] == 0 || Map[y][x] == 999)
 				Map[y][x] = color;
 		}
 
@@ -637,6 +656,9 @@ public class OmokClientGameView extends JFrame {
 		}
 
 		public Boolean isFilled(int y, int x) {
+			if(Map[y][x] == 999) {
+				return Map[y][x] != 999;
+			}
 			return Map[y][x] != 0;
 		}
 
@@ -742,6 +764,9 @@ public class OmokClientGameView extends JFrame {
 						drawWhite(g, x, y);
 					else if (Map[y][x] == 3)
 						drawRed(g, x, y);
+					else if (Map[y][x] == 999)
+						drawBack(g, x, y);
+//						g.drawOval(x, y, 28, 28); //원 그리기
 				}
 			}
 		}
@@ -756,6 +781,11 @@ public class OmokClientGameView extends JFrame {
 
 		public void drawWhite(Graphics g, int x, int y) {
 			g.drawImage(White, x * size.getCell() + 15, y * size.getCell() - 15, 28, 28, this);
+		}
+		
+		public void drawBack(Graphics g, int x, int y) {
+//			g.drawImage(White, x * size.getCell() + 15, y * size.getCell() - 15, 28, 28, this);
+			g.drawOval( x * size.getCell() + 15, y * size.getCell() - 15, 28, 28);
 		}
 
 	}

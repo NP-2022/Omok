@@ -83,6 +83,10 @@ public class Room {
 	public void addUser(OmokServer.UserService userService) {
 		playerList.add(userService);
 	}
+	
+	public void addWatcher(OmokServer.UserService userService) {
+		watcherList.add(userService);
+	}
 
 
 	public int getPlayerCount() {

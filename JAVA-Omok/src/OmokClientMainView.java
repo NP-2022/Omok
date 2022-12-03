@@ -390,16 +390,18 @@ public class OmokClientMainView extends JFrame {
 							}
 						}
 						break;
+					case "704":
+						if (cm.userName.equals(UserName)) // 방에 입장한 클라이언트 본인일 경우
+							insertRoomWatcher(cm);
+						break;
 					case "800": // 게임 시작
 						for (int i = 0; i < gameView.size(); i++) {
 							if (cm.roomName.equals(gameView.get(i).roomName)) {
 								gameView.get(i).gameStart(cm);
 								OmokClientGameView gv = gameView.get(i);
-								if (gv.time == true) {
-
-								}
 							}
 						}
+						break;
 					case "801":
 						for (int i = 0; i < gameView.size(); i++) {
 							if (cm.roomName.equals(gameView.get(i).roomName)) {
@@ -419,7 +421,9 @@ public class OmokClientMainView extends JFrame {
 						for (int i = 0; i < gameView.size(); i++) {
 							if (cm.roomName.equals(gameView.get(i).roomName)) {
 								gameView.get(i).drawStone(cm);
-								gameView.get(i).nowtime = 31;
+								if(cm.stone != 999) {
+									gameView.get(i).nowtime = 31;
+								}
 							}
 						}
 						break;
@@ -462,6 +466,17 @@ public class OmokClientMainView extends JFrame {
 		System.out.println("방 입장 중111111");
 		OmokClientGameView view = new OmokClientGameView(mainView, UserName, Ip_addr, Port_no, msg.gameMode,
 				msg.roomName, msg.roomMax, false);
+		mainView.gameView.add(view);
+		System.out.println(mainView.gameView.size());
+	}
+	
+	private void insertRoomWatcher(ChatMsg msg) { // 방 입장하기
+		System.out.println("방 입장 중222222");
+		OmokClientGameView view = new OmokClientGameView(mainView, UserName, Ip_addr, Port_no, msg.gameMode,
+				msg.roomName, msg.roomMax, false);
+		view.startReadyButton.setEnabled(false);
+		view.undoButton.setEnabled(false);
+		view.watcher = true;
 		mainView.gameView.add(view);
 		System.out.println(mainView.gameView.size());
 	}
