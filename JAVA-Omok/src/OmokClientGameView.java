@@ -30,6 +30,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
 
 import javax.swing.JMenuBar;
@@ -38,6 +39,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
 import java.awt.Panel;
+import java.awt.AlphaComposite;
 import java.awt.Button;
 import javax.swing.JList;
 import javax.swing.ListModel;
@@ -871,9 +873,12 @@ public class OmokClientGameView extends JFrame {
 			g.drawImage(White, x * size.getCell() + 15, y * size.getCell() - 15, 28, 28, this);
 		}
 
-		public void drawBack(Graphics g, int x, int y) {
+		public void drawBack(Graphics g, int x, int y) { // 훈수는 반투명한 돌 그리기
 //			g.drawImage(White, x * size.getCell() + 15, y * size.getCell() - 15, 28, 28, this);
-			g.drawOval(x * size.getCell() + 15, y * size.getCell() - 15, 28, 28);
+			//Graphics2D g2 = (Graphics2D)g;
+			((Graphics2D)g).setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f));
+			g.drawImage(Black, x * size.getCell() + 15, y * size.getCell() - 15, 28, 28, this);
+			((Graphics2D)g).setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
 		}
 
 	}
