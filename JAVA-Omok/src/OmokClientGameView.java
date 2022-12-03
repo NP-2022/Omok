@@ -15,6 +15,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.WindowConstants;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -34,6 +35,8 @@ import java.awt.Image;
 import javax.swing.JMenuBar;
 import java.awt.ScrollPane;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+
 import java.awt.Panel;
 import java.awt.Button;
 import javax.swing.JList;
@@ -70,6 +73,8 @@ public class OmokClientGameView extends JFrame {
 	public JPanel panel;
 	public Button startReadyButton;
 	public Button undoButton;
+	public JButton kickButton;
+	public JButton chatLimitButton;
 	public boolean isOwner; // 방장인지?
 	public boolean time = false; // 시간 흐름 적용 시 true 아니면 false
 	public int nowtime = 30;
@@ -103,7 +108,7 @@ public class OmokClientGameView extends JFrame {
 		contentPane.setLayout(null);
 
 		JScrollPane chatScrollPane = new JScrollPane();
-		chatScrollPane.setBounds(659, 328, 352, 300);
+		chatScrollPane.setBounds(659, 350, 352, 278);
 		contentPane.add(chatScrollPane);
 
 		textArea = new JTextPane();
@@ -219,6 +224,7 @@ public class OmokClientGameView extends JFrame {
 		undoButton.setBounds(343, 644, 107, 27);
 		contentPane.add(undoButton);
 
+		setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		Button exitButton = new Button("나가기");
 		exitButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -242,6 +248,16 @@ public class OmokClientGameView extends JFrame {
 		timeLabel = new JLabel("남은 시간 : " + nowtime);
 		timeLabel.setBounds(90, 643, 107, 28);
 		contentPane.add(timeLabel);
+		
+		kickButton = new JButton("강제퇴장");
+		kickButton.setBounds(730, 323, 91, 23);
+		contentPane.add(kickButton);
+		if(!isOwner) kickButton.setVisible(false);
+		
+		chatLimitButton = new JButton("채팅금지");
+		chatLimitButton.setBounds(857, 323, 91, 23);
+		contentPane.add(chatLimitButton);
+		if(!isOwner) chatLimitButton.setVisible(false);
 
 		MyMouseEvent mouse = new MyMouseEvent();
 
@@ -254,6 +270,15 @@ public class OmokClientGameView extends JFrame {
 
 		MyAction myAction = new MyAction();
 		startReadyButton.addActionListener(myAction);
+		
+		OwnerAction ownerAction = new OwnerAction();
+		kickButton.addActionListener(ownerAction);
+		chatLimitButton.addActionListener(ownerAction);
+		
+
+		undoButton.addActionListener(myAction);
+		
+		
 
 		setVisible(true);
 
@@ -297,6 +322,28 @@ public class OmokClientGameView extends JFrame {
 					cm.roomName = roomName;
 					mainView.SendObject(cm);
 				}
+			}
+		}
+	}
+	
+	class OwnerAction implements ActionListener { // 강제퇴장, 채팅금지 Action
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (e.getSource() == kickButton) { // 강제 퇴장
+				System.out.println("강제퇴장 버튼 눌림"); 
+				int index = userList.getSelectedIndex();
+				if (index == -1 || index == 0)
+					return;
+				String selectedName = userList.getSelectedValue().toString().split("이름:")[1].split("]")[0]; // 이름에 ]가 없다고 가정
+				int result = JOptionPane.showConfirmDialog(null, selectedName + "를 강제퇴장 시킬까요?", "강제퇴장", JOptionPane.YES_NO_OPTION);
+				if(result == JOptionPane.YES_OPTION) {
+					ChatMsg cm = new ChatMsg(userName, "705", selectedName);
+					cm.roomName = roomName;
+					mainView.SendObject(cm);
+				}
+			}
+			else if (e.getSource() == chatLimitButton) {
+				System.out.println("채팅금지 버튼 눌림");
 			}
 		}
 	}
@@ -402,9 +449,9 @@ public class OmokClientGameView extends JFrame {
 			for (String item : list) {
 				userListModel.addElement(item);
 			}
-			System.out.println("userList updated");
+			//System.out.println("userList updated");
 			String owner[] = list[0].split(" ");
-			System.out.println(owner[1].substring(4, owner[1].length() - 1) + "   방장이름<<<<<<<<<");
+			//System.out.println(owner[1].substring(4, owner[1].length() - 1) + "   방장이름<<<<<<<<<");
 			if (userName.equals(owner[1].substring(4, owner[1].length() - 1))) {
 				startReadyButton.setLabel("시작");
 				startReadyButton.setEnabled(true);
@@ -567,6 +614,17 @@ public class OmokClientGameView extends JFrame {
 		startReadyButton.setLabel(isOwner ? "시작" : "준비");
 
 	}
+	
+	public void kicked() {
+		setVisible(false);
+		time = false;
+		for (int i = 0; i < mainView.gameView.size(); i++) {
+			if (mainView.gameView.get(i).roomName.equals(roomName)) {
+				mainView.gameView.remove(i);
+			}
+		}
+		JOptionPane.showMessageDialog(null, "방장에 의해 강제퇴장 되었습니다.", "강제퇴장", JOptionPane.ERROR_MESSAGE);
+	}
 
 	public void AppendText(String msg) {
 
@@ -694,7 +752,7 @@ public class OmokClientGameView extends JFrame {
 
 		public Boolean Three(int y, int x) {
 			Map[y][x] = (currentPlayer + 1); // ( current는 0 ~ max-1 의 값을 가짐 )
-			System.out.println("33 check : Player" + (currentPlayer + 1));
+			//System.out.println("33 check : Player" + (currentPlayer + 1));
 			int nowColor = Map[y][x];
 			int dir[][] = { { 1, 0 }, { -1, 0 }, { 0, 1 }, { 0, -1 }, { -1, 1 }, { 1, -1 }, { -1, -1 }, { 1, 1 } };
 			int three = 0;
@@ -819,5 +877,4 @@ public class OmokClientGameView extends JFrame {
 		}
 
 	}
-
 }

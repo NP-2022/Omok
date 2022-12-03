@@ -315,6 +315,54 @@ public class OmokServer extends JFrame {
 				user.updateUserList(msg);
 
 		}
+		
+		public void kickRoom(ChatMsg msg) {
+			Room room = getRoom(msg);
+			room.updateReadyState(msg.data, false); // ready 배열 관리
+			System.out.println(msg.data + "가 방장에 의해 강제퇴장");
+
+			for (int i = 0; i < room.playerList.size(); i++) {
+				OmokServer.UserService user = room.playerList.get(i);
+				if (user.userName.equals(msg.data)) {
+					room.playerList.remove(i);
+					break;
+				}
+			}
+			for (int i = 0; i < room.watcherList.size(); i++) {
+				if (msg.data.equals(room.watcherList.get(i).userName)) {
+					room.watcherList.remove(i);
+					ChatMsg cm = new ChatMsg(userName, "201", "");
+					cm.roomName = room.roomName;
+					cm.roomNumber = room.roomNumber;
+					cm.data = "[관전자][" + msg.data + "]가 방장에 의해 강제퇴장 됐습니다.";
+					sendGameMessage(cm);
+					return;
+				}
+			}
+			if (room.playerList.size() != 0) {
+				for (UserService user : room.playerList) { // 준비상태 리셋
+					room.updateReadyState(user.userName, false);
+				}
+				for (UserService user : room.playerList) { // 방에 있는 모든 유저에게 유저 목록 리스트를 갱신
+					user.updateUserList(msg);
+				}
+				for (UserService user : room.watcherList) { // 방에 있는 모든 유저에게 유저 목록 리스트를 갱신
+					user.updateUserList(msg);
+				}
+				ChatMsg cm = new ChatMsg(userName, "201", "");
+				cm.roomName = room.roomName;
+				cm.roomNumber = room.roomNumber;
+				cm.data = "[" + msg.data + "]가 방장에 의해 강제퇴장 됐습니다.";
+				sendGameMessage(cm);
+				if (room.isStarted)
+					stopGame(cm); // 게임 도중 유저 이탈 시 게임을 중단함.
+				room.isStarted = false;
+				
+				ChatMsg kickCm = new ChatMsg(userName, "705", msg.data);
+				kickCm.roomName = room.roomName;
+				WriteAllObject(kickCm);
+			}
+		}
 
 		public void exitRoom(ChatMsg msg) {
 			Room room = getRoom(msg);
@@ -378,7 +426,7 @@ public class OmokServer extends JFrame {
 			Room room = roomVec.get(msg.roomNumber); // 방 번호로 입장 (방 목록 리스트는 서버의 방 배열과 인덱스를 공유함)
 			room.updateReadyState(msg.userName, false); // ready 배열 관리
 			if (room.isStarted) {
-				WriteOne("게임이 진행중인 방입니다!");
+				WriteOne("게임이 진행 중인 방입니다! 관전모드로 입장하겠습니다.");
 				AppendText("관전자" + userName + " " + room.roomNumber + "번 방 입장.");
 				msg = new ChatMsg(userName, "704", "");
 				msg.roomMax = room.roomMax;
@@ -412,7 +460,11 @@ public class OmokServer extends JFrame {
 				}
 				return;
 			}
-			if (room.isFull()) {
+			if (room.hasName(msg.userName)) { // 방에 유저의 이름이 이미 있는 경우
+				WriteOne("이미 들어가 있는 방입니다!");
+				return;
+			}
+			else if (room.isFull()) {
 				WriteOne("방이 꽉 찼습니다! 관전모드로 입장하겠습니다.");
 				AppendText("관전자" + userName + " " + room.roomNumber + "번 방 입장.");
 				msg = new ChatMsg(userName, "704", "");
@@ -433,9 +485,6 @@ public class OmokServer extends JFrame {
 				cm.roomNumber = room.roomNumber;
 				cm.data = "[" + userName + "] 님이 관전모드로 입장했습니다.";
 				sendGameMessage(cm);
-				return;
-			} else if (room.hasName(msg.userName)) { // 방에 유저의 이름이 이미 있는 경우
-				WriteOne("이미 들어가 있는 방입니다!");
 				return;
 			} else { // 유저에게 방의 정보를 주고 입장시킴
 				AppendText("플레이어 " + userName + " " + room.roomNumber + "번 방 입장.");
@@ -513,7 +562,7 @@ public class OmokServer extends JFrame {
 				i++;
 			}
 			cm.data = data.toString();
-			System.out.println("11111111111--  " + msg.code);
+			//System.out.println("11111111111--  " + msg.code);
 			WriteOneObject(cm);
 		}
 
@@ -835,6 +884,9 @@ public class OmokServer extends JFrame {
 						updateRoomList();
 					} else if (cm.code.matches("701")) { // 방 퇴장 처리
 						exitRoom(cm);
+						updateRoomList();
+					} else if (cm.code.matches("705")) { // 강제 퇴장
+						kickRoom(cm);
 						updateRoomList();
 					} else if (cm.code.matches("800")) { // 게임 시작
 						startGame(cm);
