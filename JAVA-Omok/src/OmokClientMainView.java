@@ -333,6 +333,15 @@ public class OmokClientMainView extends JFrame {
 					} else
 						continue;
 					switch (cm.code) {
+					case "000":
+						for (int i = 0; i < gameView.size(); i++) {
+							OmokClientGameView gv = gameView.get(i);
+							if (gv.time == true) {
+								gv.nowtime -= 1;
+								gv.timeProcess();
+							}
+						}
+						break;
 					case "200": // chat message
 						if (cm.userName.equals(UserName))
 							AppendTextR(msg); // 내 메세지는 우측에
@@ -365,6 +374,7 @@ public class OmokClientMainView extends JFrame {
 							if (gameView.get(i).roomName.equals(cm.roomName)) {
 								gameView.get(i).gamePanel.init();
 								gameView.get(i).gamePanel.repaint();
+								gameView.get(i).nowtime = 31;
 							}
 						}
 						break;
@@ -375,7 +385,8 @@ public class OmokClientMainView extends JFrame {
 						for (int i = 0; i < gameView.size(); i++) {
 							if (cm.roomName.equals(gameView.get(i).roomName)) {
 								gameView.get(i).userListUpdate(cm);
-								gameView.get(i).nowtime = 30;
+								gameView.get(i).nowtime = 31;
+								gameView.get(i).time = false;
 							}
 						}
 						break;
@@ -385,23 +396,7 @@ public class OmokClientMainView extends JFrame {
 								gameView.get(i).gameStart(cm);
 								OmokClientGameView gv = gameView.get(i);
 								if (gv.time == true) {
-									TimerTask task = new TimerTask() {
-										@Override
-										public void run() {
-											if (gv.time == false) {
-												cancel();
-												gv.nowtime = 30;
-											} else {
-												System.out.println("------------- " + gv.nowtime + " -------");
-												if (gv.nowtime == 0) {
-												} else {
-													gv.nowtime -= 1;
-													gv.timeProcess();
-												}
-											}
-										}
-									};
-									new Timer().scheduleAtFixedRate(task, 0l, 1000);
+
 								}
 							}
 						}
@@ -413,8 +408,10 @@ public class OmokClientMainView extends JFrame {
 						}
 						break;
 					case "803": // 유저 이탈로 게임 중단
-						for(int i = 0; i < gameView.size(); i++) {
-							gameView.get(i).gameStop(cm); 
+						for (int i = 0; i < gameView.size(); i++) {
+							gameView.get(i).gameStop(cm);
+							gameView.get(i).time = false;
+							gameView.get(i).nowtime = 31;
 						}
 					case "900": // 바둑돌 입력 수신
 						for (int i = 0; i < gameView.size(); i++) {

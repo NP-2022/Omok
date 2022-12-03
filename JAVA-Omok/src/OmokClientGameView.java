@@ -218,8 +218,15 @@ public class OmokClientGameView extends JFrame {
 		exitButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
+				time = false;
 				ChatMsg msg = new ChatMsg(userName, "701", "나가기");
 				msg.roomName = roomName;
+				for(int i = 0; i < mainView.gameView.size(); i++) {
+					if(mainView.gameView.get(i).roomName.equals(roomName)) {
+						mainView.gameView.remove(i);
+					}
+						
+				}
 				mainView.SendObject(msg);
 			}
 		});
@@ -380,6 +387,7 @@ public class OmokClientGameView extends JFrame {
 
 	public void userListUpdate(ChatMsg msg) {
 		if (roomName.equals(msg.roomName)) {
+			nowtime = 30;
 			userListModel.removeAllElements();
 			String list[] = msg.data.split("\n");
 			for (String item : list) {
@@ -416,7 +424,7 @@ public class OmokClientGameView extends JFrame {
 			msg.roomName = roomName;
 			mainView.SendObject(msg);
 			System.out.println("제한 시간이 지났습니다.");
-			nowtime = 30;
+			nowtime = 31;
 		}
 		
 		
@@ -479,6 +487,7 @@ public class OmokClientGameView extends JFrame {
 	}
 	
 	public void gameEnd(ChatMsg cm) {
+		time = false;
 		try {
 			Thread.sleep(1000);
 		} catch (InterruptedException e) {
@@ -500,10 +509,13 @@ public class OmokClientGameView extends JFrame {
 		if(isOwner) mainView.SendObject(msg); // 게임 종료를 서버에 알림
 		// 방장만 보내는 이유 : 한명만 보내게 하기 위해서
 		
+		nowtime = 30;
 		startReadyButton.setEnabled(true);
 	}
 	
 	public void gameStop(ChatMsg cm) {
+		time = false;
+		nowtime = 30;
 		gamePanel.init();
 		AppendText("유저 이탈로 게임을 중단합니다.");
 		
