@@ -475,7 +475,6 @@ public class OmokClientMainView extends JFrame {
 							if (cm.roomName.equals(gameView.get(i).roomName)) {
 								gameView.get(i).stonenum = cm.stoneNum;
 								gameView.get(i).previous(cm.y, cm.x);
-								//System.out.println("이전 완료");
 							}
 						}
 						break;
@@ -484,7 +483,6 @@ public class OmokClientMainView extends JFrame {
 							if (cm.roomName.equals(gameView.get(i).roomName)) {
 								gameView.get(i).stonenum = cm.stoneNum;
 								gameView.get(i).next(cm.y, cm.x, cm.stone);
-								//System.out.println("다음 완료");
 							}
 						}
 						break;

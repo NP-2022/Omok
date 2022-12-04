@@ -666,7 +666,7 @@ public class OmokServer extends JFrame {
 							for (UserService user : room.playerList) // 방에 있는 모든 유저에게 바둑돌 전송
 								user.WriteOneObject(msg);
 							for (UserService user : room.watcherList) {// 방에 있는 모든 유저에게 바둑돌 전송
-								for (int i = 0; i < room.stoneList.size(); i++) {
+								for (int i = 0; i < room.stoneList.size() - 1; i++) {
 									ChatMsg stonemsg = new ChatMsg(user.userName, "900", "진행 기록");
 									stonemsg.roomName = msg.roomName;
 									stonemsg.x = room.stoneList.get(i).x;
