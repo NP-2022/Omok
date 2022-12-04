@@ -62,6 +62,7 @@ import javax.swing.text.StyledDocument;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JMenuBar;
+import javax.swing.ListModel;
 
 public class OmokClientMainView extends JFrame {
 	/**
@@ -108,6 +109,10 @@ public class OmokClientMainView extends JFrame {
 	private JList roomList;
 	private DefaultListModel roomListModel; // 방 목록
 	private JButton roomInsertButton;
+	
+	private JLabel serverUserListTitleLabel;
+	private JList serverUserList;
+	private DefaultListModel serverUserListModel;
 
 	/**
 	 * Create the frame.
@@ -154,28 +159,28 @@ public class OmokClientMainView extends JFrame {
 		userNameLabel.setBackground(Color.WHITE);
 		userNameLabel.setFont(new Font("굴림", Font.BOLD, 14));
 		userNameLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		userNameLabel.setBounds(376, 539, 149, 40);
+		userNameLabel.setBounds(645, 469, 127, 30);
 		contentPane.add(userNameLabel);
 		setVisible(true);
 
 		AppendText("User " + username + " connecting " + ip_addr + " " + port_no);
 		userNameLabel.setText(UserName);
 
-		imageChangeButton = new JButton("이미지 변경");
+		imageChangeButton = new JButton("프로필 수정");
 		imageChangeButton.setFont(new Font("굴림", Font.PLAIN, 16));
-		imageChangeButton.setBounds(376, 324, 149, 40);
+		imageChangeButton.setBounds(645, 509, 127, 23);
 		contentPane.add(imageChangeButton);
 
 		JButton exitButton = new JButton("종 료");
 		exitButton.setFont(new Font("굴림", Font.PLAIN, 14));
 
-		exitButton.setBounds(672, 539, 100, 40);
+		exitButton.setBounds(645, 539, 127, 40);
 		contentPane.add(exitButton);
 
 		imagePanel = new JPanel();
 		imagePanel.setBorder(new LineBorder(new Color(0, 0, 0)));
 		imagePanel.setBackground(Color.WHITE);
-		imagePanel.setBounds(376, 374, 149, 154);
+		imagePanel.setBounds(645, 335, 127, 132);
 		contentPane.add(imagePanel);
 		gc = imagePanel.getGraphics();
 
@@ -221,17 +226,22 @@ public class OmokClientMainView extends JFrame {
 		roomListScrollPane.setViewportView(roomList);
 		roomCreateButton.setBounds(675, 283, 97, 23);
 		contentPane.add(roomCreateButton);
-
-		gameLogScrollPane = new JScrollPane();
-		gameLogScrollPane.setBounds(537, 374, 235, 154);
-		contentPane.add(gameLogScrollPane);
-
-		lblUserName_1_2 = new JLabel("전적");
-		gameLogScrollPane.setColumnHeaderView(lblUserName_1_2);
-		lblUserName_1_2.setHorizontalAlignment(SwingConstants.CENTER);
-		lblUserName_1_2.setFont(new Font("굴림", Font.BOLD, 14));
-		lblUserName_1_2.setBorder(new LineBorder(new Color(0, 0, 0)));
-		lblUserName_1_2.setBackground(Color.WHITE);
+		
+		JScrollPane serverUserListScrollPane = new JScrollPane();
+		serverUserListScrollPane.setBounds(376, 335, 263, 245);
+		contentPane.add(serverUserListScrollPane);
+		
+		serverUserListTitleLabel = new JLabel("유저 리스트");
+		serverUserListTitleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		serverUserListTitleLabel.setFont(new Font("굴림", Font.BOLD, 14));
+		serverUserListTitleLabel.setBorder(new LineBorder(new Color(0, 0, 0)));
+		serverUserListTitleLabel.setBackground(Color.WHITE);
+		serverUserListScrollPane.setColumnHeaderView(serverUserListTitleLabel);
+		
+		serverUserListModel = new DefaultListModel();
+		serverUserList = new JList(serverUserListModel);
+		serverUserList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		serverUserListScrollPane.setViewportView(serverUserList);
 
 		// 게임 종료 set
 		exitButton.addActionListener(new ActionListener() {
@@ -353,6 +363,9 @@ public class OmokClientMainView extends JFrame {
 								gameView.get(i).receiveGameMessage(cm);
 							}
 						}
+						break;
+					case "101": // 대기방 유저목록 갱신
+						serverUserListUpdate(cm);
 						break;
 					case "300": // Image 첨부
 //						if (cm.UserName.equals(UserName))
@@ -519,6 +532,14 @@ public class OmokClientMainView extends JFrame {
 		//System.out.println(mainView.gameView.size());
 	}
 
+	public void serverUserListUpdate(ChatMsg cm) {
+		serverUserListModel.removeAllElements(); // 방 리스트를 모두 지우고, 다시 업데이트 한다.
+		String list[] = cm.data.split("\n");
+		for (String item : list) {
+			serverUserListModel.addElement(item);
+		}
+	}
+	
 	public void roomListUpdate(ChatMsg cm) { // 방 목록 갱신
 		roomListModel.removeAllElements(); // 방 리스트를 모두 지우고, 다시 업데이트 한다.
 		String list[] = cm.data.split("\n");
@@ -662,8 +683,6 @@ public class OmokClientMainView extends JFrame {
 	}
 
 	ImageIcon icon1 = new ImageIcon("src/icon1.jpg");
-	private JLabel lblUserName_1_2;
-	private JScrollPane gameLogScrollPane;
 
 	public void AppendIcon(ImageIcon icon) {
 		int len = textArea.getDocument().getLength();
