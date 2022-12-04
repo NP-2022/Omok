@@ -347,6 +347,13 @@ public class OmokClientGameView extends JFrame {
 			}
 			else if (e.getSource() == chatLimitButton) {
 				System.out.println("채팅금지 버튼 눌림");
+				int index = userList.getSelectedIndex();
+				if (index == -1 || index == 0)
+					return;
+				String selectedName = userList.getSelectedValue().toString().split("이름:")[1].split("]")[0]; // 이름에 ]가 없다고 가정
+				ChatMsg cm = new ChatMsg(userName, "706", selectedName);
+				cm.roomName = roomName;
+				mainView.SendObject(cm);
 			}
 		}
 	}

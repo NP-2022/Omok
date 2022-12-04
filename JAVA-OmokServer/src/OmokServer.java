@@ -185,7 +185,7 @@ public class OmokServer extends JFrame {
 
 		public void Login() {
 			AppendText("새로운 참가자 " + userName + " 입장.");
-			WriteOne("Welcome to Java chat server\n");
+			WriteOne("네트워크 오목 서버 입장.\n");
 			WriteOne(userName + "님 환영합니다.\n"); // 연결된 사용자에게 정상접속을 알림
 			String msg = "[" + userName + "]님이 입장 하였습니다.\n";
 			WriteOthers(msg); // 아직 user_vc에 새로 입장한 user는 포함되지 않았다.
@@ -287,7 +287,7 @@ public class OmokServer extends JFrame {
 				Logout();
 			}
 		}
-
+		
 		public Room getRoom(ChatMsg msg) {
 			int roomnum = -1;
 			for (int i = 0; i < roomVec.size(); i++) {
@@ -300,6 +300,21 @@ public class OmokServer extends JFrame {
 			msg.roomNumber = roomnum;
 			Room room = roomVec.get(roomnum);
 			return room;
+		}
+		
+		public void chatLimit(ChatMsg cm) {
+			Room room = getRoom(cm);
+			String msg = room.getChatLimitState(cm.data) ? "[" + cm.data + "]가 채팅 금지 해제 되었습니다." : "[" + cm.data + "]가 채팅 금지 되었습니다.";
+
+			room.toggleChatLimitState(cm.data);
+
+			ChatMsg chatCm = new ChatMsg(userName, "201", msg); // 채금 상태 게임 내 채팅으로 전송
+			chatCm.roomName = room.roomName;
+
+			for (UserService user : room.playerList) { // 방에 있는 모든 유저에게 전송
+				user.WriteOneObject(chatCm);
+			}
+			
 		}
 
 		public void createRoom(ChatMsg msg) {
@@ -318,7 +333,7 @@ public class OmokServer extends JFrame {
 		
 		public void kickRoom(ChatMsg msg) {
 			Room room = getRoom(msg);
-			room.updateReadyState(msg.data, false); // ready 배열 관리
+			room.updateChatLimitState(userName, false); // chatLimit 관리
 			System.out.println(msg.data + "가 방장에 의해 강제퇴장");
 
 			for (int i = 0; i < room.playerList.size(); i++) {
@@ -425,6 +440,8 @@ public class OmokServer extends JFrame {
 		public void insertRoom(ChatMsg msg) {
 			Room room = roomVec.get(msg.roomNumber); // 방 번호로 입장 (방 목록 리스트는 서버의 방 배열과 인덱스를 공유함)
 			room.updateReadyState(msg.userName, false); // ready 배열 관리
+			if(!room.chatLimitMap.containsKey(msg.userName)) // 채금 당한적 없는 경우에만
+				room.updateChatLimitState(msg.userName, false); // chatLimit 관리
 			if (room.isStarted) {
 				WriteOne("게임이 진행 중인 방입니다! 관전모드로 입장하겠습니다.");
 				AppendText("관전자" + userName + " " + room.roomNumber + "번 방 입장.");
@@ -906,8 +923,14 @@ public class OmokServer extends JFrame {
 							// WriteAll(msg + "\n"); // Write All
 							WriteAllObject(cm);
 						}
-					} else if (cm.code.matches("201")) { // 게임방 채팅
-						sendGameMessage(cm);
+					} else if (cm.code.matches("201")) { // 유저가 보낸 게임방 채팅
+						if(getRoom(cm).getChatLimitState(cm.userName) == true) {
+							ChatMsg limitCm = new ChatMsg(userName, "201", "채팅 금지! 해제 될 때까지 채팅 할 수 없습니다.");
+							limitCm.roomName = cm.roomName;
+							WriteOneObject(limitCm);
+						}
+						else
+							sendGameMessage(cm);
 					} else if (cm.code.matches("400")) { // logout message 처리
 						Logout();
 						break;
@@ -926,6 +949,8 @@ public class OmokServer extends JFrame {
 					} else if (cm.code.matches("705")) { // 강제 퇴장
 						kickRoom(cm);
 						updateRoomList();
+					} else if (cm.code.matches("706")) { 
+						chatLimit(cm);
 					} else if (cm.code.matches("800")) { // 게임 시작
 						startGame(cm);
 					} else if (cm.code.matches("801")) { // 게임 준비
