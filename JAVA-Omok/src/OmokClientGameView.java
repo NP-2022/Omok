@@ -570,7 +570,6 @@ public class OmokClientGameView extends JFrame {
 				System.out.println("Client draw Stone : player" + cm.stone);
 				gamePanel.setMap(cm.y, cm.x, cm.stone);
 				currentPlayer = (currentPlayer + 1) % maxPlayer; // 플레이어는 1~max ( 실 사용시 +1 )
-				System.out.println(currentPlayer);
 				/*
 				 * if (gamePanel.Three(cm.y, cm.x)) { cm.code = "901"; // 33이면 입력한 바둑돌 되돌리기
 				 * mainView.SendObject(cm); return; }
