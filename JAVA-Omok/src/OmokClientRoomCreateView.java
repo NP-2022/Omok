@@ -57,7 +57,7 @@ public class OmokClientRoomCreateView extends JFrame {
 		gameModeLabel.setBounds(12, 39, 82, 33);
 		contentPane.add(gameModeLabel);
 		
-		String[] gameModes = {"오목", "알까기"};
+		String[] gameModes = {"오목"};
 		gameModeComboBox = new JComboBox(gameModes);
 		gameModeComboBox.setBounds(101, 39, 116, 33);
 		contentPane.add(gameModeComboBox);

@@ -667,6 +667,10 @@ public class OmokServer extends JFrame {
 							sendGameMessage(cm);
 						} else {
 							System.out.println("Â÷·Ê°¡ ¾Æ´Ô");
+							ChatMsg cm = new ChatMsg(msg.userName, "201", "");
+							cm.roomName = msg.roomName;
+							cm.data = "¾ÆÁ÷ ¼ø¼­°¡ ¾Æ´Õ´Ï´Ù.";
+							WriteOneObject(cm);
 						}
 					}
 				}
