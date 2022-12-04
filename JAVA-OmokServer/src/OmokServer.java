@@ -675,6 +675,7 @@ public class OmokServer extends JFrame {
 
 		public void undoRequest(ChatMsg msg) {
 			Room room = getRoom(msg);
+			if(!room.isStarted) return;
 			
 			ChatMsg cm = new ChatMsg(userName, "903", "");
 			cm.roomName = room.roomName;
