@@ -93,13 +93,9 @@ public class OmokClientMainView extends JFrame {
 	private Frame frame;
 	private FileDialog fd;
 	private JButton imageChangeButton;
-
-	JPanel imagePanel;
 	private Graphics gc;
 	private int pen_size = 2; // minimum 2
 	// 그려진 Image를 보관하는 용도, paint() 함수에서 이용한다.
-	private Image panelImage = null;
-	private Graphics gc2 = null;
 
 	public OmokClientMainView mainView = null; // 현재 화면에 대한 레퍼런스
 //	public JavaGameClientView2 gameClientView = null; // 게임 화면 레퍼런스
@@ -176,24 +172,7 @@ public class OmokClientMainView extends JFrame {
 
 		exitButton.setBounds(645, 539, 127, 40);
 		contentPane.add(exitButton);
-
-		imagePanel = new JPanel();
-		imagePanel.setBorder(new LineBorder(new Color(0, 0, 0)));
-		imagePanel.setBackground(Color.WHITE);
-		imagePanel.setBounds(645, 335, 127, 132);
-		contentPane.add(imagePanel);
-		gc = imagePanel.getGraphics();
-
-		// Image 영역 보관용. paint() 에서 이용한다.
-		Image defaultimg = new ImageIcon(OmokClientMainView.class.getResource("default.png")).getImage();
-		panelImage = createImage(imagePanel.getWidth(), imagePanel.getHeight());
-		gc2 = panelImage.getGraphics();
-		gc2.setColor(imagePanel.getBackground());
-		gc2.fillRect(0, 0, imagePanel.getWidth(), imagePanel.getHeight());
-		gc2.setColor(Color.BLACK);
-		gc2.drawRect(0, 0, imagePanel.getWidth() - 1, imagePanel.getHeight() - 1);
-		gc2.drawImage(defaultimg, 0, 0, imagePanel.getWidth(), imagePanel.getHeight(), imagePanel);
-
+ 
 		JLabel titleLabel = new JLabel("<Omok Game>");
 		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		titleLabel.setFont(new Font("굴림", Font.BOLD, 14));
@@ -242,6 +221,15 @@ public class OmokClientMainView extends JFrame {
 		serverUserList = new JList(serverUserListModel);
 		serverUserList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		serverUserListScrollPane.setViewportView(serverUserList);
+		
+		profileImageLabel = new JLabel("");
+		profileImageLabel.setBounds(645, 339, 127, 120);
+		
+
+		ImageIcon defaultImg = new ImageIcon(OmokClientMainView.class.getResource("profileImg/default.png"));
+		setProfileImage(defaultImg);
+		
+		contentPane.add(profileImageLabel);
 
 		// 게임 종료 set
 		exitButton.addActionListener(new ActionListener() {
@@ -291,13 +279,8 @@ public class OmokClientMainView extends JFrame {
 			chatSendButton.addActionListener(action);
 			chatTextInput.addActionListener(action);
 			chatTextInput.requestFocus();
-			ImageSendAction action2 = new ImageSendAction();
-			imageChangeButton.addActionListener(action2);
-			MyMouseEvent mouse = new MyMouseEvent();
-			imagePanel.addMouseMotionListener(mouse);
-			imagePanel.addMouseListener(mouse);
-			MyMouseWheelEvent wheel = new MyMouseWheelEvent();
-			imagePanel.addMouseWheelListener(wheel);
+			ChangeImageAction changeImageAction = new ChangeImageAction();
+			imageChangeButton.addActionListener(changeImageAction);
 
 		} catch (NumberFormatException | IOException e) {
 			// TODO Auto-generated catch block
@@ -306,17 +289,16 @@ public class OmokClientMainView extends JFrame {
 		}
 
 	}
-
-	private Image getImage(String string) {
-		// TODO Auto-generated method stub
-		return null;
+	
+	private void setProfileImage(ImageIcon profileImageIcon) {
+		Image changeImg = profileImageIcon.getImage().getScaledInstance(profileImageLabel.getWidth(), profileImageLabel.getHeight(), Image.SCALE_SMOOTH);
+		ImageIcon changeIcon = new ImageIcon(changeImg);
+		profileImageLabel.setIcon(changeIcon);
 	}
 
-	public void paint(Graphics g) {
-		super.paint(g);
-		// Image 영역이 가려졌다 다시 나타날 때 그려준다.
-		gc.drawImage(panelImage, 0, 0, this);
-	}
+//	public void paint(Graphics g) {
+//		super.paint(g);
+//	}
 
 	// Server Message를 수신해서 화면에 표시
 	class ListenNetwork extends Thread {
@@ -375,7 +357,7 @@ public class OmokClientMainView extends JFrame {
 						// AppendImage(cm.img);
 						break;
 					case "500": // Mouse Event 수신
-						DoMouseEvent(cm);
+						//DoMouseEvent(cm);
 						break;
 					case "600": // 새로운 방 생성 됨
 						break;
@@ -549,103 +531,6 @@ public class OmokClientMainView extends JFrame {
 		//System.out.println("roomList updated");
 	}
 
-	// Mouse Event 수신 처리
-	public void DoMouseEvent(ChatMsg cm) {
-		Color c;
-		if (cm.userName.matches(UserName)) // 본인 것은 이미 Local 로 그렸다.
-			return;
-		c = new Color(255, 0, 0); // 다른 사람 것은 Red
-		gc2.setColor(c);
-		gc2.fillOval(cm.mouse_e.getX() - pen_size / 2, cm.mouse_e.getY() - cm.pen_size / 2, cm.pen_size, cm.pen_size);
-		gc.drawImage(panelImage, 0, 0, imagePanel);
-	}
-
-	public void SendMouseEvent(MouseEvent e) {
-		ChatMsg cm = new ChatMsg(UserName, "500", "MOUSE");
-		cm.mouse_e = e;
-		cm.pen_size = pen_size;
-		SendObject(cm);
-	}
-
-	class MyMouseWheelEvent implements MouseWheelListener {
-		@Override
-		public void mouseWheelMoved(MouseWheelEvent e) {
-			// TODO Auto-generated method stub
-			if (e.getWheelRotation() < 0) { // 위로 올리는 경우 pen_size 증가
-				if (pen_size < 20)
-					pen_size++;
-			} else {
-				if (pen_size > 2)
-					pen_size--;
-			}
-
-		}
-
-	}
-
-	// Mouse Event Handler
-	class MyMouseEvent implements MouseListener, MouseMotionListener {
-		@Override
-		public void mouseDragged(MouseEvent e) {
-			// lblMouseEvent.setText(e.getButton() + " mouseDragged " + e.getX() + "," +
-			// e.getY());// 좌표출력가능
-			Color c = new Color(0, 0, 255);
-			gc2.setColor(c);
-			gc2.fillOval(e.getX() - pen_size / 2, e.getY() - pen_size / 2, pen_size, pen_size);
-			// panelImnage는 paint()에서 이용한다.
-			gc.drawImage(panelImage, 0, 0, imagePanel);
-			SendMouseEvent(e);
-		}
-
-		@Override
-		public void mouseMoved(MouseEvent e) {
-			// lblMouseEvent.setText(e.getButton() + " mouseMoved " + e.getX() + "," +
-			// e.getY());
-		}
-
-		@Override
-		public void mouseClicked(MouseEvent e) {
-			// lblMouseEvent.setText(e.getButton() + " mouseClicked " + e.getX() + "," +
-			// e.getY());
-			Color c = new Color(0, 0, 255);
-			gc2.setColor(c);
-			gc2.fillOval(e.getX() - pen_size / 2, e.getY() - pen_size / 2, pen_size, pen_size);
-			gc.drawImage(panelImage, 0, 0, imagePanel);
-			SendMouseEvent(e);
-		}
-
-		@Override
-		public void mouseEntered(MouseEvent e) {
-			// lblMouseEvent.setText(e.getButton() + " mouseEntered " + e.getX() + "," +
-			// e.getY());
-			// panel.setBackground(Color.YELLOW);
-
-		}
-
-		@Override
-		public void mouseExited(MouseEvent e) {
-			// lblMouseEvent.setText(e.getButton() + " mouseExited " + e.getX() + "," +
-			// e.getY());
-			// panel.setBackground(Color.CYAN);
-
-		}
-
-		@Override
-		public void mousePressed(MouseEvent e) {
-			// lblMouseEvent.setText(e.getButton() + " mousePressed " + e.getX() + "," +
-			// e.getY());
-
-		}
-
-		@Override
-		public void mouseReleased(MouseEvent e) {
-			// lblMouseEvent.setText(e.getButton() + " mouseReleased " + e.getX() + "," +
-			// e.getY());
-			// 드래그중 멈출시 보임
-
-		}
-	}
-
 	// keyboard enter key 치면 서버로 전송
 	class TextSendAction implements ActionListener {
 		@Override
@@ -681,8 +566,32 @@ public class OmokClientMainView extends JFrame {
 			}
 		}
 	}
+	
+	class ChangeImageAction implements ActionListener { // 이미지 전송
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (e.getSource() == imageChangeButton) {
+				frame = new Frame("이미지첨부");
+				fd = new FileDialog(frame, "이미지 선택", FileDialog.LOAD);
+				fd.setVisible(true);
+
+				
+				
+				if (fd.getDirectory().length() > 0 && fd.getFile().length() > 0) {
+					ChatMsg obcm = new ChatMsg(UserName, "300", "IMG");
+					ImageIcon profileImage = new ImageIcon(fd.getDirectory() + fd.getFile());
+					obcm.img = profileImage;
+					SendObject(obcm);
+					
+					setProfileImage(profileImage);
+					repaint();
+				}
+			}
+		}
+	}
 
 	ImageIcon icon1 = new ImageIcon("src/icon1.jpg");
+	private JLabel profileImageLabel;
 
 	public void AppendIcon(ImageIcon icon) {
 		int len = textArea.getDocument().getLength();
@@ -733,36 +642,6 @@ public class OmokClientMainView extends JFrame {
 
 	}
 
-	/*
-	 * public void AppendImage(ImageIcon ori_icon) { int len =
-	 * textArea.getDocument().getLength(); textArea.setCaretPosition(len); // place
-	 * caret at the end (with no selection) Image ori_img = ori_icon.getImage();
-	 * Image new_img; ImageIcon new_icon; int width, height; double ratio; width =
-	 * ori_icon.getIconWidth(); height = ori_icon.getIconHeight();
-	 * 
-	 * 
-	 * gc2.drawImage(ori_img, 0, 0, imagePanel.getWidth(), imagePanel.getHeight(),
-	 * imagePanel); gc.drawImage(panelImage, 0, 0, imagePanel.getWidth(),
-	 * imagePanel.getHeight(), imagePanel); }
-	 */
-
-	// Windows 처럼 message 제외한 나머지 부분은 NULL 로 만들기 위한 함수
-	public byte[] MakePacket(String msg) {
-		byte[] packet = new byte[BUF_LEN];
-		byte[] bb = null;
-		int i;
-		for (i = 0; i < BUF_LEN; i++)
-			packet[i] = 0;
-		try {
-			bb = msg.getBytes("euc-kr");
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-			System.exit(0);
-		}
-		for (i = 0; i < bb.length; i++)
-			packet[i] = bb[i];
-		return packet;
-	}
 
 	// Server에게 network으로 전송
 	public void SendMessage(String msg) {

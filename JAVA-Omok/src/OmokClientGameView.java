@@ -295,7 +295,7 @@ public class OmokClientGameView extends JFrame {
 				String msg = null;
 				msg = String.format("[%s] %s", userName, chatTextField.getText());
 				ChatMsg cm = new ChatMsg(userName, "201", msg);
-				cm.roomName = roomName;
+				cm.roomName = roomName; 
 				mainView.SendObject(cm);
 				chatTextField.setText(""); // 메세지를 보내고 나면 메세지 쓰는창을 비운다.
 				chatTextField.requestFocus(); // 메세지를 보내고 커서를 다시 텍스트 필드로 위치시킨다
@@ -363,31 +363,14 @@ public class OmokClientGameView extends JFrame {
 		int y;
 
 		@Override
-		public void mouseDragged(MouseEvent e) {
-			// lblMouseEvent.setText(e.getButton() + " mouseDragged " + e.getX() + "," +
-			// e.getY());// 좌표출력가능
-//			Color c = new Color(0,0,255);
-//			gc2.setColor(c);
-//			gc2.fillOval(e.getX()-pen_size/2, e.getY()-pen_size/2, pen_size, pen_size);
-//			// panelImnage는 paint()에서 이용한다.
-//			gc.drawImage(panelImage, 0, 0, panel);
-			// SendMouseEvent(e);
-		}
+		public void mouseDragged(MouseEvent e) {}
 
 		@Override
-		public void mouseMoved(MouseEvent e) {
-			// lblMouseEvent.setText(e.getButton() + " mouseMoved " + e.getX() + "," +
-			// e.getY());
-		}
+		public void mouseMoved(MouseEvent e) {}
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			// lblMouseEvent.setText(e.getButton() + " mouseClicked " + e.getX() + "," +
-			// e.getY());
-//			Color c = new Color(0,0,255);
-//			gc2.setColor(c);
-//			gc2.fillOval(e.getX()-pen_size/2, e.getY()-pen_size/2, pen_size, pen_size);
-//			gc.drawImage(panelImage, 0, 0, panel);
+
 
 			x = (int) Math.round(e.getX() / (double) 30) - 1;
 			y = (int) Math.round(e.getY() / (double) 30);
@@ -424,31 +407,15 @@ public class OmokClientGameView extends JFrame {
 		}
 
 		@Override
-		public void mouseEntered(MouseEvent e) {
-			// lblMouseEvent.setText(e.getButton() + " mouseEntered " + e.getX() + "," +
-			// e.getY());
-			// panel.setBackground(Color.YELLOW);
-		}
+		public void mouseEntered(MouseEvent e) {}
 
 		@Override
-		public void mouseExited(MouseEvent e) {
-			// lblMouseEvent.setText(e.getButton() + " mouseExited " + e.getX() + "," +
-			// e.getY());
-			// panel.setBackground(Color.CYAN);
-		}
+		public void mouseExited(MouseEvent e) {}
 
 		@Override
-		public void mousePressed(MouseEvent e) {
-			// lblMouseEvent.setText(e.getButton() + " mousePressed " + e.getX() + "," +
-			// e.getY());
-		}
-
+		public void mousePressed(MouseEvent e) {}
 		@Override
-		public void mouseReleased(MouseEvent e) {
-			// lblMouseEvent.setText(e.getButton() + " mouseReleased " + e.getX() + "," +
-			// e.getY());
-			// 드래그중 멈출시 보임
-		}
+		public void mouseReleased(MouseEvent e) {}
 	}
 
 	public void userListUpdate(ChatMsg msg) {
@@ -695,19 +662,6 @@ public class OmokClientGameView extends JFrame {
 
 	}
 
-	/*
-	 * 이모티콘 넣으면 사용할 부분 public void AppendImage(ImageIcon ori_icon) { int len =
-	 * textArea.getDocument().getLength(); textArea.setCaretPosition(len); // place
-	 * caret at the end (with no selection) Image ori_img = ori_icon.getImage();
-	 * Image new_img; ImageIcon new_icon; int width, height; double ratio; width =
-	 * ori_icon.getIconWidth(); height = ori_icon.getIconHeight();
-	 * 
-	 * 
-	 * gc2.drawImage(ori_img, 0, 0, imagePanel.getWidth(), imagePanel.getHeight(),
-	 * imagePanel); gc.drawImage(panelImage, 0, 0, imagePanel.getWidth(),
-	 * imagePanel.getHeight(), imagePanel); }
-	 */
-
 	///////////////// 오목 패널 부분 ////////////////////
 
 	class TablePanel1 extends JPanel {
@@ -730,10 +684,9 @@ public class OmokClientGameView extends JFrame {
 		private int MaxSize = 20;
 		private int Map[][] = new int[MaxSize + 1][MaxSize];
 
-		Image Black = new ImageIcon(OmokClientMainView.class.getResource("Black.png")).getImage();
-		Image White = new ImageIcon(OmokClientMainView.class.getResource("White.png")).getImage();
-		Image Red = new ImageIcon(OmokClientMainView.class.getResource("Red.png")).getImage();
-		Image Custom = new ImageIcon(OmokClientMainView.class.getResource("Custom.png")).getImage();
+		Image Black = new ImageIcon(OmokClientMainView.class.getResource("stoneImg/Black.png")).getImage();
+		Image White = new ImageIcon(OmokClientMainView.class.getResource("stoneImg/White.png")).getImage();
+		Image Red = new ImageIcon(OmokClientMainView.class.getResource("stoneImg/Red.png")).getImage();
 
 		public void init() {
 			for (int i = 0; i < MaxSize + 1; i++) {
