@@ -7,6 +7,8 @@ import java.awt.event.MouseMotionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Vector;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -16,10 +18,13 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.Color;
+import java.awt.Component;
+
 import javax.swing.border.LineBorder;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.SimpleAttributeSet;
@@ -86,9 +91,23 @@ public class OmokClientGameView extends JFrame {
 
 	private JList userList;
 	private DefaultListModel userListModel; // 방 목록
+	
+	JLabel user1NameLabel; 
+	JLabel user2NameLabel; 
+	JLabel user3NameLabel; 
+	JLabel user4NameLabel;
+	
+	JLabel user1ImageLabel;
+	JLabel user2ImageLabel;
+	JLabel user3ImageLabel;
+	JLabel user4ImageLabel;
+	
+	ImageIcon defaultImage;
+	
+	public Vector<JLabel> nameLabelVector = new Vector<>();
+	public Vector<JLabel> imageLabelVector = new Vector<>();
 
 	public OmokClientMainView mainView;
-
 	/**
 	 * Create the frame.
 	 */
@@ -148,51 +167,9 @@ public class OmokClientGameView extends JFrame {
 		userList = new JList(userListModel);
 		userList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		userListScrollPane.setViewportView(userList);
+		userList.setCellRenderer(new myListRenderer());
 
-		Panel user1Pannel = new Panel();
-		user1Pannel.setBounds(659, 10, 84, 91);
-		contentPane.add(user1Pannel);
-
-		JLabel user1NameLabel = new JLabel("유저 이름");
-		user1NameLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		user1NameLabel.setFont(new Font("굴림", Font.BOLD, 14));
-		user1NameLabel.setBorder(new LineBorder(new Color(0, 0, 0)));
-		user1NameLabel.setBackground(Color.WHITE);
-		user1Pannel.add(user1NameLabel);
-
-		Panel user2Pannel = new Panel();
-		user2Pannel.setBounds(749, 10, 84, 91);
-		contentPane.add(user2Pannel);
-
-		JLabel user2NameLabel = new JLabel("유저 이름");
-		user2NameLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		user2NameLabel.setFont(new Font("굴림", Font.BOLD, 14));
-		user2NameLabel.setBorder(new LineBorder(new Color(0, 0, 0)));
-		user2NameLabel.setBackground(Color.WHITE);
-		user2Pannel.add(user2NameLabel);
-
-		Panel user3Pannel = new Panel();
-		user3Pannel.setBounds(839, 10, 84, 91);
-		contentPane.add(user3Pannel);
-
-		JLabel user3NameLabel = new JLabel("유저 이름");
-		user3NameLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		user3NameLabel.setFont(new Font("굴림", Font.BOLD, 14));
-		user3NameLabel.setBorder(new LineBorder(new Color(0, 0, 0)));
-		user3NameLabel.setBackground(Color.WHITE);
-		user3Pannel.add(user3NameLabel);
-
-		Panel user4Pannel = new Panel();
-		user4Pannel.setBounds(929, 10, 84, 91);
-		contentPane.add(user4Pannel);
-
-		JLabel user4NameLabel = new JLabel("유저이름");
-		user4NameLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		user4NameLabel.setFont(new Font("굴림", Font.BOLD, 14));
-		user4NameLabel.setBorder(new LineBorder(new Color(0, 0, 0)));
-		user4NameLabel.setBackground(Color.WHITE);
-		user4Pannel.add(user4NameLabel);
-
+		
 		gamePanel = new TablePanel1();
 		gamePanel.setBounds(12, 10, 627, 628);
 		gamePanel.setBackground(new Color(206, 167, 61));
@@ -260,6 +237,76 @@ public class OmokClientGameView extends JFrame {
 		chatLimitButton = new JButton("채팅금지");
 		chatLimitButton.setBounds(857, 323, 91, 23);
 		contentPane.add(chatLimitButton);
+		
+		ImageIcon emptyImage = new ImageIcon(OmokClientMainView.class.getResource("/profileImg/empty.png"));
+		Image changeImg = emptyImage.getImage().getScaledInstance(84, 74, Image.SCALE_SMOOTH);
+		defaultImage = new ImageIcon(changeImg);
+		
+		user1ImageLabel = new JLabel();
+		user1ImageLabel.setBounds(659, 10, 84, 74);
+		contentPane.add(user1ImageLabel);
+		user1ImageLabel.setBorder(new LineBorder(new Color(0, 0, 0)));
+		user1ImageLabel.setIcon(defaultImage);
+		imageLabelVector.add(user1ImageLabel);
+
+		user2ImageLabel = new JLabel();
+		user2ImageLabel.setBounds(749, 10, 84, 74);
+		user2ImageLabel.setBorder(new LineBorder(new Color(0, 0, 0)));
+		contentPane.add(user2ImageLabel);
+		user2ImageLabel.setIcon(defaultImage);
+		imageLabelVector.add(user2ImageLabel);
+		
+		user3ImageLabel = new JLabel();
+		user3ImageLabel.setBounds(839, 10, 84, 74);
+		contentPane.add(user3ImageLabel);
+		user3ImageLabel.setBorder(new LineBorder(new Color(0, 0, 0)));
+		user3ImageLabel.setIcon(defaultImage);
+		imageLabelVector.add(user3ImageLabel);
+		
+		user4ImageLabel = new JLabel();
+		user4ImageLabel.setBounds(929, 10, 84, 74);
+		contentPane.add(user4ImageLabel);
+		user4ImageLabel.setBorder(new LineBorder(new Color(0, 0, 0)));
+		user4ImageLabel.setIcon(defaultImage);
+		imageLabelVector.add(user4ImageLabel);
+		
+		user1NameLabel = new JLabel("비어있음");
+		user1NameLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		user1NameLabel.setFont(new Font("굴림", Font.BOLD, 14));
+		user1NameLabel.setBorder(new LineBorder(new Color(0, 0, 0)));
+		user1NameLabel.setBackground(Color.WHITE);
+		user1NameLabel.setBounds(669, 85, 66, 20);
+		contentPane.add(user1NameLabel);
+		nameLabelVector.add(user1NameLabel);
+		
+		user2NameLabel = new JLabel("비어있음");
+		user2NameLabel.setBounds(759, 85, 66, 20);
+		contentPane.add(user2NameLabel);
+		user2NameLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		user2NameLabel.setFont(new Font("굴림", Font.BOLD, 14));
+		user2NameLabel.setBorder(new LineBorder(new Color(0, 0, 0)));
+		user2NameLabel.setBackground(Color.WHITE);
+		nameLabelVector.add(user2NameLabel);
+				
+		user3NameLabel = new JLabel("비어있음");
+		user3NameLabel.setBounds(849, 85, 66, 20);
+		contentPane.add(user3NameLabel);
+		user3NameLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		user3NameLabel.setFont(new Font("굴림", Font.BOLD, 14));
+		user3NameLabel.setBorder(new LineBorder(new Color(0, 0, 0)));
+		user3NameLabel.setBackground(Color.WHITE);
+		nameLabelVector.add(user3NameLabel);
+		
+		user4NameLabel = new JLabel("비어있음");
+		user4NameLabel.setBounds(939, 85, 66, 20);
+		contentPane.add(user4NameLabel);
+		user4NameLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		user4NameLabel.setFont(new Font("굴림", Font.BOLD, 14));
+		user4NameLabel.setBorder(new LineBorder(new Color(0, 0, 0)));
+		user4NameLabel.setBackground(Color.WHITE);
+		nameLabelVector.add(user4NameLabel);
+						
+						
 		if(!isOwner) chatLimitButton.setVisible(false);
 
 		MyMouseEvent mouse = new MyMouseEvent();
@@ -282,7 +329,7 @@ public class OmokClientGameView extends JFrame {
 		undoButton.addActionListener(myAction);
 		
 		
-
+		repaint();
 		setVisible(true);
 
 	}
@@ -295,7 +342,7 @@ public class OmokClientGameView extends JFrame {
 				String msg = null;
 				msg = String.format("[%s] %s", userName, chatTextField.getText());
 				ChatMsg cm = new ChatMsg(userName, "201", msg);
-				cm.roomName = roomName;
+				cm.roomName = roomName; 
 				mainView.SendObject(cm);
 				chatTextField.setText(""); // 메세지를 보내고 나면 메세지 쓰는창을 비운다.
 				chatTextField.requestFocus(); // 메세지를 보내고 커서를 다시 텍스트 필드로 위치시킨다
@@ -327,6 +374,36 @@ public class OmokClientGameView extends JFrame {
 				}
 			}
 		}
+	}
+	
+	class myListRenderer extends DefaultListCellRenderer { // 리스트를 이미지를 포함하여 커스텀 렌더링
+		
+		@Override
+		public Component getListCellRendererComponent(
+                JList list, Object value, int index,
+                boolean isSelected, boolean cellHasFocus) {
+
+            JLabel label = (JLabel) super.getListCellRendererComponent(
+                    list, value, index, isSelected, cellHasFocus);
+            
+            String name = value.toString().split("이름:")[1].split("]")[0];
+            
+            String path;
+            try {
+            	path = mainView.profileImageSrcHashMap.get(name);
+            	System.out.println(path);
+            } catch(IndexOutOfBoundsException e) { path = "profileImg/default.png"; }
+            ImageIcon newIcon;
+            try {
+            newIcon = new ImageIcon(OmokClientMainView.class.getResource(path));
+           } catch(NullPointerException e) {
+            	newIcon = new ImageIcon(OmokClientMainView.class.getResource("profileImg/default.png"));
+           }
+            Image changeImg = newIcon.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+    		ImageIcon changeIcon = new ImageIcon(changeImg);
+            label.setIcon(changeIcon);
+            return label;
+        }
 	}
 	
 	class OwnerAction implements ActionListener { // 강제퇴장, 채팅금지 Action
@@ -363,31 +440,14 @@ public class OmokClientGameView extends JFrame {
 		int y;
 
 		@Override
-		public void mouseDragged(MouseEvent e) {
-			// lblMouseEvent.setText(e.getButton() + " mouseDragged " + e.getX() + "," +
-			// e.getY());// 좌표출력가능
-//			Color c = new Color(0,0,255);
-//			gc2.setColor(c);
-//			gc2.fillOval(e.getX()-pen_size/2, e.getY()-pen_size/2, pen_size, pen_size);
-//			// panelImnage는 paint()에서 이용한다.
-//			gc.drawImage(panelImage, 0, 0, panel);
-			// SendMouseEvent(e);
-		}
+		public void mouseDragged(MouseEvent e) {}
 
 		@Override
-		public void mouseMoved(MouseEvent e) {
-			// lblMouseEvent.setText(e.getButton() + " mouseMoved " + e.getX() + "," +
-			// e.getY());
-		}
+		public void mouseMoved(MouseEvent e) {}
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			// lblMouseEvent.setText(e.getButton() + " mouseClicked " + e.getX() + "," +
-			// e.getY());
-//			Color c = new Color(0,0,255);
-//			gc2.setColor(c);
-//			gc2.fillOval(e.getX()-pen_size/2, e.getY()-pen_size/2, pen_size, pen_size);
-//			gc.drawImage(panelImage, 0, 0, panel);
+
 
 			x = (int) Math.round(e.getX() / (double) 30) - 1;
 			y = (int) Math.round(e.getY() / (double) 30);
@@ -424,31 +484,15 @@ public class OmokClientGameView extends JFrame {
 		}
 
 		@Override
-		public void mouseEntered(MouseEvent e) {
-			// lblMouseEvent.setText(e.getButton() + " mouseEntered " + e.getX() + "," +
-			// e.getY());
-			// panel.setBackground(Color.YELLOW);
-		}
+		public void mouseEntered(MouseEvent e) {}
 
 		@Override
-		public void mouseExited(MouseEvent e) {
-			// lblMouseEvent.setText(e.getButton() + " mouseExited " + e.getX() + "," +
-			// e.getY());
-			// panel.setBackground(Color.CYAN);
-		}
+		public void mouseExited(MouseEvent e) {}
 
 		@Override
-		public void mousePressed(MouseEvent e) {
-			// lblMouseEvent.setText(e.getButton() + " mousePressed " + e.getX() + "," +
-			// e.getY());
-		}
-
+		public void mousePressed(MouseEvent e) {}
 		@Override
-		public void mouseReleased(MouseEvent e) {
-			// lblMouseEvent.setText(e.getButton() + " mouseReleased " + e.getX() + "," +
-			// e.getY());
-			// 드래그중 멈출시 보임
-		}
+		public void mouseReleased(MouseEvent e) {}
 	}
 
 	public void userListUpdate(ChatMsg msg) {
@@ -469,6 +513,22 @@ public class OmokClientGameView extends JFrame {
 				chatLimitButton.setVisible(true);
 				this.isOwner = true;
 			}
+			
+			for(JLabel label : imageLabelVector) 
+				label.setIcon(defaultImage);
+			for(JLabel label : nameLabelVector) 
+				label.setText("비어있음");
+			
+			int i = 0;
+			for(String item : list) {
+				String name = item.split("이름:")[1].split("]")[0];
+				nameLabelVector.get(i).setText(name);
+				ImageIcon image = new ImageIcon(OmokClientMainView.class.getResource(mainView.profileImageSrcHashMap.get(name)));
+				Image changeImg = image.getImage().getScaledInstance(84, 74, Image.SCALE_SMOOTH);
+				imageLabelVector.get(i).setIcon(new ImageIcon(changeImg));
+				i++;
+			}
+			repaint();
 		}
 	}
 
@@ -695,19 +755,6 @@ public class OmokClientGameView extends JFrame {
 
 	}
 
-	/*
-	 * 이모티콘 넣으면 사용할 부분 public void AppendImage(ImageIcon ori_icon) { int len =
-	 * textArea.getDocument().getLength(); textArea.setCaretPosition(len); // place
-	 * caret at the end (with no selection) Image ori_img = ori_icon.getImage();
-	 * Image new_img; ImageIcon new_icon; int width, height; double ratio; width =
-	 * ori_icon.getIconWidth(); height = ori_icon.getIconHeight();
-	 * 
-	 * 
-	 * gc2.drawImage(ori_img, 0, 0, imagePanel.getWidth(), imagePanel.getHeight(),
-	 * imagePanel); gc.drawImage(panelImage, 0, 0, imagePanel.getWidth(),
-	 * imagePanel.getHeight(), imagePanel); }
-	 */
-
 	///////////////// 오목 패널 부분 ////////////////////
 
 	class TablePanel1 extends JPanel {
@@ -730,10 +777,9 @@ public class OmokClientGameView extends JFrame {
 		private int MaxSize = 20;
 		private int Map[][] = new int[MaxSize + 1][MaxSize];
 
-		Image Black = new ImageIcon(OmokClientMainView.class.getResource("Black.png")).getImage();
-		Image White = new ImageIcon(OmokClientMainView.class.getResource("White.png")).getImage();
-		Image Red = new ImageIcon(OmokClientMainView.class.getResource("Red.png")).getImage();
-		Image Custom = new ImageIcon(OmokClientMainView.class.getResource("Custom.png")).getImage();
+		Image Black = new ImageIcon(OmokClientMainView.class.getResource("stoneImg/Black.png")).getImage();
+		Image White = new ImageIcon(OmokClientMainView.class.getResource("stoneImg/White.png")).getImage();
+		Image Red = new ImageIcon(OmokClientMainView.class.getResource("stoneImg/Red.png")).getImage();
 
 		public void init() {
 			for (int i = 0; i < MaxSize + 1; i++) {
