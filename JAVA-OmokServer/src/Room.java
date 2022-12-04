@@ -22,6 +22,7 @@ public class Room {
 	
 	public boolean isStarted = false;
 	public HashMap<String, Boolean> readyMap = new HashMap<>();
+	public HashMap<String, Boolean> chatLimitMap = new HashMap<>();
 	
 	public Room(String roomName, OmokServer.UserService owner, int roomMax, String gameMode) {
 		this.roomName = roomName;
@@ -31,6 +32,7 @@ public class Room {
 		this.ownerName = owner.userName;
 		playerList.add(owner);
 		readyMap.put(owner.userName, false);
+		chatLimitMap.put(owner.userName, false);
 	}
 	
 	// 이름으로 준비 상태 해시맵으로 저장
@@ -43,11 +45,29 @@ public class Room {
 		return readyMap.get(userName);
 	}
 	
+	// 준비 상태 바꿈
 	public void toggleReadyState(String userName) {
 		if(getReadyState(userName) == true) 
 			readyMap.put(userName, false);
 		else
 			readyMap.put(userName, true); 
+	}
+	
+	public void updateChatLimitState(String userName, Boolean chatLimitState) {
+		chatLimitMap.put(userName, chatLimitState);
+	}
+	
+	// 채팅 금지 상태 가져오기
+	public boolean getChatLimitState(String userName) {
+		return chatLimitMap.get(userName);
+	}
+	
+	// 채팅 금지 상태 바꿈
+	public void toggleChatLimitState(String userName) {
+		if(getChatLimitState(userName) == true) 
+			chatLimitMap.put(userName, false);
+		else
+			chatLimitMap.put(userName, true); 
 	}
 	
 	
