@@ -167,6 +167,7 @@ public class OmokServer extends JFrame {
 		public String userStatus;
 
 		public int roomNumber;
+		public String profileImageSrc = "profileImg/default.png";
 
 		public UserService(Socket client_socket) {
 			// TODO Auto-generated constructor stub
@@ -527,7 +528,16 @@ public class OmokServer extends JFrame {
 		}
 		
 		public void updateServerUserList() {
-			ChatMsg msg = new ChatMsg(userName, "101", "");
+			
+			ChatMsg profileMsg = new ChatMsg(userName, "300", ""); // 프로필 이미지 갱신 메세지 전송
+			StringBuffer imgData = new StringBuffer();
+			for (UserService user : userVec) {
+				imgData.append(String.format("%s %s\n", user.userName, user.profileImageSrc));
+			}
+			profileMsg.data = imgData.toString();
+			WriteAllObject(profileMsg);
+			
+			ChatMsg msg = new ChatMsg(userName, "101", ""); // 유저 목록 갱신 메세지 전송
 			StringBuffer data = new StringBuffer();
 			for (UserService user : userVec) {
 				data.append(String.format("[이름:%s]\n", user.userName));
@@ -862,7 +872,7 @@ public class OmokServer extends JFrame {
 					@Override
 					public void run() {
 						ChatMsg time = new ChatMsg(userName, "000", "1초");
-						System.out.print("1초/");
+						//System.out.print("1초/");
 						WriteAllObject(time);
 					}
 				};
@@ -947,6 +957,9 @@ public class OmokServer extends JFrame {
 						}
 						else
 							sendGameMessage(cm);
+					} else if (cm.code.matches("300")) { // 유저 프로필 사진 변경됨
+						profileImageSrc = cm.data;
+						updateServerUserList();
 					} else if (cm.code.matches("400")) { // logout message 처리
 						Logout();
 						updateServerUserList();

@@ -22,6 +22,7 @@ import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.Socket;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.Vector;
@@ -33,6 +34,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -43,6 +45,8 @@ import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Color;
+import java.awt.Component;
+
 import javax.swing.border.BevelBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.JToggleButton;
@@ -110,6 +114,8 @@ public class OmokClientMainView extends JFrame {
 	private JList serverUserList;
 	private DefaultListModel serverUserListModel;
 
+	public HashMap<String, String> profileImageSrcHashMap = new HashMap<>();
+	
 	/**
 	 * Create the frame.
 	 * 
@@ -206,6 +212,15 @@ public class OmokClientMainView extends JFrame {
 		roomCreateButton.setBounds(675, 283, 97, 23);
 		contentPane.add(roomCreateButton);
 		
+		profileImageLabel = new JLabel("");
+		profileImageLabel.setBounds(645, 339, 127, 120);
+		contentPane.add(profileImageLabel);
+		
+		
+		ImageIcon defaultImg = new ImageIcon(OmokClientMainView.class.getResource("profileImg/default.png"));
+		setProfileImage(defaultImg);
+		
+		
 		JScrollPane serverUserListScrollPane = new JScrollPane();
 		serverUserListScrollPane.setBounds(376, 335, 263, 245);
 		contentPane.add(serverUserListScrollPane);
@@ -221,15 +236,11 @@ public class OmokClientMainView extends JFrame {
 		serverUserList = new JList(serverUserListModel);
 		serverUserList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		serverUserListScrollPane.setViewportView(serverUserList);
+		serverUserList.setCellRenderer(new myListRenderer());
 		
-		profileImageLabel = new JLabel("");
-		profileImageLabel.setBounds(645, 339, 127, 120);
 		
-
-		ImageIcon defaultImg = new ImageIcon(OmokClientMainView.class.getResource("profileImg/default.png"));
-		setProfileImage(defaultImg);
+	
 		
-		contentPane.add(profileImageLabel);
 
 		// 게임 종료 set
 		exitButton.addActionListener(new ActionListener() {
@@ -288,6 +299,36 @@ public class OmokClientMainView extends JFrame {
 			AppendText("connect error");
 		}
 
+	}
+	
+	class myListRenderer extends DefaultListCellRenderer { // 리스트를 이미지를 포함하여 커스텀 렌더링
+		
+		@Override
+		public Component getListCellRendererComponent(
+                JList list, Object value, int index,
+                boolean isSelected, boolean cellHasFocus) {
+
+            JLabel label = (JLabel) super.getListCellRendererComponent(
+                    list, value, index, isSelected, cellHasFocus);
+            
+            String name = value.toString().split("이름:")[1].split("]")[0];
+            
+            String path;
+            try {
+            	path = profileImageSrcHashMap.get(name);
+            	System.out.println(path);
+            } catch(IndexOutOfBoundsException e) { path = "profileImg/default.png"; }
+            ImageIcon newIcon;
+            try {
+            newIcon = new ImageIcon(OmokClientMainView.class.getResource(path));
+           } catch(NullPointerException e) {
+            	newIcon = new ImageIcon(OmokClientMainView.class.getResource("profileImg/default.png"));
+           }
+            Image changeImg = newIcon.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+    		ImageIcon changeIcon = new ImageIcon(changeImg);
+            label.setIcon(changeIcon);
+            return label;
+        }
 	}
 	
 	private void setProfileImage(ImageIcon profileImageIcon) {
@@ -349,12 +390,8 @@ public class OmokClientMainView extends JFrame {
 					case "101": // 대기방 유저목록 갱신
 						serverUserListUpdate(cm);
 						break;
-					case "300": // Image 첨부
-//						if (cm.UserName.equals(UserName))
-//							AppendTextR("[" + cm.UserName + "]");
-//						else
-//							AppendText("[" + cm.UserName + "]");
-						// AppendImage(cm.img);
+					case "300": // profileImageSrc 배열 관리
+						updateProfileImageSrcVector(cm);
 						break;
 					case "500": // Mouse Event 수신
 						//DoMouseEvent(cm);
@@ -513,6 +550,15 @@ public class OmokClientMainView extends JFrame {
 		mainView.gameView.add(view);
 		//System.out.println(mainView.gameView.size());
 	}
+	
+	public void updateProfileImageSrcVector(ChatMsg cm) {
+		String list[] = cm.data.split("\n");
+		for (String item : list) {
+			String name = item.split(" ")[0];
+			String src = item.split(" ")[1];
+			profileImageSrcHashMap.put(name, src);
+		}
+	}
 
 	public void serverUserListUpdate(ChatMsg cm) {
 		serverUserListModel.removeAllElements(); // 방 리스트를 모두 지우고, 다시 업데이트 한다.
@@ -574,11 +620,10 @@ public class OmokClientMainView extends JFrame {
 				frame = new Frame("이미지첨부");
 				fd = new FileDialog(frame, "이미지 선택", FileDialog.LOAD);
 				fd.setVisible(true);
-
-				
 				
 				if (fd.getDirectory().length() > 0 && fd.getFile().length() > 0) {
-					ChatMsg obcm = new ChatMsg(UserName, "300", "IMG");
+					String path = "profileImg\\" + fd.getFile();
+					ChatMsg obcm = new ChatMsg(UserName, "300", path);
 					ImageIcon profileImage = new ImageIcon(fd.getDirectory() + fd.getFile());
 					obcm.img = profileImage;
 					SendObject(obcm);
