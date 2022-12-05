@@ -14,6 +14,7 @@ import java.awt.event.MouseWheelListener;
 import java.awt.image.ImageObserver;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
@@ -620,7 +621,8 @@ public class OmokClientMainView extends JFrame {
 				fd.setVisible(true);
 				
 				if (fd.getDirectory().length() > 0 && fd.getFile().length() > 0) {
-					String path = "profileImg\\" + fd.getFile();
+					//String path = "profileImg\\" + fd.getFile();
+					String path = new File(fd.getFile()).getAbsolutePath();
 					ChatMsg obcm = new ChatMsg(UserName, "300", path);
 					ImageIcon profileImage = new ImageIcon(fd.getDirectory() + fd.getFile());
 					obcm.img = profileImage;
