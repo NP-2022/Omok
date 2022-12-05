@@ -326,8 +326,6 @@ public class OmokClientGameView extends JFrame {
 		chatLimitButton.addActionListener(ownerAction);
 		
 
-		undoButton.addActionListener(myAction);
-		
 		
 		repaint();
 		setVisible(true);
